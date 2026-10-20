@@ -1,0 +1,320 @@
+[
+  {
+    "source": "analyze_hop_sweep.py",
+    "destination": "archives/historical_sources/analyze_hop_sweep.py.txt",
+    "sha256": "b04fbb0bc801a0c857d9a6e71653b1d7a940b2f56fe74ca9a63c33fa9d1597c0",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "audit_gate_execution.py",
+    "destination": "archives/historical_sources/audit_gate_execution.py.txt",
+    "sha256": "d64eae5ba8ebd27b30299f154121b9502b70ea80a8241f2390ac6cc434e8652b",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "plot_hop_sweep.py",
+    "destination": "archives/historical_sources/plot_hop_sweep.py.txt",
+    "sha256": "a63753d0977bf0e55139edca3523577ecf144d1f362911ed0d1f63f2263972b2",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "run_gate_ablation.py",
+    "destination": "archives/historical_sources/run_gate_ablation.py.txt",
+    "sha256": "3716e284ea3313fd585ab6acf56741f44f082a04c49d9e62120a52655017bd00",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "run_hop_sweep.py",
+    "destination": "archives/historical_sources/run_hop_sweep.py.txt",
+    "sha256": "537208da8909425cb94b37cc073a0e3b7ac446bfc049c13ef128c1a3d37de477",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "run_readme_reproduction.py",
+    "destination": "archives/historical_sources/run_readme_reproduction.py.txt",
+    "sha256": "4220b11d70475db1743d25ac8c53b2b53c6d377bff12677095669e760fe8fac3",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "run_remaining_reproduction.py",
+    "destination": "archives/historical_sources/run_remaining_reproduction.py.txt",
+    "sha256": "76fbe7b463c3a68891d53aecf8290aa1c8819aece53aaf4bd9bf60d9f26219aa",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "verify_gate_ablation.py",
+    "destination": "archives/historical_sources/verify_gate_ablation.py.txt",
+    "sha256": "54994b7ccb49cdd3d3808c3d3494c292f244db32759906bd827dc21ad8c1c490",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "verify_hop_sweep.py",
+    "destination": "archives/historical_sources/verify_hop_sweep.py.txt",
+    "sha256": "22208c42b6143f9e956e0f872753d8bbeceddb73efe05011f73666ef4ea529d1",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/scripts/analyze_results.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/analyze_results.py.txt",
+    "sha256": "ef43d3e67870f8257a79c08b99c37815e92758ad09823762806c0142a2bc658e",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/scripts/bootstrap.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/bootstrap.py.txt",
+    "sha256": "3f7d9e64fc43a3b6b41ca3b1d6a5e73940fa8c53cd91dd3173d19f2622315814",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/scripts/diagnose_results.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/diagnose_results.py.txt",
+    "sha256": "3132799962f927db41bf5a899a4953a6f40eec413d92c17d7e91ddba4b6681c4",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/scripts/plot_results.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/plot_results.py.txt",
+    "sha256": "3c4a6753fb5bdb14f45b94cd46470aec982a9067758634f19a8aba58c503871d",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/scripts/prepare_data.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/prepare_data.py.txt",
+    "sha256": "173e93cec83bc1d2438db21a3af45962dfca3f4167aac37a104fdac9126b3710",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/scripts/run_experiments.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/run_experiments.py.txt",
+    "sha256": "1a866167234191a037913d09971f2978b19e7667e6ff1dd826f245894fcf1060",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/scripts/summarize_all_experiments.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/summarize_all_experiments.py.txt",
+    "sha256": "6450b7b622cd765711a766803ea19b7c72c0c2f82c2fa5d86ac936e06917dbf4",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "public_derivative_sha256": "1067188d951a5726cdce9d32ca991e163be23e2be854f4cdaf746bfb71ac246b",
+    "byte_identical": false,
+    "redactions": "private absolute local paths; original code remains untouched"
+  },
+  {
+    "source": "test_mlp/scripts/summarize_combined.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/summarize_combined.py.txt",
+    "sha256": "0505f2ea8a0cafe3daab2e2a006baad4b7952b24013137551628dd041a9475fd",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/scripts/validate_delivery.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/validate_delivery.py.txt",
+    "sha256": "f1a504b85d464d80aa56b5badbe1afaf306733619e04b5e6577957739f74de35",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/scripts/verify_isolation.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/verify_isolation.py.txt",
+    "sha256": "df945663d1f735e40ab9eb635ddd49523e0cd7b0112bb419e0772de6809b1fec",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/scripts/verify_runs.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/verify_runs.py.txt",
+    "sha256": "600eb458fb1a170884790c4d393317391a8d2b843412707a8e9a7d2ee34e1842",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/scripts/write_reports.py",
+    "destination": "archives/historical_sources/test_mlp/scripts/write_reports.py.txt",
+    "sha256": "c321c45d9fc20432a8b6b563b0ec98227ea16ab72baa4b31190e2f4dec790739",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "public_derivative_sha256": "e3fa4c458748b9ed5bb9d225770f950c754e507df791a5cdfa00227ce17b11c2",
+    "byte_identical": false,
+    "redactions": "private absolute local paths; original code remains untouched"
+  },
+  {
+    "source": "test_mlp/ablation_mlp/analyze.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/analyze.py.txt",
+    "sha256": "905aa6da8dd475f15ad06c31f759bff678ee88402d83177ea4499e5fd0bbb610",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/ablation_mlp/benchmark.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/benchmark.py.txt",
+    "sha256": "4954793c87bdcebc19f7578e1e260a37070841caf4252b3500dd6e2d16e95d9e",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/ablation_mlp/check_delivery.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/check_delivery.py.txt",
+    "sha256": "45096db64beae5bdb9cdad64d38911eb21c0dd9492aff127985411f21ac88ab4",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/ablation_mlp/factory.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/factory.py.txt",
+    "sha256": "c4f763a0e8c6de25c88cdde400d93a815942647e8ab46a43db53f175fbf432d4",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/ablation_mlp/model.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/model.py.txt",
+    "sha256": "cacde4d965d31fbee4c1875edf615b7bbdef9bcfc8ca9a6b9296292e1a5e18df",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/ablation_mlp/plot.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/plot.py.txt",
+    "sha256": "fc2260da7fc3dab38ec1a4d2acd01e1b8869924007ea1109bfdbaee271b2e9ab",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/ablation_mlp/preserve.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/preserve.py.txt",
+    "sha256": "a9545bf0bed987e99bf36736c6afc30f1c6fa0b24decd6365daf76f5640288ff",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/ablation_mlp/report.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/report.py.txt",
+    "sha256": "41f5a3f4a467529b4c56340659b73860817fe419c1de84d05874211606c7b367",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "public_derivative_sha256": "9e505bcf7378462cec79eb698637b1a6bd072c6a217317029612cd7fc79f3370",
+    "byte_identical": false,
+    "redactions": "private absolute local paths; original code remains untouched"
+  },
+  {
+    "source": "test_mlp/ablation_mlp/run.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/run.py.txt",
+    "sha256": "391fcadc28b0697d2a34270735c099db09890bf1bd5c828771803f19e38af7cb",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/ablation_mlp/test_components.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/test_components.py.txt",
+    "sha256": "2fc6d4610bf59a2aa9923cf4dbf0feac9872626bd9a7fd380883405ac3971402",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/ablation_mlp/test_resume.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/test_resume.py.txt",
+    "sha256": "9e0cbb34f6c7a555b420f7d687a55b9b6f9a294d1261c5176001f8ceed99cf84",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/ablation_mlp/verify.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/verify.py.txt",
+    "sha256": "af62be41a26d2cd8b8f3b0c88037b204d9b3a46b73d87f642add6e868169e8c9",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/ablation_mlp/__init__.py",
+    "destination": "archives/historical_sources/test_mlp/ablation_mlp/__init__.py.txt",
+    "sha256": "deb2e4b1e22d375f2fa44efbd5ca5f50406bcffd4db3e93636a55ecb4add06c1",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/tests/test_baseline.py",
+    "destination": "archives/historical_sources/test_mlp/tests/test_baseline.py.txt",
+    "sha256": "e513e206861b1d8a7f23a93413340f6e7c01fbd815941be1da6d47921b20b01b",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/tests/test_mlp.py",
+    "destination": "archives/historical_sources/test_mlp/tests/test_mlp.py.txt",
+    "sha256": "3ef98e038e6329cbfa8845b4907ee0c0e9f27378a02503a38b2384f04f98a4c3",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/tests/test_resume.py",
+    "destination": "archives/historical_sources/test_mlp/tests/test_resume.py.txt",
+    "sha256": "b99697c3ccdc01867042789196d068d35de0e5453a20af7b3c106a1b9c8e365c",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/docs/VERSIONS.md",
+    "destination": "archives/historical_sources/test_mlp/docs/VERSIONS.md.txt",
+    "sha256": "8ee3a19bc3ed8885cbd88628f9997f3f4eb3c2bf332a77e6810dcf9aee322e79",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  },
+  {
+    "source": "test_mlp/docs/MLP_COMPONENT_VERSIONS.md",
+    "destination": "archives/historical_sources/test_mlp/docs/MLP_COMPONENT_VERSIONS.md.txt",
+    "sha256": "a9bca7f3b35cf39c7fc42e9af4d62705f9eef31fc36a8d0f077a1e8cb0f27644",
+    "purpose": "archival source only; not the portable course execution entry point",
+    "execution_git_commit": "UNKNOWN",
+    "byte_identical": true
+  }
+]

@@ -1,0 +1,129 @@
+"""Reload all hop-sweep checkpoints and verify controls and predictions."""
+
+import argparse
+import csv
+import json
+from pathlib import Path
+import shutil
+import statistics
+
+import run_hop_sweep as sweep
+import numpy as np
+import torch
+
+base = sweep.base
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("output", type=Path)
+    args = parser.parse_args()
+    root = args.output.resolve()
+    overall = json.loads((root / "results.json").read_text(encoding="utf-8"))
+    assert overall["status"] == "complete"
+    torch.use_deterministic_algorithms(True)
+    torch.backends.cuda.matmul.allow_tf32 = False
+    torch.backends.cudnn.allow_tf32 = False
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    for path, digest in overall["sources"].items():
+        assert base.sha256(path) == digest
+    total, checked = 0, {}
+    minimum_hops = 3 - overall["start_hop"]
+    assert set(overall["experiments"]) == {"2", "3", "4"}
+    for key, directory in overall["experiments"].items():
+        k = int(key)
+        output = root / directory
+        state = json.loads((output / "results.json").read_text(encoding="utf-8"))
+        data_audit = json.loads((output / "data_audit.json").read_text(encoding="utf-8"))
+        split_audit = json.loads((output / "split_audit.json").read_text(encoding="utf-8"))
+        powers = list(range(overall["start_hop"], k + 1))
+        assert state["status"] == "complete" and state["configuration"]["model"]["powers"] == powers
+        checked[key] = {}
+        for name, pairs in state["pairs"].items():
+            assert len(pairs) == 10
+            dataset = base.load_dataset(name)
+            graph = dataset[0].to("cuda")
+            assert base.sha256(dataset.processed_paths[0]) == data_audit[name]["processed_sha256"]
+            for path, digest in data_audit[name]["raw_files"].items():
+                assert base.sha256(base.PROJECT / path) == digest
+            for pair, mask_record in zip(pairs, split_audit[name]):
+                index = pair["split"]
+                assert index == mask_record["seed"] - 102
+                mask_path = output / "splits" / mask_record["file"]
+                assert base.sha256(mask_path) == mask_record["sha256"]
+                assert base.sha256(base.PROJECT / "splits" / mask_path.name) == mask_record["sha256"]
+                with np.load(mask_path) as saved:
+                    masks = {label: saved[label].copy() for label in ("train_mask", "val_mask", "test_mask")}
+                for label, mask in masks.items():
+                    graph[label] = torch.from_numpy(mask).to("cuda")
+                assert pair["routing"]["initial_state_sha256"] == pair["uniform"]["initial_state_sha256"]
+                assert pair["routing"]["initial_rng_sha256"] == pair["uniform"]["initial_rng_sha256"]
+                assert pair["routing"]["parameter_count"] == pair["uniform"]["parameter_count"]
+                for variant in ("routing", "uniform"):
+                    record = pair[variant]
+                    run_dir = output / record["directory"]
+                    for filename, field in (("model.pt", "checkpoint_sha256"), ("trace.csv", "trace_sha256"),
+                                             ("predictions.npz", "predictions_sha256")):
+                        assert base.sha256(run_dir / filename) == record[field]
+                    checkpoint = torch.load(run_dir / "model.pt", map_location="cpu", weights_only=True)
+                    assert checkpoint["model_kwargs"]["powers"] == powers
+                    assert checkpoint["routing"] == (variant == "routing")
+                    model = sweep.make_model(checkpoint["model_kwargs"], overall["canonical_powers"],
+                                             record["seed"], checkpoint["routing"])
+                    common_key = f"{name}:{index}"
+                    assert base.state_hash(model.state_dict()) == record["initial_state_sha256"]
+                    assert base.rng_hash() == record["initial_rng_sha256"] == overall["initial_rng_states"][common_key]
+                    assert sweep.common_hash(model, minimum_hops) == record["common_initial_sha256"] == overall["common_initial_states"][common_key]
+                    assert base.state_hash(checkpoint["state_dict"]) == record["trained_state_sha256"]
+                    model.load_state_dict(checkpoint["state_dict"])
+                    model.eval()
+                    if index == 0:
+                        observed = sweep.execution_check(model, graph, powers, checkpoint["routing"])
+                        assert observed == state["execution_checks"][name][variant]
+                    with torch.no_grad():
+                        predictions = model(graph.x, graph.edge_index).argmax(dim=1).cpu().numpy()
+                    with np.load(run_dir / "predictions.npz") as saved:
+                        assert np.array_equal(predictions, saved["predictions"])
+                        assert np.array_equal(graph.y.cpu().numpy(), saved["labels"])
+                        for label, mask in masks.items():
+                            assert np.array_equal(mask, saved[label])
+                    labels = graph.y.cpu().numpy()
+                    test_correct = int((predictions[masks["test_mask"]] == labels[masks["test_mask"]]).sum())
+                    assert test_correct == record["test_correct"]
+                    assert test_correct / int(masks["test_mask"].sum()) == record["test_accuracy"]
+                    val_acc = float((predictions[masks["val_mask"]] == labels[masks["val_mask"]]).mean())
+                    assert val_acc == record["best_val_accuracy"]
+                    with (run_dir / "trace.csv").open(newline="", encoding="utf-8") as handle:
+                        trace = list(csv.DictReader(handle))
+                    assert len(trace) == record["stopped_epoch"]
+                    assert [int(row["epoch"]) for row in trace] == list(range(1, len(trace) + 1))
+                    assert all(np.isfinite(float(row["train_loss"])) for row in trace)
+                    values = [float(row["val_accuracy"]) for row in trace]
+                    assert max(values) == val_acc and values.index(val_acc) + 1 == record["best_epoch"]
+                    assert record["stopped_epoch"] == 500 or record["stopped_epoch"] - record["best_epoch"] == 50
+                    total += 1
+            routing = [pair["routing"]["test_accuracy"] for pair in pairs]
+            uniform = [pair["uniform"]["test_accuracy"] for pair in pairs]
+            summary = state["summary"][name]
+            assert abs(statistics.mean(routing) - summary["routing_mean"]) < 1e-12
+            assert abs(statistics.mean(uniform) - summary["uniform_mean"]) < 1e-12
+            assert abs(statistics.pstdev(routing) - summary["routing_std_ddof0"]) < 1e-12
+            assert abs(statistics.pstdev(uniform) - summary["uniform_std_ddof0"]) < 1e-12
+            row = next(row for row in overall["summary"] if row["k"] == k and row["dataset"] == name)
+            assert abs(row["mean_difference_pp"] - 100 * (statistics.mean(routing) - statistics.mean(uniform))) < 1e-12
+            checked[key][name] = 20
+            print(f"VERIFIED K={k} {name}: 20 checkpoints and exact predictions, shared initialization, real propagation/routing counts", flush=True)
+    assert total == 360
+    result = dict(status="passed", checkpoints_checked=total, exact_predictions_reproduced=True,
+                  common_initialization_across_k_verified=True, cpu_cuda_rng_states_verified=True,
+                  propagation_counts_verified=True, routing_softmax_counts_verified=True,
+                  best_validation_selection_verified=True, finite_training_losses_verified=True,
+                  datasets=checked, verifier_sha256=base.sha256(__file__))
+    base.write_json(root / "verification.json", result)
+    shutil.copy2(__file__, root / "source_snapshot" / Path(__file__).name)
+    print("COMPLETE: all 360 saved models reproduced exactly", flush=True)
+
+
+if __name__ == "__main__":
+    main()

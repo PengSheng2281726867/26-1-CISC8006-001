@@ -1,0 +1,288 @@
+{
+  "passed": true,
+  "tests_run": 4,
+  "errors": 0,
+  "failures": 0,
+  "evidence": [
+    {
+      "test": "baseline_alignment",
+      "device": "cpu",
+      "k": 1,
+      "training": false,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cpu",
+      "k": 1,
+      "training": true,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cpu",
+      "k": 2,
+      "training": false,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cpu",
+      "k": 2,
+      "training": true,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cpu",
+      "k": 3,
+      "training": false,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cpu",
+      "k": 3,
+      "training": true,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cpu",
+      "k": 4,
+      "training": false,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cpu",
+      "k": 4,
+      "training": true,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cuda",
+      "k": 1,
+      "training": false,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cuda",
+      "k": 1,
+      "training": true,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cuda",
+      "k": 2,
+      "training": false,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cuda",
+      "k": 2,
+      "training": true,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cuda",
+      "k": 3,
+      "training": false,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cuda",
+      "k": 3,
+      "training": true,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cuda",
+      "k": 4,
+      "training": false,
+      "max_error": 0
+    },
+    {
+      "test": "baseline_alignment",
+      "device": "cuda",
+      "k": 4,
+      "training": true,
+      "max_error": 0
+    },
+    {
+      "test": "gradient",
+      "device": "cpu",
+      "method": "mlp_ln",
+      "k": 1,
+      "grads": {
+        "convs.0.scorer.0.weight": 1.7380908727645874,
+        "convs.0.scorer.1.weight": 0.07053805887699127,
+        "convs.0.scorer.3.weight": 0.643478274345398
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cpu",
+      "method": "mlp_ln",
+      "k": 2,
+      "grads": {
+        "convs.0.scorer.0.weight": 1.7056313753128052,
+        "convs.0.scorer.1.weight": 0.06928081065416336,
+        "convs.0.scorer.3.weight": 0.6100193858146667
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cpu",
+      "method": "mlp_ln",
+      "k": 3,
+      "grads": {
+        "convs.0.scorer.0.weight": 1.340261459350586,
+        "convs.0.scorer.1.weight": 0.057242367416620255,
+        "convs.0.scorer.3.weight": 0.5037357211112976
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cpu",
+      "method": "mlp_ln",
+      "k": 4,
+      "grads": {
+        "convs.0.scorer.0.weight": 1.4300503730773926,
+        "convs.0.scorer.1.weight": 0.06537530571222305,
+        "convs.0.scorer.3.weight": 0.599096417427063
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cpu",
+      "method": "mlp_gelu",
+      "k": 1,
+      "grads": {
+        "convs.0.scorer.0.weight": 0.579477846622467,
+        "convs.0.scorer.2.weight": 0.2560923397541046
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cpu",
+      "method": "mlp_gelu",
+      "k": 2,
+      "grads": {
+        "convs.0.scorer.0.weight": 0.6038951277732849,
+        "convs.0.scorer.2.weight": 0.24783094227313995
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cpu",
+      "method": "mlp_gelu",
+      "k": 3,
+      "grads": {
+        "convs.0.scorer.0.weight": 0.44947195053100586,
+        "convs.0.scorer.2.weight": 0.18624499440193176
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cpu",
+      "method": "mlp_gelu",
+      "k": 4,
+      "grads": {
+        "convs.0.scorer.0.weight": 0.47054141759872437,
+        "convs.0.scorer.2.weight": 0.19904571771621704
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cuda",
+      "method": "mlp_ln",
+      "k": 1,
+      "grads": {
+        "convs.0.scorer.0.weight": 1.7380907535552979,
+        "convs.0.scorer.1.weight": 0.07053805887699127,
+        "convs.0.scorer.3.weight": 0.6434781551361084
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cuda",
+      "method": "mlp_ln",
+      "k": 2,
+      "grads": {
+        "convs.0.scorer.0.weight": 1.7056310176849365,
+        "convs.0.scorer.1.weight": 0.06928079575300217,
+        "convs.0.scorer.3.weight": 0.6100192666053772
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cuda",
+      "method": "mlp_ln",
+      "k": 3,
+      "grads": {
+        "convs.0.scorer.0.weight": 1.3402608633041382,
+        "convs.0.scorer.1.weight": 0.05724234879016876,
+        "convs.0.scorer.3.weight": 0.5037354826927185
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cuda",
+      "method": "mlp_ln",
+      "k": 4,
+      "grads": {
+        "convs.0.scorer.0.weight": 1.4300496578216553,
+        "convs.0.scorer.1.weight": 0.06537528336048126,
+        "convs.0.scorer.3.weight": 0.5990961194038391
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cuda",
+      "method": "mlp_gelu",
+      "k": 1,
+      "grads": {
+        "convs.0.scorer.0.weight": 0.5794779062271118,
+        "convs.0.scorer.2.weight": 0.2560923099517822
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cuda",
+      "method": "mlp_gelu",
+      "k": 2,
+      "grads": {
+        "convs.0.scorer.0.weight": 0.6038950681686401,
+        "convs.0.scorer.2.weight": 0.24783089756965637
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cuda",
+      "method": "mlp_gelu",
+      "k": 3,
+      "grads": {
+        "convs.0.scorer.0.weight": 0.449472039937973,
+        "convs.0.scorer.2.weight": 0.18624500930309296
+      }
+    },
+    {
+      "test": "gradient",
+      "device": "cuda",
+      "method": "mlp_gelu",
+      "k": 4,
+      "grads": {
+        "convs.0.scorer.0.weight": 0.47054147720336914,
+        "convs.0.scorer.2.weight": 0.19904574751853943
+      }
+    }
+  ]
+}

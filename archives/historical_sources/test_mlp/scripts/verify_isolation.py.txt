@@ -1,0 +1,37 @@
+"""Re-audit the read-only original and immutable snapshot; never write there."""
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json,sha256
+from scripts.bootstrap import manifest
+import json
+import subprocess
+
+def main():
+    provenance=json.loads((ROOT/'docs/provenance.json').read_text(encoding='utf-8'))
+    original=Path(provenance['original'])
+    before=json.loads((ROOT/'docs/original_manifest_before.json').read_text(encoding='utf-8'))
+    after=manifest(original)
+    save_json(ROOT/'docs/original_manifest_after.json',after)
+    added=sorted(set(after)-set(before));removed=sorted(set(before)-set(after))
+    changed=[name for name in before.keys() & after.keys() if before[name]!=after[name]]
+    prefix=['git','--no-optional-locks','-c',f'safe.directory={original.as_posix()}','-C',str(original)]
+    status=subprocess.check_output(prefix+['status','--porcelain=v1'])
+    (ROOT/'docs/original_git_status_after.txt').write_bytes(status)
+    git_same=status==(ROOT/'docs/original_git_status_before.txt').read_bytes()
+    expected=provenance['snapshot_sha256']
+    actual={path.relative_to(ROOT/'upstream_snapshot').as_posix():sha256(path)
+            for path in sorted((ROOT/'upstream_snapshot').rglob('*')) if path.is_file()}
+    snapshot_same=actual==expected
+    passed=not added and not removed and not changed and git_same and snapshot_same
+    report=dict(status='passed' if passed else 'failed',original=str(original),
+        original_files_before=len(before),original_files_after=len(after),
+        added=added,removed=removed,changed=sorted(changed),git_status_identical=git_same,
+        immutable_snapshot_identical=snapshot_same,commit=provenance['commit'],
+        checks='All original files: size, mtime_ns, SHA256; sensitive .env/.aws: metadata only; '
+               'Git porcelain status and all snapshot file hashes/inventory.')
+    save_json(ROOT/'results/original_integrity.json',report)
+    print(json.dumps(report,indent=2))
+    assert passed,'Original tree or immutable snapshot changed; inspect original_integrity.json'
+
+if __name__=='__main__':main()

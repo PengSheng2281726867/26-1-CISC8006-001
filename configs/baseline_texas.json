@@ -1,0 +1,106 @@
+{
+  "version": "course_prospective_v1",
+  "teacher_approval": "NOT_VERIFIED",
+  "scientific_status": "PROPOSED_NOT_COURSE_FROZEN",
+  "datasets": [
+    "Texas"
+  ],
+  "ks": [
+    2
+  ],
+  "splits": [
+    0
+  ],
+  "seeds": [
+    42
+  ],
+  "methods": [
+    "dot"
+  ],
+  "training": {
+    "version": "v1_main",
+    "datasets": [
+      "Texas",
+      "Wisconsin",
+      "Cornell",
+      "Chameleon",
+      "Squirrel",
+      "Actor"
+    ],
+    "ks": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "methods": [
+      "dot",
+      "mlp"
+    ],
+    "splits": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "hidden_dim": 32,
+    "mlp_hidden_dim": 32,
+    "actual_gamma_layers": 1,
+    "routing_iterations": 2,
+    "include_zero_hop": true,
+    "epochs": 500,
+    "early_stopping_patience": 50,
+    "learning_rate": 0.02,
+    "weight_decay": 0.0001,
+    "input_dropout": 0.2,
+    "hidden_dropout": 0.8,
+    "gradient_clip": 1.0,
+    "scheduler": {
+      "factor": 0.5,
+      "patience": 50,
+      "min_lr": 1e-06
+    },
+    "split_ratios": [
+      0.6,
+      0.2,
+      0.2
+    ],
+    "split_seeds": [
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111
+    ],
+    "training_seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "best_checkpoint": "deep copy selected using validation only",
+    "deterministic": true,
+    "scoring": "shared MLP(64,32,1), ReLU; dot baseline unmodified agreement",
+    "canonical_initialization": "random dot K=4 shared parameters; identical MLP scorer initialization across K",
+    "infer_warmup": 5,
+    "infer_repeats": 20,
+    "max_retries": 2
+  }
+}

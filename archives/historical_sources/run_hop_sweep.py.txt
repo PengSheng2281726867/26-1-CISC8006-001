@@ -1,0 +1,228 @@
+"""Paired routing ablation for maximum propagation powers K=2,3,4."""
+
+import argparse
+import csv
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+import shutil
+from unittest.mock import patch
+
+import run_gate_ablation as base
+import torch
+
+
+def make_model(kwargs, canonical_powers, seed, routing):
+    """Use one K=4 initial state, slicing hop scales for each smaller K."""
+    base.set_seed(seed)
+    canonical = base.GAMMA_GNN(**{**kwargs, "powers": canonical_powers})
+    bank = canonical.state_dict()
+    model = base.GAMMA_GNN(**kwargs)
+    selected = {}
+    indices = [canonical_powers.index(power) for power in kwargs["powers"]]
+    for key, target in model.state_dict().items():
+        value = bank[key][indices] if key.endswith("scale_params") else bank[key]
+        assert value.shape == target.shape
+        selected[key] = value.detach().clone()
+    model.load_state_dict(selected)
+    model = model.to("cuda")
+    for conv in model.convs:
+        conv.use_routing = routing
+    base.set_seed(seed)
+    return model
+
+
+def common_hash(model, minimum_hops):
+    state = {key: value[:minimum_hops] if key.endswith("scale_params") else value
+             for key, value in model.state_dict().items()}
+    return base.state_hash(state)
+
+
+def execution_check(model, graph, powers, routing):
+    """Count calls in the real layer; do not change its implementation."""
+    model.eval()
+    conv = model.convs[0]
+    assert conv.powers == powers and conv.num_iterations == 2
+    assert conv.use_routing == routing
+    with torch.no_grad(), patch.object(conv, "propagate", wraps=conv.propagate) as propagation, \
+            patch.object(torch, "softmax", wraps=torch.softmax) as softmax:
+        value = conv(graph.x, graph.edge_index)
+        propagation_calls, softmax_calls = propagation.call_count, softmax.call_count
+    assert torch.isfinite(value).all()
+    assert propagation_calls == sum(powers)
+    assert softmax_calls == (2 if routing else 0)
+    return dict(powers=powers, propagation_calls=propagation_calls,
+                routing_softmax_calls=softmax_calls, output_shape=list(value.shape))
+
+
+def update_run(output, state):
+    state["summary"] = {name: base.summarize_pairs(pairs)
+                        for name, pairs in state["pairs"].items() if pairs}
+    base.write_json(output / "results.json", state)
+    with (output / "summary.csv").open("w", newline="", encoding="utf-8-sig") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["dataset", "pairs", "routing_mean_percent", "uniform_mean_percent", "difference_pp"])
+        for name, summary in state["summary"].items():
+            writer.writerow([name, summary["n"], 100 * summary["routing_mean"],
+                             100 * summary["uniform_mean"], summary["mean_difference_pp"]])
+
+
+def update_sweep(root, state, runs):
+    summaries = []
+    for key, run in runs.items():
+        for name, summary in run.get("summary", {}).items():
+            summaries.append(dict(k=int(key), dataset=name, powers=run["configuration"]["model"]["powers"], **summary))
+    if state["status"] == "complete":
+        ordered = sorted(summaries, key=lambda entry: entry["exact_sign_flip_p_two_sided"])
+        running = 0.0
+        for rank, entry in enumerate(ordered):
+            running = max(running, entry["exact_sign_flip_p_two_sided"] * (len(ordered) - rank))
+            entry["holm_adjusted_p_18_comparisons"] = min(1.0, running)
+    state["summary"] = summaries
+    base.write_json(root / "results.json", state)
+    with (root / "summary.csv").open("w", newline="", encoding="utf-8-sig") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["k", "dataset", "powers", "pairs", "routing_mean_percent", "routing_std_percent",
+                         "uniform_mean_percent", "uniform_std_percent", "difference_pp", "ci95_lower_pp", "ci95_upper_pp",
+                         "exact_sign_flip_p", "holm_p_18_comparisons"])
+        for row in summaries:
+            writer.writerow([row["k"], row["dataset"], str(row["powers"]), row["n"],
+                             100 * row["routing_mean"], 100 * row["routing_std_ddof0"],
+                             100 * row["uniform_mean"], 100 * row["uniform_std_ddof0"],
+                             row["mean_difference_pp"], *row["paired_t_ci95_pp"],
+                             row["exact_sign_flip_p_two_sided"], row.get("holm_adjusted_p_18_comparisons")])
+    lines = ["# Maximum-hop routing sweep", "", f"Status: {state['status']}", "",
+             f"Hop convention: {state['hop_convention']}", "",
+             "| K | Dataset | Routing accuracy (%) | Uniform accuracy (%) | Routing minus uniform (pp) |",
+             "| ---: | --- | ---: | ---: | ---: |"]
+    for row in summaries:
+        lines.append(f"| {row['k']} | {row['dataset']} | {row['routing_mean']*100:.2f} ± {row['routing_std_ddof0']*100:.2f} | "
+                     f"{row['uniform_mean']*100:.2f} ± {row['uniform_std_ddof0']*100:.2f} | {row['mean_difference_pp']:+.2f} |")
+    lines += ["", "K is the largest adjacency power; it does not change the number of GAMMA layers or routing iterations. "
+              "The imported original model has one GAMMA layer plus a linear classifier, hidden size 32, and routing iterations 2. "
+              "The only within-K variant difference is use_routing. Channel scales, projection, LayerNorm, squash and dropout remain enabled.", "",
+              "For each split, all K values start from a shared canonical K=4 initialization; smaller K values select the corresponding "
+              "hop scale rows. Shared projection/classifier/norm weights and shared hop-scale rows are checked identical across K. "
+              "After construction the RNG is reset to the same seed, so initial CPU/CUDA RNG states match across K and variants. "
+              "The number of hop-scale parameters grows with K, as in the original model; parameter counts are recorded. "
+              "All K=2 trials are newly trained rather than reused from the earlier experiment.", "",
+              "Training: fixed 60/20/20 split seeds 102–111, training seeds 42–51, Adam lr=0.02/weight_decay=0.0001, "
+              "clip_grad_norm=1, ReduceLROnPlateau factor=0.5/patience=50/min_lr=1e-6, max_epochs=500, early-stop patience=50. "
+              "Both variants restore a deep-copied best-validation checkpoint. Test labels are used only after checkpoint selection. "
+              "Strict deterministic algorithms and CUBLAS_WORKSPACE_CONFIG=:4096:8 are enabled, with TF32 disabled.", "",
+              "Actual layer calls are audited at each dataset/K/variant: the original implementation separately propagates each hop, "
+              "so total propagate() calls equal sum(powers); the largest path is K steps. Routing softmax calls are 2 when on and 0 when off. "
+              "An independent audit on previously trained checkpoints also compared the off branch against manually computed uniform aggregation.", "",
+              "Adjacency powers represent p-step walks, not strict shortest-path-distance-only neighborhoods. "
+              "Keeping 0-hop follows the prior repository protocol when selected. Each larger K adds one candidate hop to the same layer.", "",
+              "The 18 routing-minus-uniform comparisons use exact paired sign-flip tests and a common Holm correction. "
+              "Approximate paired-t 95% intervals and population standard deviations are retained in JSON/CSV. "
+              "Random splits overlap; this is exploratory evidence under a fixed training protocol, not a claim of universal benefit. "
+              "No K is chosen using test accuracy to claim an unbiased final model.", "",
+              "Per-K subdirectories contain data/split audits, all checkpoints, full predictions, traces and per-pair results. "
+              "Source snapshots capture the runner, original architecture and shared training helper.", ""]
+    (root / "REPORT.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--exclude-zero-hop", action="store_true")
+    parser.add_argument("--output")
+    args = parser.parse_args()
+    start_hop = 1 if args.exclude_zero_hop else 0
+    canonical_powers = list(range(start_hop, 5))
+    minimum_hops = len(list(range(start_hop, 3)))
+    root = base.PROJECT / (args.output or datetime.now().strftime("results/hop_sweep_%Y%m%d_%H%M%S"))
+    root.mkdir(parents=True, exist_ok=False)
+    assert torch.cuda.is_available()
+    torch.use_deterministic_algorithms(True)
+    torch.backends.cuda.matmul.allow_tf32 = False
+    torch.backends.cudnn.allow_tf32 = False
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    sources = [Path(__file__), Path(base.__file__), base.PROJECT / "gamma_multi_split.py", base.PROJECT / "GAMMA_layer.py"]
+    snapshot = root / "source_snapshot"
+    snapshot.mkdir()
+    hashes = {}
+    for path in sources:
+        shutil.copy2(path, snapshot / path.name)
+        hashes[str(path)] = base.sha256(path)
+    state = dict(status="running", started_at=datetime.now(timezone.utc).isoformat(),
+                 hop_convention=f"powers=range({start_hop}, K+1)", start_hop=start_hop,
+                 canonical_powers=canonical_powers, sources=hashes, experiments={},
+                 common_initial_states={}, initial_rng_states={})
+    runs = {}
+    update_sweep(root, state, runs)
+    for k in (2, 3, 4):
+        powers = list(range(start_hop, k + 1))
+        output = root / f"k_{k}"
+        output.mkdir()
+        (output / "splits").mkdir()
+        model_options = dict(hidden_channels=32, num_layers=2, num_iterations=2, powers=powers)
+        run = dict(status="running", configuration=dict(model=model_options, canonical_powers=canonical_powers,
+                   shared_canonical_initialization=True, max_epochs=500, patience=50, deterministic=True),
+                   sources=hashes, pairs={name: [] for name in base.DATASETS}, execution_checks={})
+        runs[str(k)] = run
+        state["experiments"][str(k)] = str(output.relative_to(root))
+        data_audit, split_audit = {}, {}
+        for name in base.DATASETS:
+            dataset = base.load_dataset(name)
+            graph = dataset[0]
+            assert tuple(graph.x.shape) == base.SHAPES[name]
+            data_audit[name] = dict(nodes=graph.num_nodes, features=graph.num_node_features, edges=graph.num_edges,
+                    processed_sha256=base.sha256(dataset.processed_paths[0]),
+                    raw_files={str(Path(path).relative_to(base.PROJECT)): base.sha256(path) for path in dataset.raw_paths})
+            base.write_json(output / "data_audit.json", data_audit)
+            split_audit[name] = []
+            kwargs = dict(in_channels=dataset.num_node_features, out_channels=dataset.num_classes, **model_options)
+            graph = graph.to("cuda")
+            for split in range(10):
+                masks, split_record = base.load_masks(name, split, graph.num_nodes, output)
+                split_audit[name].append(split_record)
+                base.write_json(output / "split_audit.json", split_audit)
+                for key, mask in zip(("train_mask", "val_mask", "test_mask"), masks):
+                    graph[key] = torch.from_numpy(mask).to("cuda")
+                seed, pair = 42 + split, dict(split=split, training_seed=42 + split, split_sha256=split_record["sha256"])
+                expected_initial = expected_rng = None
+                common_key = f"{name}:{split}"
+                for variant in (("routing", "uniform") if split % 2 == 0 else ("uniform", "routing")):
+                    model = make_model(kwargs, canonical_powers, seed, variant == "routing")
+                    digest, rng = base.state_hash(model.state_dict()), base.rng_hash()
+                    common = common_hash(model, minimum_hops)
+                    state["common_initial_states"].setdefault(common_key, common)
+                    state["initial_rng_states"].setdefault(common_key, rng)
+                    assert common == state["common_initial_states"][common_key]
+                    assert rng == state["initial_rng_states"][common_key]
+                    if expected_initial is None:
+                        expected_initial, expected_rng = digest, rng
+                    assert digest == expected_initial and rng == expected_rng
+                    if split == 0:
+                        run["execution_checks"].setdefault(name, {})[variant] = execution_check(model, graph, powers, variant == "routing")
+                        assert base.rng_hash() == rng
+                    run_dir = output / "runs" / name.lower() / f"split_{split}" / variant
+                    run_dir.mkdir(parents=True)
+                    result = base.train_variant(model, graph, variant == "routing", seed, run_dir, kwargs)
+                    result.update(initial_state_sha256=digest, initial_rng_sha256=rng,
+                                  common_initial_sha256=common, parameter_count=sum(p.numel() for p in model.parameters()),
+                                  directory=str(run_dir.relative_to(output)))
+                    base.write_json(run_dir / "result.json", result)
+                    pair[variant] = result
+                assert pair["routing"]["parameter_count"] == pair["uniform"]["parameter_count"]
+                run["pairs"][name].append(pair)
+                update_run(output, run)
+                delta = 100 * (pair["routing"]["test_accuracy"] - pair["uniform"]["test_accuracy"])
+                print(f"K={k} {name} {split+1}/10: on={100*pair['routing']['test_accuracy']:.2f}% "
+                      f"off={100*pair['uniform']['test_accuracy']:.2f}% delta={delta:+.2f} pp", flush=True)
+            update_sweep(root, state, runs)
+            print(f"DONE K={k} {name}: paired mean delta={run['summary'][name]['mean_difference_pp']:+.2f} pp", flush=True)
+        run["status"] = "complete"
+        update_run(output, run)
+    for path, digest in hashes.items():
+        assert base.sha256(path) == digest
+    state.update(status="complete", finished_at=datetime.now(timezone.utc).isoformat())
+    update_sweep(root, state, runs)
+    print(f"COMPLETE: {root / 'REPORT.md'}", flush=True)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,38 @@
+"""Protect all earlier baseline results while the new group runs."""
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json,sha256
+from scripts.bootstrap import manifest
+import argparse
+import json
+
+TARGET=ROOT/'runs/mlp_components_v1/previous_results_manifest.json'
+
+def paths():
+    items=list((ROOT/'src').glob('*.py'))
+    items+=list((ROOT/'runs/v2').rglob('*'))+list((ROOT/'plots').glob('*'))
+    items+=[p for p in (ROOT/'results').glob('*') if not p.name.startswith('mlp_components_')]
+    items+=[ROOT/name for name in ('FINAL_REPORT.md','README.md','EXPERIMENTS_SUMMARY.md','configs/main.json','configs/pilot.json')]
+    return sorted(set(p for p in items if p.is_file()))
+
+def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--capture',action='store_true');args=parser.parse_args()
+    if args.capture:
+        assert not TARGET.exists(),'Do not overwrite the preservation baseline'
+        files={str(p.relative_to(ROOT)):dict(sha256=sha256(p),size=p.stat().st_size,mtime_ns=p.stat().st_mtime_ns) for p in paths()}
+        save_json(TARGET,dict(files=files))
+        print(f'Captured {len(files)} earlier files (content and mtime)');return
+    before=json.loads(TARGET.read_text())['files'];changes=[]
+    for relative,expected in before.items():
+        p=ROOT/relative
+        if not p.is_file() or dict(sha256=sha256(p),size=p.stat().st_size,mtime_ns=p.stat().st_mtime_ns)!=expected:changes.append(relative)
+    original=json.loads((ROOT/'docs/original_manifest_after.json').read_text())
+    current=manifest(ROOT.parent/'GAMMA')
+    original_same=current==original
+    report=dict(status='passed' if not changes and original_same else 'failed',previous_files_checked=len(before),
+        changed_previous_files=changes,original_gamma_files_checked=len(original),original_gamma_unchanged=original_same)
+    save_json(ROOT/'results/mlp_components_preservation.json',report)
+    print(json.dumps(report));assert report['status']=='passed'
+
+if __name__=='__main__':main()

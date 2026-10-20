@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "new_runs": 480,
+  "reused_control_runs": 240,
+  "checked_artifact_sets": 720,
+  "summary_groups": 72,
+  "paired_comparisons": 480,
+  "paired_summary_groups": 48,
+  "figures": 14,
+  "valid_local_links": 22,
+  "broken_links": [],
+  "all_statistics_recomputed": true
+}

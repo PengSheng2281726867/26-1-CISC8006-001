@@ -1,0 +1,128 @@
+{
+  "passed": true,
+  "tests_run": 6,
+  "errors": 0,
+  "failures": 0,
+  "gradient_evidence": [
+    {
+      "device": "cpu",
+      "k": 1,
+      "mlp_input_shape": [
+        8,
+        2,
+        64
+      ],
+      "gradient_norms": {
+        "convs.0.scorer.0.weight": 0.1918681561946869,
+        "convs.0.scorer.0.bias": 0.027708524838089943,
+        "convs.0.scorer.2.weight": 0.11520927399396896,
+        "convs.0.scorer.2.bias": 3.725290298461914e-09
+      }
+    },
+    {
+      "device": "cpu",
+      "k": 2,
+      "mlp_input_shape": [
+        8,
+        3,
+        64
+      ],
+      "gradient_norms": {
+        "convs.0.scorer.0.weight": 0.39852043986320496,
+        "convs.0.scorer.0.bias": 0.06038052216172218,
+        "convs.0.scorer.2.weight": 0.2900502383708954,
+        "convs.0.scorer.2.bias": 1.862645149230957e-08
+      }
+    },
+    {
+      "device": "cpu",
+      "k": 3,
+      "mlp_input_shape": [
+        8,
+        4,
+        64
+      ],
+      "gradient_norms": {
+        "convs.0.scorer.0.weight": 1.1440919637680054,
+        "convs.0.scorer.0.bias": 0.1299775391817093,
+        "convs.0.scorer.2.weight": 0.6554126143455505,
+        "convs.0.scorer.2.bias": 2.2351741790771484e-08
+      }
+    },
+    {
+      "device": "cpu",
+      "k": 4,
+      "mlp_input_shape": [
+        8,
+        5,
+        64
+      ],
+      "gradient_norms": {
+        "convs.0.scorer.0.weight": 1.390945315361023,
+        "convs.0.scorer.0.bias": 0.16932550072669983,
+        "convs.0.scorer.2.weight": 0.9021255373954773,
+        "convs.0.scorer.2.bias": 4.470348358154297e-08
+      }
+    },
+    {
+      "device": "cuda",
+      "k": 1,
+      "mlp_input_shape": [
+        8,
+        2,
+        64
+      ],
+      "gradient_norms": {
+        "convs.0.scorer.0.weight": 1.90057373046875,
+        "convs.0.scorer.0.bias": 0.21172133088111877,
+        "convs.0.scorer.2.weight": 1.0953887701034546,
+        "convs.0.scorer.2.bias": 0.0
+      }
+    },
+    {
+      "device": "cuda",
+      "k": 2,
+      "mlp_input_shape": [
+        8,
+        3,
+        64
+      ],
+      "gradient_norms": {
+        "convs.0.scorer.0.weight": 1.1181772947311401,
+        "convs.0.scorer.0.bias": 0.1583656221628189,
+        "convs.0.scorer.2.weight": 0.8508663177490234,
+        "convs.0.scorer.2.bias": 7.450580596923828e-09
+      }
+    },
+    {
+      "device": "cuda",
+      "k": 3,
+      "mlp_input_shape": [
+        8,
+        4,
+        64
+      ],
+      "gradient_norms": {
+        "convs.0.scorer.0.weight": 1.9628454446792603,
+        "convs.0.scorer.0.bias": 0.20460756123065948,
+        "convs.0.scorer.2.weight": 1.0781277418136597,
+        "convs.0.scorer.2.bias": 1.4901161193847656e-08
+      }
+    },
+    {
+      "device": "cuda",
+      "k": 4,
+      "mlp_input_shape": [
+        8,
+        5,
+        64
+      ],
+      "gradient_norms": {
+        "convs.0.scorer.0.weight": 0.394098162651062,
+        "convs.0.scorer.0.bias": 0.04236728698015213,
+        "convs.0.scorer.2.weight": 0.2907591462135315,
+        "convs.0.scorer.2.bias": 2.514570951461792e-08
+      }
+    }
+  ]
+}

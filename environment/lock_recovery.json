@@ -1,0 +1,13 @@
+{
+  "original_freeze_sha256": "af44815f8d6c384e3a754b466f6433a41506f86109f0f45a793ada4aa944e479",
+  "recovered_utc": "2026-10-20T11:49:44.733670+00:00",
+  "converted_direct_urls": [
+    {
+      "package": "packaging",
+      "installed_version": "26.3",
+      "reason": "Direct build URL redacted; version read from installed metadata during recovery."
+    }
+  ],
+  "fresh_environment_installation": "NOT_VERIFIED",
+  "platform": "Windows / Python 3.12 / CUDA 12.8"
+}

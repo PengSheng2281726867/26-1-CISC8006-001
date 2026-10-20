@@ -1,0 +1,76 @@
+"""Read-only upstream audit and isolated experiment initialization."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+ORIGINAL = ROOT.parent / 'GAMMA'
+
+def digest(path):
+    h = hashlib.sha256()
+    with path.open('rb') as stream:
+        for chunk in iter(lambda: stream.read(8 * 1024 * 1024), b''):
+            h.update(chunk)
+    return h.hexdigest()
+
+def manifest(folder):
+    result = {}
+    for path in sorted(folder.rglob('*')):
+        if path.is_file():
+            relative = path.relative_to(folder).as_posix()
+            stat = path.stat()
+            secret = path.name == '.env' or path.name.startswith('.env.') or '.aws' in path.parts
+            result[relative] = dict(size=stat.st_size, mtime_ns=stat.st_mtime_ns,
+                                    sha256=None if secret else digest(path))
+    return result
+
+def main():
+    for directory in ('upstream_snapshot','src','configs','tests','scripts','data/cache','data/splits',
+                      'runs/pilot','runs/full','results','plots','docs/sources','cache/tmp','cache/matplotlib','cache/torch','cache/cuda'):
+        (ROOT / directory).mkdir(parents=True, exist_ok=True)
+    assert ORIGINAL.is_dir()
+    target = ROOT / 'docs/original_manifest_before.json'
+    if target.exists():
+        raise RuntimeError('Bootstrap already completed; do not replace the original audit baseline.')
+    before = manifest(ORIGINAL)
+    target.write_text(json.dumps(before, indent=2)+'\n', encoding='utf-8')
+    prefix = ['git','--no-optional-locks','-c',f'safe.directory={ORIGINAL.as_posix()}','-C',str(ORIGINAL)]
+    commit = subprocess.check_output(prefix+['rev-parse','HEAD']).decode().strip()
+    (ROOT/'docs/original_git_status_before.txt').write_bytes(subprocess.check_output(prefix+['status','--porcelain=v1']))
+    (ROOT/'docs/local_worktree_diff.patch').write_bytes(subprocess.check_output(prefix+['diff','--','GAMMA_layer.py','gamma_multi_split.py','gamma.py','create_splits.py','README.md']))
+    names = ['GAMMA_layer.py','gamma_multi_split.py','gamma.py','create_splits.py','README.md','requirements.txt','LICENSE']
+    for name in names:
+        (ROOT/'upstream_snapshot'/name).write_bytes(subprocess.check_output(prefix+['show',f'HEAD:{name}']))
+    snapshot = {name:digest(ROOT/'upstream_snapshot'/name) for name in names}
+    provenance = dict(original=str(ORIGINAL), repository='https://github.com/amir-ghz/GAMMA', commit=commit,
+                      snapshot_source='git show HEAD:path, not the previously modified working tree',
+                      snapshot_sha256=snapshot, original_file_count=len(before),
+                      sensitive_files='metadata only; .env contents and credentials were not read')
+    (ROOT/'docs/provenance.json').write_text(json.dumps(provenance,indent=2)+'\n',encoding='utf-8')
+    for name in ('Texas','Wisconsin','Cornell','Chameleon','Squirrel','Actor'):
+        source = ORIGINAL/'data'/name
+        dest = ROOT/'data/cache'/name
+        assert source.is_dir(), source
+        shutil.copytree(source,dest,dirs_exist_ok=False)
+    config = dict(version='v1_main', datasets=['Texas','Wisconsin','Cornell','Chameleon','Squirrel','Actor'],
+                  ks=[1,2,3,4], methods=['dot','mlp'], splits=list(range(10)), hidden_dim=32, mlp_hidden_dim=32,
+                  actual_gamma_layers=1, routing_iterations=2, include_zero_hop=True, epochs=500,
+                  early_stopping_patience=50, learning_rate=0.02, weight_decay=0.0001,
+                  input_dropout=0.2, hidden_dropout=0.8, gradient_clip=1.0,
+                  scheduler=dict(factor=0.5,patience=50,min_lr=1e-6),
+                  split_ratios=[0.6,0.2,0.2],split_seeds=list(range(102,112)),training_seeds=list(range(42,52)),
+                  best_checkpoint='deep copy selected using validation only', deterministic=True,
+                  scoring='shared MLP(64,32,1), ReLU; dot baseline unmodified agreement',
+                  canonical_initialization='random dot K=4 shared parameters; identical MLP scorer initialization across K',
+                  infer_warmup=5,infer_repeats=20,max_retries=2)
+    (ROOT/'configs/main.json').write_text(json.dumps(config,indent=2)+'\n',encoding='utf-8')
+    pilot={**config,'version':'v1_pilot','datasets':['Texas','Chameleon'],'ks':[2,3,4],'splits':[0,1]}
+    (ROOT/'configs/pilot.json').write_text(json.dumps(pilot,indent=2)+'\n',encoding='utf-8')
+    assert before == manifest(ORIGINAL), 'Original tree changed during read-only bootstrap'
+    print(json.dumps(provenance,indent=2))
+
+if __name__=='__main__': main()

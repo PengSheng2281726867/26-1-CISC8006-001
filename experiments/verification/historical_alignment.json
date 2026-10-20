@@ -1,0 +1,185 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 1,
+      "r": 1,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 1,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 1,
+      "r": 3,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 2,
+      "r": 1,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 2,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 2,
+      "r": 3,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 3,
+      "r": 1,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 3,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 3,
+      "r": 3,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 4,
+      "r": 1,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 4,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 4,
+      "r": 3,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 1,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 1,
+      "r": 2,
+      "training": true,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 2,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 2,
+      "r": 2,
+      "training": true,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 3,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 3,
+      "r": 2,
+      "training": true,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 4,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 4,
+      "r": 2,
+      "training": true,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    }
+  ]
+}

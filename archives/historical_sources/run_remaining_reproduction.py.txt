@@ -1,0 +1,179 @@
+"""Run the four remaining training examples from the upstream README."""
+
+import argparse
+import ast
+import csv
+from datetime import datetime, timezone
+import importlib.metadata
+import json
+from pathlib import Path
+import re
+import shutil
+import subprocess
+import sys
+
+import numpy as np
+import torch
+import torch_geometric
+from torch_geometric.datasets import Planetoid, WikipediaNetwork
+from torch_geometric.transforms import NormalizeFeatures
+
+from run_readme_reproduction import PROJECT, run_command, sha256, write_json
+
+
+EXPERIMENTS = [
+    ("Chameleon_64_3_2", "Chameleon", ["gamma_multi_split.py", "--dataset", "Chameleon", "--hidden_channels", "64", "--num_layers", "3", "--num_iterations", "2"]),
+    ("Cora", "Cora", ["gamma.py", "--dataset", "Cora", "--hidden_channels", "32", "--num_layers", "2"]),
+    ("CiteSeer", "CiteSeer", ["gamma.py", "--dataset", "CiteSeer", "--hidden_channels", "32", "--num_layers", "2"]),
+    ("PubMed", "PubMed", ["gamma.py", "--dataset", "PubMed", "--hidden_channels", "32", "--num_layers", "2"]),
+]
+
+
+def git(*args):
+    return subprocess.check_output(["git", "-c", f"safe.directory={PROJECT.as_posix()}", "-C", str(PROJECT), *args]).decode("utf-8").replace("\r\n", "\n")
+
+
+def save_summary(output, state):
+    write_json(output / "results.json", state)
+    with (output / "summary.csv").open("w", newline="", encoding="utf-8-sig") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["experiment", "mean_percent", "std_percent_ddof0", "splits", "seconds", "command"])
+        for name, result in state["results"].items():
+            writer.writerow([name, result["mean"] * 100, result["std_ddof0"] * 100,
+                             10, result["seconds"], result["command"]])
+    lines = ["# Remaining GAMMA README training commands", "",
+             "Repository: https://github.com/amir-ghz/GAMMA", "",
+             f"Commit: `{state['commit']}`", "",
+             f"Status: {state['status']}", "",
+             "| Experiment | Test accuracy (%), mean ± population std | Splits |",
+             "| --- | ---: | ---: |"]
+    for name, result in state["results"].items():
+        lines.append(f"| {name} | {result['mean']*100:.2f} ± {result['std_ddof0']*100:.2f} | 10 |")
+    lines += ["", "Commands:", "", "```powershell"]
+    lines += ["python " + " ".join(arguments) for _, _, arguments in EXPERIMENTS]
+    lines += ["```", "", "Environment and complete per-split results are in `results.json`; full stdout/stderr are in the corresponding `.log` files.", "",
+              "The only edits to gamma.py change the Planetoid cache root from /tmp to data/ and remove "
+              "the obsolete ReduceLROnPlateau verbose=True keyword, which PyTorch 2.8 rejects. The latter "
+              "controls logging, not the learning-rate schedule. The multi-split script retains its earlier cache-root adjustment.", "",
+              "Chameleon uses the 10 saved 60/20/20 splits generated earlier with seeds 102–111, "
+              "and training seeds 42–51. Cora/CiteSeer/PubMed use the upstream 48/32/20 split function "
+              "with seeds 42–51. Regenerated copies of those expected runtime masks are stored under splits/.", "",
+              "Important upstream behavior retained: gamma.py hardcodes num_iterations=1 when constructing "
+              "each GAMMA layer, despite its command-line default being 2. Its num_layers=2 constructs "
+              "one GAMMA layer plus a linear classifier. The gamma_multi_split.py Chameleon example "
+              "constructs two GAMMA layers plus a linear classifier and uses two routing iterations.", "",
+              "Both training scripts shallow-copy state_dict(), so they do not freeze the best-validation "
+              "weights. The scripts do not save model checkpoints. GPU scatter operations are not forced "
+              "to be strictly deterministic; repeated runs may differ. These runs retain the repository's "
+              "training and evaluation logic, without tuning to match the published table.", ""]
+    (output / "REPORT.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output")
+    args = parser.parse_args()
+    output = PROJECT / (args.output or datetime.now().strftime("results/readme_remaining_%Y%m%d_%H%M%S"))
+    output.mkdir(parents=True, exist_ok=False)
+    assert torch.cuda.is_available()
+    state = dict(status="running", commit=git("rev-parse", "HEAD").strip(),
+                 started_at=datetime.now(timezone.utc).isoformat(), results={}, sources={},
+                 environment=dict(python=sys.version, executable=sys.executable,
+                                  torch=torch.__version__, pyg=torch_geometric.__version__,
+                                  cuda=torch.version.cuda, gpu=torch.cuda.get_device_name(),
+                                  packages={name: importlib.metadata.version(name) for name in
+                                            ("numpy", "scipy", "torch-scatter", "torch-sparse")}))
+    snapshot = output / "source_snapshot"
+    snapshot.mkdir()
+    for filename in ("gamma.py", "gamma_multi_split.py", "GAMMA_layer.py", "README.md", "requirements.txt"):
+        path = PROJECT / filename
+        local = path.read_text(encoding="utf-8")
+        restored = local.replace("root='data/", "root='/tmp/").replace("root=f'data/", "root=f'/tmp/")
+        if filename == "gamma.py":
+            restored = restored.replace("            min_lr=1e-6\n", "            min_lr=1e-6, verbose=True\n")
+        assert restored.rstrip() == git("show", "HEAD:" + filename).rstrip(), filename
+        shutil.copy2(path, snapshot / filename)
+        state["sources"][filename] = sha256(path)
+    for script in (Path(__file__), Path(__file__).with_name("run_readme_reproduction.py")):
+        shutil.copy2(script, snapshot / script.name)
+    (output / "source_changes.patch").write_text(git("diff", "--", "gamma.py", "gamma_multi_split.py", "GAMMA_layer.py"), encoding="utf-8")
+    (output / "pip_freeze.txt").write_text(subprocess.check_output([sys.executable, "-m", "pip", "freeze"]).decode("utf-8"), encoding="utf-8")
+    sys.path.insert(0, str(PROJECT))
+    from gamma import create_split_masks
+    expected = {"Chameleon": (2277, 2325), "Cora": (2708, 1433),
+                "CiteSeer": (3327, 3703), "PubMed": (19717, 500)}
+    graph_info, split_info = {}, {}
+    split_dir = output / "splits"
+    split_dir.mkdir()
+    for name, shape in expected.items():
+        options = dict(root=str(PROJECT / "data" / name), name=name, transform=NormalizeFeatures(), force_reload=True)
+        dataset = WikipediaNetwork(**options) if name == "Chameleon" else Planetoid(**options)
+        data = dataset[0]
+        assert tuple(data.x.shape) == shape and data.y.shape == (shape[0],)
+        assert int(data.edge_index.min()) >= 0 and int(data.edge_index.max()) < data.num_nodes
+        assert torch.isfinite(data.x).all()
+        graph_info[name] = dict(nodes=data.num_nodes, features=data.num_node_features,
+                                edges=data.num_edges, classes=dataset.num_classes,
+                                processed_sha256=sha256(dataset.processed_paths[0]),
+                                raw_files={str(Path(p).relative_to(PROJECT)): sha256(p) for p in dataset.raw_paths})
+        records = []
+        for index in range(10):
+            if name == "Chameleon":
+                path = PROJECT / "splits" / f"chameleon_split_0.6_0.2_{index}.npz"
+                with np.load(path) as saved:
+                    masks = [saved[key].copy() for key in ("train_mask", "val_mask", "test_mask")]
+                seed, train_ratio, val_ratio = 102 + index, 0.6, 0.2
+                shutil.copy2(path, split_dir / path.name)
+            else:
+                seed, train_ratio, val_ratio = 42 + index, 0.48, 0.32
+                masks = [mask.numpy() for mask in create_split_masks(data.num_nodes, seed=seed)]
+                path = split_dir / f"{name.lower()}_split_0.48_0.32_{index}.npz"
+                np.savez(path, **dict(zip(("train_mask", "val_mask", "test_mask"), masks)))
+            train_n, val_n = int(data.num_nodes * train_ratio), int(data.num_nodes * val_ratio)
+            assert all(mask.shape == (data.num_nodes,) and mask.dtype == np.bool_ for mask in masks)
+            assert np.all(np.stack(masks).sum(axis=0) == 1)
+            assert [int(mask.sum()) for mask in masks] == [train_n, val_n, data.num_nodes - train_n - val_n]
+            perm = torch.randperm(data.num_nodes, generator=torch.Generator().manual_seed(seed)).numpy()
+            for mask, indices in zip(masks, np.split(perm, [train_n, train_n + val_n])):
+                reference = np.zeros(data.num_nodes, dtype=np.bool_)
+                reference[indices] = True
+                assert np.array_equal(mask, reference)
+            records.append(dict(index=index, seed=seed, train=train_n, val=val_n,
+                                test=data.num_nodes - train_n - val_n,
+                                filename=path.name, sha256=sha256(path)))
+        split_info[name] = records
+        print(f"DATA AND SPLITS OK {name}: {data.num_nodes} nodes, {data.num_edges} edges", flush=True)
+    write_json(output / "data_audit.json", graph_info)
+    write_json(output / "split_audit.json", split_info)
+    save_summary(output, state)
+    for name, dataset_name, arguments in EXPERIMENTS:
+        log = output / f"{name.lower()}.log"
+        stdout, seconds = run_command(arguments, log)
+        assert re.findall(r"^Split (\d+)/10$", stdout, re.M) == list(map(str, range(1, 11)))
+        values = ast.literal_eval(re.search(r"All accuracies: (\[.*\])", stdout).group(1))
+        counts = [entry["test"] for entry in split_info[dataset_name]]
+        assert len(values) == 10
+        correct = [round(float(value) * count) for value, count in zip(values, counts)]
+        accuracies = [number / count for number, count in zip(correct, counts)]
+        assert [f"{value:.4f}" for value in accuracies] == values
+        mean, std = float(np.mean(accuracies)), float(np.std(accuracies))
+        summary = re.search(r"Mean Test Accuracy: ([0-9.]+) ± ([0-9.]+)", stdout)
+        assert [f"{mean:.4f}", f"{std:.4f}"] == list(summary.groups())
+        state["results"][name] = dict(dataset=dataset_name, command="python " + " ".join(arguments),
+                                      seconds=seconds, accuracies=accuracies, test_correct=correct,
+                                      test_sizes=counts, mean=mean, std_ddof0=std,
+                                      log=log.name, log_sha256=sha256(log))
+        save_summary(output, state)
+        print(f"DONE {name}: {mean*100:.2f} +/- {std*100:.2f}% in {seconds:.1f}s", flush=True)
+    for filename, expected_hash in state["sources"].items():
+        assert sha256(PROJECT / filename) == expected_hash
+    for records in split_info.values():
+        for record in records:
+            assert sha256(split_dir / record["filename"]) == record["sha256"]
+    state.update(status="complete", finished_at=datetime.now(timezone.utc).isoformat())
+    save_summary(output, state)
+    print(f"COMPLETE: {output / 'REPORT.md'}", flush=True)
+
+
+if __name__ == "__main__":
+    main()

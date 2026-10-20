@@ -1,0 +1,166 @@
+"""Resumable run-level scheduler; pilot and full share one frozen protocol."""
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,sha256,save_json
+from src.data import load_dataset,load_masks,split_path
+from src.factory import build_model,configure_determinism
+from src.train import run_one
+import argparse
+from datetime import datetime,timezone
+import gc
+import hashlib
+import itertools
+import json
+import os
+import platform
+import shutil
+import subprocess
+import time
+import traceback
+import torch
+import torch_geometric
+import numpy as np
+import scipy
+
+TRAIN_KEYS=('hidden_dim','mlp_hidden_dim','actual_gamma_layers','routing_iterations','include_zero_hop','epochs',
+    'early_stopping_patience','learning_rate','weight_decay','input_dropout','hidden_dropout','gradient_clip',
+    'scheduler','split_ratios','split_seeds','training_seeds','best_checkpoint','deterministic',
+    'canonical_initialization','infer_warmup','infer_repeats')
+
+def signature(config):
+    sources={str(path.relative_to(ROOT)):sha256(path) for path in sorted((ROOT/'src').glob('*.py'))}
+    sources['scripts/run_experiments.py']=sha256(__file__)
+    content=dict(training={key:config[key] for key in TRAIN_KEYS},sources=sources,
+                 data_manifest_sha256=sha256(ROOT/'data/manifest.json'))
+    encoded=json.dumps(content,sort_keys=True).encode()
+    return hashlib.sha256(encoded).hexdigest(),content
+
+def completed_run(directory,fingerprint):
+    path=directory/'result.json'
+    if not path.exists(): return None
+    report=json.loads(path.read_text(encoding='utf-8'))
+    if report.get('status')!='complete': return None
+    if report.get('protocol_sha256')!=fingerprint: raise RuntimeError(f'Protocol mismatch: {directory}; use a new group')
+    artifacts=directory/report['artifact_subdir']
+    if not all((artifacts/name).is_file() and sha256(artifacts/name)==digest for name,digest in report['artifacts'].items()):
+        return None
+    return report
+
+def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--phase',choices=['pilot','full'],required=True)
+    parser.add_argument('--group',default='v1')
+    parser.add_argument('--dry-run',action='store_true')
+    parser.add_argument('--extra-retries',type=int,default=0)
+    args=parser.parse_args()
+    assert args.group.replace('_','').replace('-','').isalnum()
+    config=json.loads((ROOT/'configs'/('pilot.json' if args.phase=='pilot' else 'main.json')).read_text())
+    for name in ('baseline_alignment','mlp_unit_tests'):
+        assert json.loads((ROOT/f'results/{name}.json').read_text())['passed'],f'{name} must pass first'
+    fingerprint,protocol=signature(config)
+    group_dir=ROOT/'runs'/args.group
+    group_dir.mkdir(parents=True,exist_ok=True)
+    lock=group_dir/'protocol.json'
+    if lock.exists():
+        assert json.loads(lock.read_text())['sha256']==fingerprint,'Frozen protocol changed: create a new group'
+    else: save_json(lock,dict(sha256=fingerprint,**protocol))
+    phase_dir=group_dir/args.phase
+    phase_dir.mkdir(exist_ok=True)
+    configure_determinism()
+    assert torch.cuda.is_available()
+    environment=dict(python=sys.version,executable=sys.executable,torch=torch.__version__,pyg=torch_geometric.__version__,
+                     numpy=np.__version__,scipy=scipy.__version__,cuda=torch.version.cuda,gpu=torch.cuda.get_device_name(),
+                     platform=platform.platform(),cublas_workspace_config=os.environ['CUBLAS_WORKSPACE_CONFIG'],
+                     actual_gamma_layers=1,routing_iterations=2,deterministic_algorithms=torch.are_deterministic_algorithms_enabled())
+    save_json(group_dir/'environment.json',environment)
+    snapshot=group_dir/'source_snapshot'
+    if not snapshot.exists():
+        snapshot.mkdir()
+        for relative in protocol['sources']:
+            target=snapshot/relative;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(ROOT/relative,target)
+        (group_dir/'pip_freeze.txt').write_text(subprocess.check_output([sys.executable,'-B','-m','pip','freeze']).decode(),encoding='utf-8')
+    expected=len(config['datasets'])*len(config['ks'])*len(config['splits'])*2
+    summary=dict(phase=args.phase,group=args.group,protocol_sha256=fingerprint,expected_runs=expected,
+                 status='running',completed=0,reused_pilot=0,failed=[],started_at=datetime.now(timezone.utc).isoformat())
+    done=[];init_checks={};scorer_checks={};start=time.perf_counter()
+    log=(phase_dir/'scheduler.log').open('a',encoding='utf-8')
+    def announce(message):
+        print(message,flush=True);log.write(datetime.now(timezone.utc).isoformat()+' '+message+'\n');log.flush()
+    for name in config['datasets']:
+        dataset=load_dataset(name);graph=dataset[0].to('cuda')
+        for k in config['ks']:
+            for split in config['splits']:
+                masks=load_masks(name,split,graph.num_nodes)
+                for label,mask in zip(('train_mask','val_mask','test_mask'),masks):
+                    graph[label]=torch.from_numpy(mask).to('cuda')
+                order=('dot','mlp') if split%2==0 else ('mlp','dot')
+                for method in order:
+                    directory=phase_dir/name.lower()/f'k_{k}'/f'split_{split}'/method
+                    directory.mkdir(parents=True,exist_ok=True)
+                    report=completed_run(directory,fingerprint)
+                    if report is None and args.phase=='full':
+                        pilot=group_dir/'pilot'/name.lower()/f'k_{k}'/f'split_{split}'/method
+                        reusable=completed_run(pilot,fingerprint)
+                        if reusable is not None and not args.dry_run:
+                            shutil.copytree(pilot,directory,dirs_exist_ok=True)
+                            report={**reusable,'phase':'full','reused_from':str(pilot.relative_to(ROOT))}
+                            save_json(directory/'result.json',report)
+                            summary['reused_pilot']+=1
+                    if report is None and args.dry_run:
+                        announce(f'PENDING {name} K={k} split={split} {method}');continue
+                    if report is None:
+                        max_attempts=1+config['max_retries']+args.extra_retries
+                        for attempt in range(1,max_attempts+1):
+                            attempt_dir=directory/f'attempt_{attempt:02d}'
+                            if (attempt_dir/'failure.json').exists(): continue
+                            attempt_dir.mkdir(exist_ok=True)
+                            try:
+                                torch.cuda.synchronize();gc.collect()
+                                torch._C._cuda_clearCublasWorkspaces()
+                                torch.cuda.empty_cache()
+                                model,initial=build_model(dataset.num_node_features,dataset.num_classes,k,method,42+split)
+                                assert len(model.convs)==1 and model.convs[0].num_iterations==2
+                                assert model.convs[0].powers==list(range(k+1))
+                                meta=dict(dataset=name,routing_method=method,k=k,powers=list(range(k+1)),actual_gamma_layers=1,
+                                          r=2,seed=42+split,split_id=split,phase=args.phase,group=args.group,
+                                          protocol_sha256=fingerprint,split_sha256=sha256(split_path(name,split)),**initial)
+                                report=run_one(model,graph,config,meta,attempt_dir)
+                                del model;gc.collect();torch.cuda.empty_cache()
+                                if method=='mlp':
+                                    assert report['scorer_gradient_norm_first']>0
+                                    assert report['scorer_parameter_change_l2']>0
+                                report['artifact_subdir']=attempt_dir.name
+                                save_json(directory/'result.json',report)
+                                break
+                            except Exception as error:
+                                failure=dict(error=repr(error),traceback=traceback.format_exc(),attempt=attempt,
+                                             dataset=name,k=k,split=split,method=method)
+                                save_json(attempt_dir/'failure.json',failure)
+                                announce(f'FAILED {name} K={k} split={split} {method}: {error!r}')
+                                report=None
+                                if 'model' in locals(): del model
+                                gc.collect();torch.cuda.empty_cache()
+                        if report is None:
+                            summary['failed'].append(str(directory.relative_to(ROOT)));continue
+                    pair_key=f'{name}:{split}'
+                    init_checks.setdefault(pair_key,(report['common_init_sha256'],report['cpu_rng_sha256'],report['cuda_rng_sha256']))
+                    assert init_checks[pair_key]==(report['common_init_sha256'],report['cpu_rng_sha256'],report['cuda_rng_sha256'])
+                    if method=='mlp':
+                        scorer_checks.setdefault(pair_key,report['scorer_init_sha256'])
+                        assert scorer_checks[pair_key]==report['scorer_init_sha256']
+                    done.append(str(directory.relative_to(ROOT)));summary['completed']=len(done)
+                    save_json(phase_dir/'matrix_status.json',summary)
+                    announce(f"DONE {len(done)}/{expected} {name} K={k} split={split} {method} "
+                             f"test={100*report['test_accuracy']:.2f}% best={report['best_validation_epoch']} "
+                             f"epochs={report['stopped_epoch']} train={report['training_seconds']:.2f}s "
+                             f"peak={report['peak_gpu_allocated_mb']:.1f}MB")
+        del graph,dataset;gc.collect();torch.cuda.empty_cache()
+    summary.update(status='complete' if len(done)==expected else ('dry_run' if args.dry_run else 'partial'),
+                   elapsed_seconds=time.perf_counter()-start,finished_at=datetime.now(timezone.utc).isoformat(),runs=done)
+    save_json(phase_dir/'matrix_status.json',summary)
+    announce(f"FINISHED {args.phase}: {summary['status']} {len(done)}/{expected}, reused pilot={summary['reused_pilot']}")
+    log.close()
+    return 0 if summary['status'] in ('complete','dry_run') else 1
+
+if __name__=='__main__': sys.exit(main())

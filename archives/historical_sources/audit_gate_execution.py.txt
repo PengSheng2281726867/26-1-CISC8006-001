@@ -1,0 +1,97 @@
+"""Check the actual routing branch on saved, trained GNN layers."""
+
+import argparse
+from datetime import datetime
+import json
+from pathlib import Path
+from unittest.mock import patch
+
+import run_gate_ablation as base
+import torch
+
+
+def squash(x):
+    squared = (x * x).sum(dim=-1, keepdim=True)
+    return squared / (1 + squared) * x / torch.sqrt(squared + 1e-8)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--source", type=Path, default=base.PROJECT / "results/gate_ablation_20261019_130814")
+    args = parser.parse_args()
+    source = args.source.resolve()
+    output = base.PROJECT / datetime.now().strftime("results/gate_execution_audit_%Y%m%d_%H%M%S")
+    output.mkdir(parents=True)
+    state = json.loads((source / "results.json").read_text(encoding="utf-8"))
+    torch.use_deterministic_algorithms(True)
+    torch.backends.cuda.matmul.allow_tf32 = False
+    torch.backends.cudnn.allow_tf32 = False
+    result = dict(status="passed", source=str(source), checks={})
+    for name in base.DATASETS:
+        saved = state["pairs"][name][0]["routing"]
+        path = source / saved["directory"] / "model.pt"
+        assert base.sha256(path) == saved["checkpoint_sha256"]
+        checkpoint = torch.load(path, map_location="cpu", weights_only=True)
+        model = base.GAMMA_GNN(**checkpoint["model_kwargs"]).to("cuda").eval()
+        model.load_state_dict(checkpoint["state_dict"])
+        before = base.state_hash(model.state_dict())
+        graph = base.load_dataset(name)[0].to("cuda")
+        layer = model.convs[0]
+        captured = []
+        hook = layer.layer_norm.register_forward_hook(lambda module, inputs, value: captured.append(value.detach().clone()))
+        layer.use_routing = False
+        layer.num_iterations = 2
+        with torch.no_grad(), patch.object(torch, "softmax", wraps=torch.softmax) as spy:
+            uniform = layer(graph.x, graph.edge_index)
+            off_calls = spy.call_count
+        hook.remove()
+        assert off_calls == 0
+        assert len(captured) == len(layer.powers)
+        hops = torch.stack(captured, dim=1)
+        weights = torch.full(hops.shape[:2], 1 / len(layer.powers), device="cuda", dtype=hops.dtype)
+        first = squash((weights.unsqueeze(-1) * hops).sum(dim=1))
+        reference_off = first + layer.bias
+        manual_error = float((uniform - reference_off).abs().max())
+        assert manual_error < 1e-6
+        with torch.no_grad():
+            layer.num_iterations = 4
+            off_four = layer(graph.x, graph.edge_index)
+            assert torch.equal(uniform, off_four)
+            layer.use_routing = True
+            layer.num_iterations = 1
+            once = layer(graph.x, graph.edge_index)
+            one_error = float((once - uniform).abs().max())
+            assert one_error < 1e-6
+            layer.num_iterations = 2
+            with patch.object(torch, "softmax", wraps=torch.softmax) as spy:
+                routing = layer(graph.x, graph.edge_index)
+                on_calls = spy.call_count
+            agreement = (hops * first.unsqueeze(1)).sum(dim=-1)
+            actual_second_weights = torch.softmax(agreement, dim=1)
+            reference_on = squash((actual_second_weights.unsqueeze(-1) * hops).sum(dim=1)) + layer.bias
+            on_error = float((routing - reference_on).abs().max())
+            gate_difference = float((routing - uniform).abs().max())
+            weight_deviation = float((actual_second_weights - 1 / len(layer.powers)).abs().max())
+            assert on_calls == 2 and on_error < 1e-6 and gate_difference > 1e-6
+            layer.use_routing = True
+            full_on = model(graph.x, graph.edge_index)
+            layer.use_routing = False
+            full_off = model(graph.x, graph.edge_index)
+        assert before == base.state_hash(model.state_dict())
+        result["checks"][name] = dict(softmax_calls_routing=on_calls, softmax_calls_uniform=off_calls,
+            uniform_manual_max_error=manual_error, routing_manual_max_error=on_error,
+            one_iteration_vs_uniform_max_error=one_error, uniform_independent_of_iterations=True,
+            routing_vs_uniform_layer_max_difference=gate_difference,
+            actual_used_weights_max_deviation_from_uniform=weight_deviation,
+            full_model_log_probability_max_difference=float((full_on - full_off).abs().max()),
+            full_model_changed_predictions=int((full_on.argmax(1) != full_off.argmax(1)).sum()),
+            checkpoint_sha256=base.sha256(path), weights_unchanged=True)
+        print(f"{name}: softmax calls ON={on_calls}, OFF={off_calls}; uniform reference error={manual_error:.2g}; "
+              f"same-weight layer output difference={gate_difference:.6f}", flush=True)
+    result["audit_source_sha256"] = base.sha256(__file__)
+    base.write_json(output / "audit.json", result)
+    print(f"PASSED: {output / 'audit.json'}", flush=True)
+
+
+if __name__ == "__main__":
+    main()

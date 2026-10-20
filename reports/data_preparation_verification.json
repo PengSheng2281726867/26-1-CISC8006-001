@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "verified_utc": "2026-10-20T12:16:24.114924+00:00",
+  "command": "python -B scripts/prepare_data.py --check-only",
+  "exit_code": 0,
+  "datasets": [
+    "Texas",
+    "Wisconsin",
+    "Cornell",
+    "Chameleon",
+    "Squirrel",
+    "Actor"
+  ],
+  "raw_file_hashes_verified": 72,
+  "split_archives_verified": 60,
+  "split_identity": "EXACT_ARCHIVE_SHA256",
+  "fresh_downloads": true,
+  "existing_environment": true,
+  "fresh_environment_installation": "NOT_VERIFIED",
+  "real_data_training_started": false,
+  "data_excluded_from_git": true,
+  "local_manifest_sha256": "6f8ef448e903142734779073401047ba457690c276cd58d951a0d3b2eb78937f"
+}

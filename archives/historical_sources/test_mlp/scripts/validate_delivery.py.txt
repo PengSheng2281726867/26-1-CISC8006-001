@@ -1,0 +1,63 @@
+"""Final CPU-only consistency, link and artifact checks after reports are built."""
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json,sha256
+import csv
+import json
+import re
+import numpy as np
+
+def read_csv(name):
+    with (ROOT/'results'/name).open(encoding='utf-8-sig',newline='') as handle:
+        return list(csv.DictReader(handle))
+
+def main():
+    analysis=json.loads((ROOT/'results/analysis.json').read_text(encoding='utf-8'))
+    group=analysis['group']
+    for name in ('baseline_alignment','mlp_unit_tests','resume_unit_tests'):
+        assert json.loads((ROOT/f'results/{name}.json').read_text())['passed']
+    for name in (f'full_verification_{group}','original_integrity','diagnostic_summary'):
+        item=json.loads((ROOT/f'results/{name}.json').read_text())
+        assert item['status']==('complete' if name=='diagnostic_summary' else 'passed')
+    raw=read_csv('full_runs.csv');summary=read_csv('summary.csv');paired=read_csv('paired_deltas.csv')
+    assert len(raw)==480 and len(summary)==48 and len(paired)==240
+    keys={(r['dataset'],r['k'],r['split_id'],r['routing_method']) for r in raw};assert len(keys)==480
+    for r in summary:
+        subset=[row for row in raw if all(row[k]==r[k] for k in ('dataset','k','routing_method'))]
+        assert len(subset)==10
+        values=np.array([float(row['test_accuracy']) for row in subset])
+        assert np.isclose(values.mean(),float(r['test_accuracy_mean']),atol=1e-14)
+        assert np.isclose(values.std(ddof=1),float(r['test_accuracy_std']),atol=1e-14)
+    checked=0
+    for r in raw:
+        folder=ROOT/r['run_directory'];report=json.loads((folder/'result.json').read_text())
+        for name,digest in report['artifacts'].items():assert sha256(folder/report['artifact_subdir']/name)==digest
+        with np.load(folder/report['artifact_subdir']/'predictions.npz') as arrays:
+            alpha=arrays['alpha'];assert np.isfinite(alpha).all() and (alpha>=0).all()
+            np.testing.assert_allclose(alpha.sum(axis=1),1,atol=2e-6)
+            assert alpha.shape[1]==int(r['k'])+1
+        checked+=1
+    broken=[];links=0
+    for path in [ROOT/'README.md',ROOT/'FINAL_REPORT.md',*sorted((ROOT/'docs').glob('*.md'))]:
+        text=path.read_text(encoding='utf-8')
+        assert '\ufffd' not in text,f'Encoding replacement character: {path}'
+        for target in re.findall(r'\[[^\]]*\]\(([^)]+)\)',text):
+            if target.startswith(('http://','https://','#')):continue
+            candidate=(path.parent/target.split('#')[0]).resolve();links+=1
+            if not candidate.exists():broken.append(dict(document=str(path.relative_to(ROOT)),target=target))
+    assert not broken,broken
+    plots=json.loads((ROOT/'results/plot_manifest.json').read_text())
+    assert len(plots['figures'])>=14
+    for name in plots['figures']:
+        assert (ROOT/'plots'/name).stat().st_size>10000
+        assert (ROOT/'plots'/Path(name).with_suffix('.svg')).stat().st_size>1000
+    manifest=json.loads((ROOT/'results/delivery_manifest.json').read_text())
+    for name,digest in manifest['reports'].items():assert sha256(ROOT/name)==digest
+    save_json(ROOT/'results/delivery_validation.json',dict(status='passed',runs=checked,summary_groups=48,
+        paired_runs=240,figures=len(plots['figures']),local_links_checked=links,broken_links=broken,
+        artifact_hashes_valid_after_diagnostics=True,finite_normalized_gate_weights=True,
+        csv_statistics_recomputed=True))
+    print(f'DELIVERY PASSED: {checked} runs, 48 groups, 240 pairs, {len(plots["figures"])} figures, {links} local links.')
+
+if __name__=='__main__':main()

@@ -1,0 +1,121 @@
+"""Publication-style static figures from all 480 frozen results; no torch needed."""
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json
+import json
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+DATASETS=['Texas','Wisconsin','Cornell','Chameleon','Squirrel','Actor']
+COLORS={'dot':'#2265A8','mlp':'#D65F24'}
+LABELS={'dot':'Dot product','mlp':'MLP'}
+KS=np.arange(1,5)
+
+def save(fig,name):
+    fig.savefig(ROOT/'plots'/f'{name}.png',dpi=180,bbox_inches='tight')
+    fig.savefig(ROOT/'plots'/f'{name}.svg',bbox_inches='tight')
+    plt.close(fig)
+
+def main():
+    report=json.loads((ROOT/'results/analysis.json').read_text(encoding='utf-8'))
+    assert report['status']=='complete' and report['unique_runs']==480
+    lookup={(row['dataset'],row['k'],row['routing_method']):row for row in report['summary']}
+    paired={(row['dataset'],row['k']):row for row in report['paired_summary']}
+    plt.rcParams.update({'font.size':10,'axes.spines.top':False,'axes.spines.right':False,
+        'axes.grid':True,'grid.alpha':.2,'axes.titleweight':'bold','figure.facecolor':'white',
+        'svg.fonttype':'none'})
+    legend=[Line2D([0],[0],color=COLORS[m],marker='o',label=LABELS[m]) for m in ('dot','mlp')]
+    def accuracy(ax,name):
+        for method in ('dot','mlp'):
+            mean=np.array([100*lookup[name,k,method]['test_accuracy_mean'] for k in KS])
+            sd=np.array([100*lookup[name,k,method]['test_accuracy_std'] for k in KS])
+            ax.plot(KS,mean,'o-',color=COLORS[method],label=LABELS[method])
+            ax.fill_between(KS,mean-sd,mean+sd,color=COLORS[method],alpha=.14)
+        ax.set(title=name,xticks=KS,xlabel='Maximum hop K (powers = 0,...,K)',ylabel='Test accuracy (%)')
+    for name in DATASETS:
+        fig,ax=plt.subplots(figsize=(6.4,4.5));accuracy(ax,name);ax.legend()
+        fig.text(.5,.01,'10 shared splits; shaded band = sample SD',ha='center',fontsize=9)
+        fig.tight_layout(rect=(0,.03,1,1));save(fig,f'accuracy_{name.lower()}')
+    fig,axes=plt.subplots(2,3,figsize=(14,8.5))
+    for ax,name in zip(axes.flat,DATASETS):accuracy(ax,name)
+    fig.suptitle('Dot product vs MLP routing | source protocol | 10 splits',y=.995)
+    fig.legend(handles=legend,loc='upper center',bbox_to_anchor=(.5,.965),ncol=2)
+    fig.tight_layout(rect=(0,0,1,.92));save(fig,'accuracy_overview')
+    fig,axes=plt.subplots(2,3,figsize=(14,8.5),sharex=True)
+    for ax,name in zip(axes.flat,DATASETS):
+        mean=np.array([paired[name,k]['delta_mean_pp'] for k in KS])
+        sd=np.array([paired[name,k]['delta_std_pp'] for k in KS])
+        low=np.array([paired[name,k]['ci95_low_pp'] for k in KS])
+        high=np.array([paired[name,k]['ci95_high_pp'] for k in KS])
+        ax.fill_between(KS,mean-sd,mean+sd,color='#6550A1',alpha=.12,label='Paired SD')
+        ax.errorbar(KS,mean,yerr=[mean-low,high-mean],fmt='o-',capsize=4,color='#6550A1',label='Mean, 95% CI')
+        ax.axhline(0,color='black',lw=.8);ax.set(title=name,xticks=KS,xlabel='Maximum hop K',ylabel='MLP - dot (percentage points)')
+    axes[0,0].legend(fontsize=8)
+    fig.suptitle('Paired test accuracy difference (descriptive CI; overlapping splits)',y=1.01)
+    fig.tight_layout();save(fig,'delta_accuracy')
+    for metric,ylabel,filename in [('epoch_training_ms_mean','Training step per epoch (ms)','training_time'),
+            ('inference_ms_mean','Full-graph inference (ms)','inference_time'),
+            ('peak_gpu_allocated_mb','Peak allocated GPU memory (MiB)','gpu_memory')]:
+        fig,axes=plt.subplots(2,3,figsize=(14,8.5))
+        for ax,name in zip(axes.flat,DATASETS):
+            for method in ('dot','mlp'):
+                means=[lookup[name,k,method][metric+'_mean'] for k in KS]
+                sd=[lookup[name,k,method][metric+'_std'] for k in KS]
+                ax.errorbar(KS,means,yerr=sd,fmt='o-',capsize=3,color=COLORS[method])
+            ax.set(title=name,xticks=KS,xlabel='Maximum hop K',ylabel=ylabel)
+        fig.legend(handles=legend,loc='upper center',ncol=2)
+        fig.tight_layout(rect=(0,0,1,.96));save(fig,filename)
+    fig,axes=plt.subplots(2,3,figsize=(14,8.5),sharey=True)
+    for ax,name in zip(axes.flat,DATASETS):
+        for method in ('dot','mlp'):
+            means=[lookup[name,k,method]['gating_entropy_normalized_mean'] for k in KS]
+            sd=[lookup[name,k,method]['gating_entropy_normalized_std'] for k in KS]
+            ax.errorbar(KS,means,yerr=sd,fmt='o-',capsize=3,color=COLORS[method])
+        ax.set(title=name,xticks=KS,xlabel='Maximum hop K',ylabel='Entropy / log(K+1)',ylim=(-.03,1.04))
+    fig.suptitle('Gate entropy of weights actually used in the second fusion',y=.995)
+    fig.legend(handles=legend,loc='upper center',bbox_to_anchor=(.5,.965),ncol=2)
+    fig.tight_layout(rect=(0,0,1,.92));save(fig,'gating_entropy')
+    fig,axes=plt.subplots(6,2,figsize=(11,17),layout='constrained')
+    for row,name in enumerate(DATASETS):
+        for col,method in enumerate(('dot','mlp')):
+            grid=np.full((4,5),np.nan)
+            for k in KS:
+                means=[]
+                for split in range(10):
+                    path=ROOT/'runs'/report['group']/'full'/name.lower()/f'k_{k}'/f'split_{split}'/method/'result.json'
+                    run=json.loads(path.read_text(encoding='utf-8'));means.append(run['hop_weights_mean'])
+                grid[k-1,:k+1]=np.mean(means,axis=0)
+            ax=axes[row,col];im=ax.imshow(grid,vmin=0,vmax=1,cmap='YlGnBu',aspect='auto')
+            for i in range(4):
+                for j in range(i+2):
+                    ax.text(j,i,f'{grid[i,j]:.2f}',ha='center',va='center',fontsize=8,
+                        color='white' if grid[i,j]>.55 else 'black')
+            ax.grid(False);ax.set(title=f'{name} | {LABELS[method]}',xticks=range(5),yticks=range(4),
+                yticklabels=KS,xlabel='Hop',ylabel='Maximum K')
+    fig.colorbar(im,ax=axes,shrink=.35,label='Mean gate weight (nodes, then splits)')
+    save(fig,'hop_weights')
+    fig,axes=plt.subplots(2,3,figsize=(14,8.5),sharex=True)
+    for ax,name in zip(axes.flat,DATASETS):
+        for method in ('dot','mlp'):
+            values=[]
+            for split in range(10):
+                folder=ROOT/'runs'/report['group']/'full'/name.lower()/'k_4'/f'split_{split}'/method
+                run=json.loads((folder/'result.json').read_text(encoding='utf-8'))
+                with np.load(folder/run['artifact_subdir']/'predictions.npz') as arrays:
+                    values.append(arrays['alpha'].max(axis=1))
+            ax.hist(np.concatenate(values),bins=np.linspace(.2,1,33),density=True,histtype='step',lw=1.8,
+                color=COLORS[method],label=LABELS[method])
+        ax.set(title=name,xlabel='Largest gate weight per node',ylabel='Density')
+    fig.suptitle('K=4: node-wise gate concentration pooled over 10 splits',y=.995)
+    fig.legend(handles=legend,loc='upper center',bbox_to_anchor=(.5,.965),ncol=2)
+    fig.tight_layout(rect=(0,0,1,.92));save(fig,'gate_concentration_k4')
+    save_json(ROOT/'results/plot_manifest.json',dict(status='complete',matplotlib=matplotlib.__version__,
+        figures=[path.name for path in sorted((ROOT/'plots').glob('*.png'))],
+        data_source='results/analysis.json and frozen v2 full run predictions'))
+    print('Saved PNG and SVG figures:',len(list((ROOT/'plots').glob('*.png'))))
+
+if __name__=='__main__':main()

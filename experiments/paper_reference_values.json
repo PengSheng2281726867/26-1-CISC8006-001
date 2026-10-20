@@ -1,0 +1,46 @@
+{
+  "source_url": "https://amir-ghz.github.io/PDFs/GAMMA.pdf",
+  "location": "Appendix B, Table 3, printed page 16",
+  "access_date": "2026-10-20",
+  "transcription": "Manually checked primary PDF text; no local PDF archive available",
+  "published_hop_label": "1-2 hop",
+  "published_hop_definition_not_assumed_identical_to_local": true,
+  "rows": [
+    {
+      "dataset": "Texas",
+      "uniform_percent": 83.25,
+      "dot_percent": 87.37,
+      "gain_pp": 4.12
+    },
+    {
+      "dataset": "Wisconsin",
+      "uniform_percent": 81.4,
+      "dot_percent": 86.27,
+      "gain_pp": 4.87
+    },
+    {
+      "dataset": "Cornell",
+      "uniform_percent": 75.31,
+      "dot_percent": 78.68,
+      "gain_pp": 3.37
+    },
+    {
+      "dataset": "Chameleon",
+      "uniform_percent": 44.79,
+      "dot_percent": 51.16,
+      "gain_pp": 6.37
+    },
+    {
+      "dataset": "Squirrel",
+      "uniform_percent": 28.33,
+      "dot_percent": 36.2,
+      "gain_pp": 7.87
+    },
+    {
+      "dataset": "Actor",
+      "uniform_percent": 30.72,
+      "dot_percent": 35.59,
+      "gain_pp": 4.87
+    }
+  ]
+}

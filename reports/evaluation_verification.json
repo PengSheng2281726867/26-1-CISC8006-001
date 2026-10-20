@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "metric": "accuracy",
+  "unit": "fraction",
+  "aggregate": "equal split means and sample SD ddof=1",
+  "groups": 48,
+  "actual_command": "python -B scripts/evaluate.py --registry experiments/registry.csv --stage dot_mlp",
+  "comparison": "All means and sample SD match experiments/analysis/dot_mlp.json to1e-12",
+  "training_started": false
+}

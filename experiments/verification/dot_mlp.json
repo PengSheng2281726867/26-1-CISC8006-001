@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "verified_runs": 480,
+  "protocol_sha256": "7db66059f69d30c4981daa2d923886f7515a45b301ca9cf6e27b9c1422c6dcf2",
+  "exact_predictions": true,
+  "shared_initialization": true,
+  "valid_mlp_gradients": true,
+  "test_label_isolation_unit_test": true,
+  "parameter_difference": 2113,
+  "all_routing_intermediates_finite": true
+}

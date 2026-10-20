@@ -1,0 +1,457 @@
+"""Build a read-only synthesis of all completed GAMMA experiments.
+
+Only the new Markdown and its verification JSON are written. No model imports,
+training, checkpoint changes, or changes to earlier reports are performed.
+"""
+from pathlib import Path
+from statistics import mean, stdev
+from itertools import product
+from hashlib import sha256
+import json
+import math
+import re
+
+ROOT = Path(__file__).resolve().parents[1]
+WORKSPACE = ROOT.parent
+OLD = WORKSPACE / 'GAMMA/results/hop_sweep_20261019_143309'
+EARLY = WORKSPACE / 'GAMMA/results/gate_ablation_20261019_130814'
+DATASETS = ['Texas', 'Wisconsin', 'Cornell', 'Chameleon', 'Squirrel', 'Actor']
+METHODS = ['uniform', 'dot', 'mlp', 'mlp_ln', 'mlp_gelu']
+LABELS = {'uniform': 'Uniform', 'dot': 'Dot', 'mlp': 'MLP-ReLU',
+          'mlp_ln': 'MLP+LN', 'mlp_gelu': 'MLP-GELU'}
+OBSERVED = {}
+
+
+def digest(path):
+    return sha256(path.read_bytes()).hexdigest()
+
+
+def load(path):
+    path = Path(path).resolve()
+    OBSERVED.setdefault(path, (digest(path), path.stat().st_mtime_ns))
+    return json.loads(path.read_text(encoding='utf-8'))
+
+
+def table(headers, rows):
+    return ('| ' + ' | '.join(headers) + ' |\n| ' + ' | '.join(['---'] * len(headers))
+            + ' |\n' + ''.join('| ' + ' | '.join(map(str, row)) + ' |\n' for row in rows))
+
+
+def signed(value):
+    return '0.00' if abs(value) < 1e-9 else f'{value:+.2f}'
+
+
+def describe(values):
+    return f'{100 * mean(values):.2f} ± {100 * stdev(values):.2f}'
+
+
+def close(left, right):
+    assert math.isclose(left, right, rel_tol=1e-9, abs_tol=1e-9), (left, right)
+
+
+def exact_p(differences):
+    observed = abs(sum(differences))
+    return sum(abs(sum(s * d for s, d in zip(signs, differences))) >= observed - 1e-10
+               for signs in product((-1, 1), repeat=len(differences))) / (2 ** len(differences))
+
+
+def holm_values(ps):
+    result = [0.0] * len(ps)
+    running = 0.0
+    for rank, index in enumerate(sorted(range(len(ps)), key=ps.__getitem__)):
+        running = max(running, min(1.0, (len(ps) - rank) * ps[index]))
+        result[index] = running
+    return result
+
+
+def main():
+    # Freeze all earlier Markdown/figures/configuration/code in this experiment.
+    protected = {}
+    for path in ROOT.rglob('*'):
+        if path.is_file() and path.suffix in ('.md', '.py', '.png', '.svg'):
+            if path.name not in ('ALL_EXPERIMENTS_SUMMARY.md', Path(__file__).name):
+                protected[path] = (digest(path), path.stat().st_mtime_ns)
+
+    original = load(OLD / 'results.json')
+    early = load(EARLY / 'results.json')
+    readme = load(WORKSPACE / 'GAMMA/results/readme_all_results.json')
+    dot_mlp = load(ROOT / 'results/analysis.json')
+    components = load(ROOT / 'results/mlp_components_analysis.json')
+    assert all(x['status'] == 'complete' for x in (original, early, readme, dot_mlp, components))
+    assert load(OLD / 'verification.json')['checkpoints_checked'] == 360
+    assert load(EARLY / 'verification.json')['checkpoints_checked'] == 120
+    assert load(ROOT / 'results/full_verification_v2.json')['verified_runs'] == 480
+    assert load(ROOT / 'runs/mlp_components_v1/full/verification.json')['checkpoints'] == 480
+    assert load(ROOT / 'results/mlp_components_delivery_validation.json')['status'] == 'passed'
+    assert load(ROOT / 'results/combined_summary_verification.json')['shared_dot_runs_checked'] == 180
+    assert load(ROOT / 'results/mlp_components_preservation.json')['original_gamma_unchanged']
+    protocol = load(ROOT / 'runs/mlp_components_v1/protocol.json')
+    environment = load(ROOT / 'runs/mlp_components_v1/environment.json')
+
+    runs = {}
+    values = {}
+    for dataset in DATASETS:
+        for k in range(1, 5):
+            for method in METHODS[1:]:
+                parent = ROOT / ('runs/v2/full' if method in ('dot', 'mlp')
+                                 else 'runs/mlp_components_v1/full')
+                subset = []
+                for split in range(10):
+                    run = load(parent / dataset.lower() / f'k_{k}' / f'split_{split}'
+                               / method / 'result.json')
+                    assert run['status'] == 'complete'
+                    assert (run['dataset'], run['k'], run['split_id'], run['routing_method']) == (
+                        dataset, k, split, method)
+                    assert run['powers'] == list(range(k + 1))
+                    assert run['actual_gamma_layers'] == 1 and run['r'] == 2
+                    assert run['seed'] == 42 + split
+                    assert run['scorer_parameter_count'] == {
+                        'dot': 0, 'mlp': 2113, 'mlp_ln': 2177, 'mlp_gelu': 2113}[method]
+                    close(run['test_accuracy'], run['test_correct'] / run['test_size'])
+                    assert math.isfinite(run['test_accuracy'])
+                    subset.append(run['test_accuracy'])
+                    runs[dataset, k, split, method] = run
+                values[dataset, k, method] = subset
+            for split in range(10):
+                base = runs[dataset, k, split, 'mlp']
+                for method in ('dot', 'mlp_ln', 'mlp_gelu'):
+                    run = runs[dataset, k, split, method]
+                    for key in ('split_sha256', 'common_init_sha256', 'cpu_rng_sha256', 'cuda_rng_sha256'):
+                        assert run[key] == base[key]
+                    if method != 'dot':
+                        assert run['reference_full_init_sha256'] == base['full_init_sha256']
+
+    shared_dot = 0
+    for k in (2, 3, 4):
+        stage = load(OLD / f'k_{k}/results.json')
+        for dataset in DATASETS:
+            pairs = sorted(stage['pairs'][dataset], key=lambda row: row['split'])
+            assert [pair['split'] for pair in pairs] == list(range(10))
+            values[dataset, k, 'uniform'] = [pair['uniform']['test_accuracy'] for pair in pairs]
+            for pair in pairs:
+                current = runs[dataset, k, pair['split'], 'dot']
+                assert pair['split_sha256'] == current['split_sha256']
+                assert pair['training_seed'] == current['seed']
+                assert pair['routing']['best_epoch'] == current['best_validation_epoch']
+                assert pair['routing']['stopped_epoch'] == current['stopped_epoch']
+                close(pair['routing']['test_accuracy'], current['test_accuracy'])
+                shared_dot += 1
+    assert len(values) == 114 and sum(map(len, values.values())) == 1140 and shared_dot == 180
+
+    for row in dot_mlp['summary'] + components['summary']:
+        source = values[row['dataset'], row['k'], row['routing_method']]
+        close(mean(source), row['test_accuracy_mean'])
+        close(stdev(source), row['test_accuracy_std'])
+
+    def differences(dataset, k, left, right):
+        return [100 * (a - b) for a, b in zip(values[dataset, k, left], values[dataset, k, right])]
+
+    def delta(dataset, k, left, right):
+        return mean(differences(dataset, k, left, right))
+
+    def overall(left, right, ks=range(1, 5)):
+        return mean(delta(dataset, k, left, right) for dataset in DATASETS for k in ks)
+
+    verified_families = []
+
+    def verify_family(rows, p_key, adjusted_key, diff_fn, label):
+        for row in rows:
+            d = diff_fn(row)
+            close(mean(d), row.get('delta_mean_pp', row.get('mean_difference_pp')))
+            close(exact_p(d), row[p_key])
+        for row, adjusted in zip(rows, holm_values([row[p_key] for row in rows])):
+            close(adjusted, row[adjusted_key])
+        verified_families.append(dict(name=label, comparisons=len(rows),
+                                      significant=sum(row[adjusted_key] < .05 for row in rows)))
+
+    verify_family(original['summary'], 'exact_sign_flip_p_two_sided', 'holm_adjusted_p_18_comparisons',
+                  lambda row: differences(row['dataset'], row['k'], 'dot', 'uniform'), 'Dot vs Uniform')
+    verify_family(dot_mlp['paired_summary'], 'exact_signflip_p', 'holm_p',
+                  lambda row: differences(row['dataset'], row['k'], 'mlp', 'dot'), 'MLP vs Dot')
+    for method in ('mlp_ln', 'mlp_gelu'):
+        family = [row for row in components['paired_summary'] if row['method'] == method]
+        verify_family(family, 'exact_signflip_p', 'holm_p_24',
+                      lambda row: differences(row['dataset'], row['k'], method, 'mlp'), f'{method} vs MLP')
+        interaction = [row for row in components['k_interactions'] if row['method'] == method]
+        verify_family(interaction, 'exact_signflip_p', 'holm_p_18',
+                      lambda row: [a - b for a, b in zip(
+                          differences(row['dataset'], row['k'], method, 'mlp'),
+                          differences(row['dataset'], 1, method, 'mlp'))], f'{method} K interaction')
+
+    significant_interactions = [row for row in components['k_interactions'] if row['holm_p_18'] < .05]
+    assert len(significant_interactions) == 1
+    interaction = significant_interactions[0]
+    assert (interaction['dataset'], interaction['method'], interaction['k']) == ('Actor', 'mlp_gelu', 3)
+
+    full_table = table(['Dataset', 'K', 'Uniform %', 'Dot %', 'MLP-ReLU %', 'MLP+LN %', 'MLP-GELU %'], [
+        [dataset, k] + [describe(values[dataset, k, method]) if (dataset, k, method) in values else '未运行'
+                        for method in METHODS]
+        for dataset in DATASETS for k in range(1, 5)])
+    k_table = table(['K', 'Dot−Uniform', 'MLP−Dot', 'LN−MLP', 'GELU−MLP', 'LN−Dot', 'GELU−Dot'], [
+        [k, signed(overall('dot', 'uniform', [k])) if k > 1 else '未运行']
+        + [signed(overall(left, right, [k])) for left, right in (
+            ('mlp', 'dot'), ('mlp_ln', 'mlp'), ('mlp_gelu', 'mlp'), ('mlp_ln', 'dot'), ('mlp_gelu', 'dot'))]
+        for k in range(1, 5)])
+    dataset_table = table(['Dataset', 'Dot−Uniform（K2–4）', 'MLP−Dot（K1–4）', 'LN−MLP（K1–4）', 'GELU−MLP（K1–4）'], [
+        [dataset] + [signed(mean(delta(dataset, k, left, right) for k in ks)) for left, right, ks in (
+            ('dot', 'uniform', (2, 3, 4)), ('mlp', 'dot', (1, 2, 3, 4)),
+            ('mlp_ln', 'mlp', (1, 2, 3, 4)), ('mlp_gelu', 'mlp', (1, 2, 3, 4)))] for dataset in DATASETS])
+    overview = {row['method']: row for row in components['overview']}
+    gate_positive = sum(row['mean_difference_pp'] > 1e-9 for row in original['summary'])
+    mlp_positive = sum(row['delta_mean_pp'] > 1e-9 for row in dot_mlp['paired_summary'])
+    for method, row in overview.items():
+        close(overall(method, 'mlp'), row['mean_delta_pp'])
+        for k in range(1, 5):
+            close(overall(method, 'mlp', [k]), row['by_k'][str(k)])
+    headline = table(['对照问题', '比较组数', '均值升/平/降', '平均差 pp', '原检验族Holm后显著升/降'], [
+        ['Dot−Uniform，K2–4', 18, f'{gate_positive}/0/{18 - gate_positive}',
+         signed(overall('dot', 'uniform', (2, 3, 4))), '0/0'],
+        ['MLP−Dot，K1–4', 24, f'{mlp_positive}/0/{24 - mlp_positive}', signed(overall('mlp', 'dot')), '0/0'],
+        *[[f'{LABELS[method]}−MLP，K1–4', 24, f"{row['improved']}/{row['tied']}/{row['degraded']}",
+           signed(row['mean_delta_pp']), f"{row['significant_gain_24']}/{row['significant_decline_24']}"]
+          for method, row in overview.items()]])
+
+    early_rows = []
+    for dataset in DATASETS:
+        pairs = early['pairs'][dataset]
+        on = [row['routing']['test_accuracy'] for row in pairs]
+        off = [row['uniform']['test_accuracy'] for row in pairs]
+        early_rows.append([dataset, describe(on), describe(off), signed(100 * (mean(on) - mean(off)))])
+    readme_table = table(['历史README配置', 'Test %，Mean±SD'], [
+        [name, describe(row['accuracies'])] for name, row in readme['results'].items()])
+
+    old_cost = dot_mlp['cost']
+    ln = overview['mlp_ln']
+    gelu = overview['mlp_gelu']
+    cost_table = table(['比较', '新增参数', '单轮训练耗时变化', '推理耗时变化', '峰值分配显存差 MiB', '测量口径'], [
+        ['MLP−Dot', 2113, f"+{100 * (old_cost['train_step_ratio']['mean'] - 1):.1f}%",
+         f"+{100 * (old_cost['inference_ratio']['mean'] - 1):.1f}%",
+         f"+{old_cost['peak_memory_delta_mb']['mean']:.3f}", '原Dot/MLP同轮实验日志'],
+        *[[f'{LABELS[method]}−MLP', 64 if method == 'mlp_ln' else 0,
+           f"{100 * (row['mean_train_step_ratio_historical'] - 1):+.1f}%（历史参照）",
+           f"{100 * (row['mean_fresh_inference_ratio'] - 1):+.1f}%",
+           f"{row['mean_peak_memory_delta_mib']:+.3f}（历史参照）", '三种MLP另行同进程重测推理']
+          for method, row in overview.items()]])
+
+    text = f'''# GAMMA 主要实验总汇：门控、多 Hop、Dot/MLP、LayerNorm 与 GELU
+
+版本 v1，汇总日期 2026-10-19。本文整合全部已完成主要实验，重新读取逐Split结果、统一样本标准差并复核配对统计；本次仅生成总结，没有新增训练或修改旧结果。所有变化量均为测试准确率的**百分点（pp）**。
+
+## 1. 当前证据能支持什么
+
+原版Dot网络已在独立实现中通过前向与梯度对齐；关闭门控的执行路径、MLP端到端梯度，以及LayerNorm/GELU接入均已验证。所有主实验从随机初始化训练，没有使用预训练权重。
+
+{headline}
+
+MLP替换Dot总体均值{signed(overall('mlp', 'dot'))} pp。继续单独加LayerNorm相对MLP几乎持平；单独改GELU相对MLP均值{signed(gelu['mean_delta_pp'])} pp，但相对原Dot仍为{signed(overall('mlp_gelu', 'dot'))} pp。**当前尚不足以确认“可学习Agreement稳定优于Dot”，也未确认LN或GELU具有普遍提升。** 未显著不等于方法完全相同，也不等于门控无效。
+
+一个需要单独保留的K依赖观察是：Actor的GELU相对MLP收益，从K1到K3增加{signed(interaction['delta_mean_pp'])} pp（18项交互检验族Holm p={interaction['holm_p_18']:.5f}）。这是收益随K变化的证据，不等于K3时GELU对MLP的直接优势已显著；各固定K的直接比较均未通过对应24项校正。
+
+## 2. 实验清单与计数
+
+| 阶段 | 内容 | 实际训练记录 | 与主表的关系 |
+| --- | --- | --- | --- |
+| README命令复现 | 六个异配默认配置、Chameleon 64/3/2、Cora/CiteSeer/PubMed，各10 Split | 100 | 历史记录，训练协议不同 |
+| 初轮K2门控消融 | 六图×Dot/Uniform×10 Split | 120 | 历史独立初始化，不与后续K2混合 |
+| 门控×K扫描 | 六图×K2/3/4×Dot/Uniform×10 Split | 360 | 提供Uniform及原始门控对照 |
+| Dot/MLP主实验 | 六图×K1/2/3/4×Dot/MLP×10 Split | 480 | 独立实现、原版对齐后的主比较 |
+| MLP单因素实验 | 六图×K1/2/3/4×LN/GELU×10 Split | 480 | 另复用240个原MLP对照，不重复计训练 |
+
+三个核心阶段共 **1,320条训练记录**。其中K2–4的180个Dot条件被独立重训，两轮完整预测、划分和选权重轮次完全一致；去掉这180次重复条件后，主表包含 **1,140个方法/K/Split单元、114组十划分统计**：Uniform180、Dot240、MLP240、LN240、GELU240。
+
+加上100次README复现和120次初轮消融，共1,540条主要及历史训练记录。此数不含调试过程或2次基线锚点重放；合格Pilot已计入对应Full，不能再次累加。这些运行不是1,540个独立数据集，重训对照也不能合并为20 Split。
+
+## 3. 五种方法实际改了什么
+
+| 方法 | 融合/Agreement | Scorer参数 | 相对Dot新增参数 |
+| --- | --- | --- | --- |
+| Uniform | 关闭动态routing，各hop等权融合 | 0 | 0 |
+| Dot | `sum(hop * fused, dim=-1)` | 0 | 0 |
+| MLP-ReLU | `Linear(64,32) → ReLU → Linear(32,1)` | 2,113 | 2,113 |
+| MLP+LN | `Linear(64,32) → LayerNorm(32) → ReLU → Linear(32,1)` | 2,177 | 2,177 |
+| MLP-GELU | `Linear(64,32) → GELU → Linear(32,1)` | 2,113 | 2,113 |
+
+Dot和三种MLP均保留 `b=b+agreement`、沿hop维softmax、加权融合、squash、原始routing循环、最终bias和分类头。所有节点、hop及routing轮次共享一个scorer。Dot/MLP输入为hop `[N,P,32]` 和fused `[N,32]`；MLP拼接输入 `[N,P,64]`，输出 `[N,P]`。
+
+LN仅归一化scorer的32维隐藏向量（eps=1e-5，affine=True）；GELU仅替换ReLU，没有同时加入LN，也没有新增softmax、温度、残差或hop特征网络。原GAMMA特征层的LayerNorm在各组均保留。
+
+**这些评分网络并不把分数“不断缩放到1”。** Score可以为任意实数；原有softmax将各hop系数变为非负且和为1。squash对融合向量的幅度进行非线性压缩，与hop系数归一化是不同步骤。Uniform关闭的是动态routing，仍保留可学习hop通道缩放、特征LayerNorm及squash。
+
+## 4. 可比主实验协议
+
+| 项目 | 统一设置 |
+| --- | --- |
+| 数据集 | Texas、Wisconsin、Cornell、Chameleon、Squirrel、Actor |
+| 最大hop K | 1、2、3、4；Uniform只完成K2–4 |
+| 实际powers | `[0,...,K]`，包含0-hop，P=K+1 |
+| 消息传递层 | 真正1个GAMMA层，加Linear分类头；`num_layers=2` |
+| Routing / 隐藏维度 | R=2；D=32；MLP隐藏维度32 |
+| 划分 | 相同持久化60/20/20整数划分；划分种子102–111 |
+| 训练随机性 | 每Split训练seed42–51；共有初值及CPU/CUDA随机状态配对 |
+| 优化器 | Adam，lr=0.02，weight_decay=1e-4，梯度裁剪1 |
+| Dropout | 输入0.2，隐藏0.8 |
+| 预算 / 模型选择 | 最多500 epoch；早停patience50；只用验证集选最佳权重，深拷贝保存 |
+| 调度器 | ReduceLROnPlateau，factor0.5，patience50，min_lr1e-6 |
+| 确定性 | 严格确定性算法；关闭TF32；CUBLAS_WORKSPACE_CONFIG=:4096:8 |
+
+较小K从同一个随机K4模板截取共有hop初值；这是未训练初始化，不是预训练。LN/GELU的两个Linear和全部共有GAMMA参数与原MLP一一对齐；LN额外gamma=1、beta=0。每种方法分别训练并保存自己的最佳Checkpoint，没有以测试集选K、选epoch或为单一方法调参。
+
+K是最大传播范围，不是GAMMA层数或routing轮数。原代码各分支从头传播，因此K1/2/3/4的传播调用总数是1/3/6/10，最长分支仍只有K步。p-hop表示p步游走，不仅是最短距离恰好为p的邻居。
+
+## 5. 全部五方法准确率
+
+每组10 Split，测试准确率Mean±**样本SD，ddof=1**，单位%。所有值从原始逐Split记录重算；较早报告用ddof=0，故标准差可能略有不同，均值不变。未运行单元不推断、不填补。
+
+{full_table}
+
+Uniform的K1没有实验。此表供相同条件对照，不把各方法的测试最高K作为最终无偏性能，也不新增五方法全配对显著性结论。
+
+## 6. K依赖及各数据集变化
+
+下表按六个数据集等权平均，单位pp；LN/GELU默认相对原MLP，另外列出相对Dot的描述性差值。它们不是按节点数加权的整体准确率。
+
+{k_table}
+
+跨K的每图均值变化如下。第一列只平均K2–4，其余列平均K1–4，不能直接比较不同范围的平均值来作方法排名。
+
+{dataset_table}
+
+- Texas：K2–4的Dot均值高于Uniform；MLP在这些K均低于Dot。GELU改善了多数K的MLP均值，但K4下降；LN在K4相对MLP下降2.63 pp。
+- Wisconsin：Uniform在已测K2–4的五种方法中均值均最高。GELU相对MLP在K2–4提高，仍未超过该Uniform参照。
+- Cornell：方法排序随K变化，标准差较大。K4的GELU比原MLP提高1.84 pp，LN降低2.11 pp，不能据单个条件推断普遍规律。
+- Chameleon：MLP各K均值高于Dot；LN各K均值又高于原MLP，GELU则有升有降。原MLP在K3/4仍低于Uniform，说明优于Dot不自动等于优于等权融合。
+- Squirrel：原MLP在各K均值低于Dot。LN/GELU虽改善部分MLP条件，仍没有在任何已测K上超过Dot均值。
+- Actor：原MLP各K均值高于Dot；LN/GELU相对MLP主要在K3改善，其余K多有下降。GELU的K3与K1收益差值得单独确认。
+
+### K交互的准确解释
+
+Actor上GELU−MLP：K1为{signed(delta('Actor', 1, 'mlp_gelu', 'mlp'))} pp，K3为{signed(delta('Actor', 3, 'mlp_gelu', 'mlp'))} pp。逐Split的“两个差值再相减”在10对中均为正，平均{signed(interaction['delta_mean_pp'])} pp，未校正配对t的95%区间[{signed(interaction['ci95_low_pp'])}, {signed(interaction['ci95_high_pp'])}]，双侧精确符号翻转p={interaction['exact_signflip_p']:.8f}；同一变体18项K交互Holm p={interaction['holm_p_18']:.5f}。
+
+固定K3的GELU−MLP直接比较经过24项校正仍未显著；“相对收益改变”与“某点绝对优于”是两个统计问题。该交互是该检验族中的单项观察，未进行覆盖全部阶段与探索问题的全项目校正，也未在新seed或新图确认。LN的18项K交互以及原MLP相对Dot的18项K交互均未达各自校正后0.05。
+
+## 7. 统计口径与证据边界
+
+各阶段沿用原检验族：初轮Dot/Uniform为6项，K扫描Dot/Uniform为18项，MLP/Dot为24项，LN/MLP及GELU/MLP各24项。每个比较用相同Split配对，精确符号翻转枚举2^10组合，再做Holm校正；阶段之间不伪称存在事先预设的统一检验。四类主直接比较均没有校正后显著改善或下降。
+
+配对t的95%区间是未做多重比较校正的描述性区间。另存的48项LN/GELU合并Holm敏感性分析中，n=10使双侧精确p最小为2/1024，首项最小校正p=0.09375，因此该分析在0.05下本身不能拒绝首项；不能用它证明没有效应。
+
+所有Split来自同一张图且存在重叠，每Split只有一个训练seed；划分随机性与优化随机性没有充分分离。跨图均值、改善组数和门控熵用于描述，不能替代独立图或额外seed验证。累计加入hop并重训测量的是可用范围变化，不是固定模型中某一hop的因果贡献。
+
+## 8. 实现、复现与完整性证据
+
+| 核验 | 已有证据 |
+| --- | --- |
+| 原Dot网络对齐 | 独立实现20个CPU/CUDA前向、参数梯度对齐子案例通过 |
+| 动态开关生效 | 开/关routing softmax调用2/0次；关闭输出与手算等权融合误差0；R1等于Uniform |
+| K实际生效 | powers与传播调用数一致；K1–4输出/梯度/形状正常 |
+| 原MLP参与训练 | 全240次有有限有效梯度及scorer参数变化 |
+| LN/GELU参与训练 | 全480次两个Linear有非零有限梯度；LN的240个模型gamma/beta均有更新 |
+| Routing梯度路径 | R2首轮score参与第二轮融合；每次forward临时logits重新置零；无训练路径detach |
+| Checkpoint重载 | 初轮120、K扫描360、Dot/MLP480、LN/GELU480全部通过各自验证 |
+| 对照重放 | 180个旧/新Dot条件预测完全一致；Texas/Chameleon两个原MLP锚点重训权重与预测精确复现 |
+| 数据与模型选择 | 同Split掩码/seed对齐；标签隔离测试通过；验证集选择最佳Checkpoint |
+| 原始文件保护 | 既有核验确认原项目2,570个文件及Git状态不变，前轮2,596个产物未改 |
+
+本次汇总进一步读取960个Dot/MLP/LN/GELU单次结果和180个Uniform单元，复算114组均值/SD、主要配对差和K交互的精确p/Holm值，核对划分/共有初值/随机状态；Checkpoint重载采用已有验证记录，本次没有重复训练或推理。最后一次routing score更新不影响当前输出，保留官方行为，未暗中改算法。
+
+## 9. 参数和计算成本
+
+{cost_table}
+
+MLP新增2,113参数，约为Dot总参数量的2.82%–6.99%；LN再新增64个仿射参数，GELU不新增参数。固定K每增加一个hop，所有方法均额外增加32个通道缩放参数。
+
+LN/GELU推理耗时来自对720个已训练MLP模型的同进程重测：轮换方法顺序、5次预热、20次GPU同步测量，数据驻留GPU、eval/no_grad完整图前向。LN/GELU训练时间和峰值显存使用历史原MLP作为参照，缺少同一时期三组重训，精确效率排名应谨慎。原Dot/MLP与这轮重测不是同一计时实验，不能相乘比值推算GELU相对Dot的公平速度；Uniform也没有统一的显存测量。
+
+显存为PyTorch分配量（MiB），不是整卡占用。Windows小图计时有系统噪声；总训练时长受早停轮数影响，不代表单轮复杂度。小图全图训练和早停足以解释运行较快，不需要假设加载预训练。
+
+训练环境：Python {environment['python'].split(' | ')[0]}，PyTorch {environment['torch']}，PyG {environment['pyg']}，CUDA {environment['cuda']}，{environment['gpu']}。环境和依赖原始记录保存在 [LN/GELU环境](runs/mlp_components_v1/environment.json) 与 [依赖版本](runs/mlp_components_v1/pip_freeze.txt)。
+
+## 10. 机制观察与失败案例
+
+原MLP通常让Texas/Wisconsin/Cornell的门控更集中，但Squirrel更均匀仍退化；Chameleon更均匀而改善，Actor更集中而改善，不能用“越尖锐越好”或“越均匀越好”概括。
+
+LN在三个小图降低最终score尺度、提高平均门控熵，但准确率没有稳定提高；LN在Chameleon反而使路由更集中。GELU在多个小图及Actor上提高score尺度、降低熵，同样不是普遍有效。隐藏向量做LN不保证最终Linear的分数尺度固定，也不保证softmax不饱和。
+
+主要负例包括LN的Texas K4 −2.63 pp、Cornell K4 −2.11 pp，以及GELU的Wisconsin K1 −1.18 pp、Texas K4 −0.79 pp（均相对原MLP）。有效梯度和更新记录可排除模块未训练；它们不能排除优化难度、过拟合或归纳偏置差异。部分小图训练/验证缺类、测试节点少，波动较大；更大的K也未呈一致收益。
+
+本系列没有据测试结果单方调MLP宽度、温度或训练预算，没有运行LN+GELU组合。较高hop权重不直接代表更大分类贡献，特征cosine只是过平滑代理。完整诊断见 [原Dot/MLP机制分析](docs/08_mechanism_analysis.md) 与 [LN/GELU详细报告](MLP_COMPONENT_REPORT.md)。
+
+## 11. 与论文及历史实验的差别
+
+官方快照提交为 `36d054b4ae53c0c8e360d85d056f5207d61c8281`。主实验优先保留源码的1个GAMMA层、LayerNorm、60/20/20划分及含0-hop设置；论文描述中的两GNN层、L2 normalization、50/25/25及训练/调参设置与此不完全相同。双方统一修复最佳权重浅拷贝，不能称为论文Table 1逐项数值复现。含0-hop的K也不能直接等同Appendix B的1–K hop。逐项差异见 [源码审计](docs/01_source_audit.md)。
+
+### 初轮K2门控消融：120次历史训练
+
+同样使用修复后的最佳Checkpoint和严格确定性，但尚未采用后续K4公共初始化，所以与主表K2不同。以下统一重算ddof=1，不能与后续K2合成20 Split。
+
+{table(['Dataset', 'Dot %', 'Uniform %', 'Dot−Uniform pp'], early_rows)}
+
+六项经Holm校正均未显著。历史报告及原始记录见 [初轮消融](../GATE_ABLATION.md) 和 [120次原始JSON](../GAMMA/results/gate_ablation_20261019_130814/results.json)。
+
+### README命令复现：100次历史训练
+
+{readme_table}
+
+该阶段沿用原脚本的 `state_dict().copy()` 浅拷贝最佳权重及GPU非严格确定性，不能把这里的Dot分数作为主消融匹配对照。Cora/CiteSeer/PubMed为同配数据集，按gamma.py使用48/32/20划分，实际R固定1；虽然命令行默认写2，也不能据此检验R2动态routing收益。六个异配默认配置为32/2/2，Chameleon_64_3_2为64/3/2。详见 [命令复现说明](../REPRODUCTION.md) 和 [全部命令原始JSON](../GAMMA/results/readme_all_results.json)。
+
+## 12. 图表与原始数据入口
+
+![Dot与原MLP，K1–4](plots/accuracy_overview.png)
+
+![MLP的LN/GELU单因素比较，K1–4](plots/components_accuracy_overview.png)
+
+- 门控开关：[K扫描结果](../HOP_SWEEP.md)、[准确率图](../GAMMA/results/hop_sweep_20261019_143309/accuracy_vs_k.png)、[原始JSON](../GAMMA/results/hop_sweep_20261019_143309/results.json)、[360模型核验](../GAMMA/results/hop_sweep_20261019_143309/verification.json)。旧图保留原ddof=0阴影，统一数值以本报告主表为准。
+- Dot/MLP：[完整报告](FINAL_REPORT.md)、[480条逐Split CSV](results/full_runs.csv)、[Mean±SD](results/summary.csv)、[240组配对差](results/paired_deltas.csv)、[480模型核验](results/full_verification_v2.json)。
+- LN/GELU：[完整报告](MLP_COMPONENT_REPORT.md)、[720条CSV，含240只读对照](results/mlp_components_runs.csv)、[72组统计](results/mlp_components_summary.csv)、[48组配对检验](results/mlp_components_paired_summary.csv)、[36项K交互](results/mlp_components_k_interactions.csv)、[480模型核验](runs/mlp_components_v1/full/verification.json)。
+- 机制：[原MLP门控权重](plots/hop_weights.png)、[LN/GELU门控权重](plots/components_hop_weights.png)、[LN/GELU门控熵](plots/components_gate_entropy.png)、[评分尺度](plots/components_score_scale.png)。
+- 效率：[Dot/MLP训练](plots/training_time.png)、[Dot/MLP显存](plots/gpu_memory.png)、[三种MLP重测推理](plots/components_inference_time.png)、[720模型推理CSV](results/mlp_components_inference.csv)。
+- 复现依据：[旧两轮联合汇总](EXPERIMENTS_SUMMARY.md)、[独立Baseline对齐](docs/02_baseline_reproduction.md)、[原MLP实现说明](docs/03_mlp_implementation.md)、[LN/GELU预先冻结协议](docs/09_mlp_component_protocol.md)、[版本及验证记录](docs/MLP_COMPONENT_VERSIONS.md)。
+
+## 13. 复用与后续研究判断
+
+主实验已经全部完成，未留下未训练矩阵。仅重新生成本汇总：
+
+```powershell
+Set-Location 'REDACTED_LOCAL_PATH'
+python -B scripts/summarize_all_experiments.py
+```
+
+训练、断点续跑及详细校验入口见 [原Dot/MLP README](README.md) 和 `ablation_mlp/run_all.ps1`；已完成结果无需再次训练。父协议 `{protocol['parent_protocol_sha256']}`，组件协议 `{protocol['sha256']}`，不能改动核心后继续混入同一组。
+
+新增版本说明：本次只新增总汇生成脚本、本文和核验JSON，目的为将各阶段放在统一口径下审阅；不改变原源码、旧报告、数据、Checkpoint或实验结论。生成时自动复算主统计、检查本地链接及输入内容/mtime不变，记录见 [本次汇总核验](results/all_experiments_verification.json)。
+
+当前最值得保留的是GELU的有限均值改善与Actor的K交互线索，而不是宣布新的评分机制胜出。进一步结论需要独立seed、更多图或预先冻结的新评估数据，并在各方法采用一致验证集调参预算的前提下保留Uniform对照。重复查看同一批测试集不构成确认性验证。
+'''
+    document = ROOT / 'ALL_EXPERIMENTS_SUMMARY.md'
+    output = ROOT / 'results/all_experiments_verification.json'
+    links = re.findall(r'!?\[[^\]]*\]\(([^)]+)\)', text)
+    local_links = [link for link in links if not re.match(r'https?://', link)]
+    broken = [link for link in local_links if link != 'results/all_experiments_verification.json'
+              and not (ROOT / link).exists()]
+    assert not broken, broken
+    for path, initial in {**protected, **OBSERVED}.items():
+        assert (digest(path), path.stat().st_mtime_ns) == initial, str(path)
+    document.write_text(text, encoding='utf-8', newline='\n')
+    verification = dict(
+        status='passed', document=document.name, document_sha256=digest(document),
+        generator_sha256=digest(Path(__file__)), unique_main_condition_units=1140,
+        summary_groups=114, main_training_records=1320, historical_training_records=220,
+        total_main_and_historical_records=1540, duplicate_dot_condition_units=shared_dot,
+        reused_mlp_controls_not_counted_as_new=240,
+        standard_deviation='sample SD, ddof=1, recomputed from per-split values',
+        exact_signflip_and_holm_families_recomputed=verified_families,
+        significant_component_k_interactions=significant_interactions,
+        existing_files_protected=len(protected), input_files_checked=len(OBSERVED),
+        existing_reports_code_figures_unchanged=True, input_hash_and_mtime_unchanged=True,
+        local_links_checked=len(local_links), broken_links=broken, training_performed=False,
+        checkpoint_reinference_performed=False,
+        source_sha256={str(path.relative_to(WORKSPACE)): state[0] for path, state in OBSERVED.items()})
+    output.write_text(json.dumps(verification, ensure_ascii=False, indent=2) + '\n',
+                      encoding='utf-8', newline='\n')
+    assert all((ROOT / link).exists() for link in local_links)
+    print(f'PASSED: {len(values)} groups / 1140 condition units, {len(local_links)} links; '
+          f'{len(protected)} existing files unchanged. Wrote {document.name}')
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,110 @@
+{
+  "sha256": "6e9d20a284be1e9d95498e7a806f3fa13fdcd657197affa078268ea825d89f8d",
+  "parent_protocol_sha256": "7db66059f69d30c4981daa2d923886f7515a45b301ca9cf6e27b9c1422c6dcf2",
+  "parent_sources": {
+    "src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+    "src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+    "src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+    "src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+    "src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+    "src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1",
+    "scripts/run_experiments.py": "1a866167234191a037913d09971f2978b19e7667e6ff1dd826f245894fcf1060"
+  },
+  "sources": {
+    "ablation_mlp/model.py": "cacde4d965d31fbee4c1875edf615b7bbdef9bcfc8ca9a6b9296292e1a5e18df",
+    "ablation_mlp/factory.py": "c4f763a0e8c6de25c88cdde400d93a815942647e8ab46a43db53f175fbf432d4",
+    "ablation_mlp/run.py": "391fcadc28b0697d2a34270735c099db09890bf1bd5c828771803f19e38af7cb"
+  },
+  "training": {
+    "version": "v1_main",
+    "datasets": [
+      "Texas",
+      "Wisconsin",
+      "Cornell",
+      "Chameleon",
+      "Squirrel",
+      "Actor"
+    ],
+    "ks": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "methods": [
+      "dot",
+      "mlp"
+    ],
+    "splits": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "hidden_dim": 32,
+    "mlp_hidden_dim": 32,
+    "actual_gamma_layers": 1,
+    "routing_iterations": 2,
+    "include_zero_hop": true,
+    "epochs": 500,
+    "early_stopping_patience": 50,
+    "learning_rate": 0.02,
+    "weight_decay": 0.0001,
+    "input_dropout": 0.2,
+    "hidden_dropout": 0.8,
+    "gradient_clip": 1.0,
+    "scheduler": {
+      "factor": 0.5,
+      "patience": 50,
+      "min_lr": 1e-06
+    },
+    "split_ratios": [
+      0.6,
+      0.2,
+      0.2
+    ],
+    "split_seeds": [
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111
+    ],
+    "training_seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "best_checkpoint": "deep copy selected using validation only",
+    "deterministic": true,
+    "scoring": "shared MLP(64,32,1), ReLU; dot baseline unmodified agreement",
+    "canonical_initialization": "random dot K=4 shared parameters; identical MLP scorer initialization across K",
+    "infer_warmup": 5,
+    "infer_repeats": 20,
+    "max_retries": 2
+  },
+  "data_manifest_sha256": "58e66c434130f4d7d6bcdb80a7baf1a3f4010817c88e0c560cd6b5c684e1237d",
+  "methods": {
+    "mlp_ln": "Linear64-32, LayerNorm32 eps1e-5 affine, ReLU, Linear32-1",
+    "mlp_gelu": "Linear64-32, GELU exact, Linear32-1"
+  },
+  "common_initialization": "Both MLP linears and all shared GAMMA weights match v2 MLP; norm gamma1 beta0"
+}

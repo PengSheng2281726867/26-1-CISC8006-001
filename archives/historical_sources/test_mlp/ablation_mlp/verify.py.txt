@@ -1,0 +1,101 @@
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json,tensor_hash
+from src.data import load_dataset,load_masks
+from src.factory import configure_determinism
+from src.train import mechanism_metrics
+from ablation_mlp.factory import build_model
+from ablation_mlp.run import GROUP,signature,complete,baseline,read
+import argparse
+import csv
+import numpy as np
+import torch
+
+def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--phase',choices=['anchors','pilot','full'],required=True)
+    args=parser.parse_args();phase=args.phase;fingerprint,_=signature()
+    group=ROOT/'runs'/GROUP;folder=group/phase
+    status=read(folder/'matrix_status.json');assert status['status']=='complete'
+    specification=read(group/f'config_{phase}.json')['component_specification']
+    configure_determinism();checked=0;shared={};linears={};gradient_min=float('inf');diagnostics=[]
+    for name in specification['datasets']:
+        dataset=load_dataset(name);graph=dataset[0].to('cuda')
+        for k in specification['ks']:
+            for split in specification['splits']:
+                masks=load_masks(name,split,graph.num_nodes)
+                for key,mask in zip(('train_mask','val_mask','test_mask'),masks):graph[key]=torch.from_numpy(mask).to('cuda')
+                for method in specification['methods']:
+                    directory=folder/name.lower()/f'k_{k}'/f'split_{split}'/method
+                    report=complete(directory,fingerprint);assert report is not None
+                    reference_directory,reference=baseline(name,k,split)
+                    assert report['split_sha256']==reference['split_sha256']
+                    model,initial=build_model(dataset.num_node_features,dataset.num_classes,k,method,42+split)
+                    for key in ('full_init_sha256','full_common_init_sha256','common_scorer_linear_init_sha256',
+                                'reference_full_init_sha256','cpu_rng_sha256','cuda_rng_sha256'):
+                        assert initial[key]==report[key]
+                    pair=(name,k,split);shared.setdefault(pair,initial['full_common_init_sha256'])
+                    assert shared[pair]==initial['full_common_init_sha256']
+                    across_k=(name,split);linears.setdefault(across_k,initial['common_scorer_linear_init_sha256'])
+                    assert linears[across_k]==initial['common_scorer_linear_init_sha256']
+                    assert initial['reference_full_init_sha256']==reference['full_init_sha256']
+                    model.eval()
+                    with torch.no_grad():
+                        _,initial_details=model(graph.x,graph.edge_index,return_diagnostics=True)
+                        initial_metrics=mechanism_metrics(initial_details)
+                    del initial_details
+                    artifact=directory/report['artifact_subdir']
+                    checkpoint=torch.load(artifact/'model.pt',map_location='cpu',weights_only=True)
+                    assert checkpoint['model_kwargs']==report['model_kwargs']
+                    assert tensor_hash(checkpoint['state_dict'])==report['trained_state_sha256']
+                    model.load_state_dict(checkpoint['state_dict']);model.eval()
+                    with torch.no_grad():out,details=model(graph.x,graph.edge_index,return_diagnostics=True)
+                    assert bool(torch.isfinite(out).all());layer=details[0]
+                    assert bool(torch.isfinite(layer['hops']).all())
+                    for step in layer['iterations']:
+                        for value in step.values():assert bool(torch.isfinite(value).all())
+                    assert float(layer['iterations'][0]['logits'].abs().max())==0
+                    torch.testing.assert_close(layer['used_alpha'],torch.softmax(layer['iterations'][0]['agreement'],dim=1))
+                    pred=out.argmax(1).cpu().numpy();labels=graph.y.cpu().numpy()
+                    with np.load(artifact/'predictions.npz') as saved,np.load(reference_directory/reference['artifact_subdir']/'predictions.npz') as old:
+                        np.testing.assert_array_equal(pred,saved['predictions'])
+                        np.testing.assert_allclose(out.cpu().numpy(),saved['log_probs'],atol=2e-6,rtol=2e-5)
+                        np.testing.assert_allclose(layer['used_alpha'].cpu().numpy(),saved['alpha'],atol=2e-6,rtol=2e-5)
+                        for label,mask in zip(('train','val','test'),masks):
+                            np.testing.assert_array_equal(saved[f'{label}_mask'],mask)
+                            np.testing.assert_array_equal(saved[f'{label}_mask'],old[f'{label}_mask'])
+                            assert float((pred[mask]==labels[mask]).mean())==report[f'{label}_accuracy']
+                    with (artifact/'epochs.csv').open(newline='',encoding='utf-8') as stream:trace=list(csv.DictReader(stream))
+                    vals=[float(r['val_accuracy']) for r in trace]
+                    assert len(trace)==report['stopped_epoch'] and vals.index(max(vals))+1==report['best_validation_epoch']
+                    assert max(vals)==report['val_accuracy']
+                    assert all(np.isfinite(float(r['train_loss'])) and np.isfinite(float(r['gradient_norm_before_clip'])) for r in trace)
+                    assert report['scorer_parameter_count']==(2177 if method=='mlp_ln' else 2113)
+                    assert report['parameter_count']-reference['parameter_count']==(64 if method=='mlp_ln' else 0)
+                    assert report['scorer_parameter_change_l2']>0 and report['scorer_gradient_norm_first']>0
+                    assert all(np.isfinite(value) and value>0 for value in report['scorer_weight_gradient_first'].values())
+                    gradient_min=min(gradient_min,*report['scorer_weight_gradient_first'].values())
+                    norm_change=0.0
+                    if method=='mlp_ln':
+                        norm=model.convs[0].scorer[1]
+                        norm_change=float(((norm.weight.detach()-1).square().sum()+norm.bias.detach().square().sum()).sqrt())
+                        assert norm_change>0
+                    diagnostics.append(dict(dataset=name,k=k,split_id=split,routing_method=method,
+                        initial_centered_score_std=initial_metrics['centered_score_std'],
+                        initial_entropy_normalized=initial_metrics['gating_entropy_normalized'],
+                        final_centered_score_std=report['centered_score_std'],
+                        final_entropy_normalized=report['gating_entropy_normalized'],
+                        final_saturated_fraction=report['max_weight_over_095_fraction'],
+                        layernorm_affine_change_l2=norm_change))
+                    checked+=1;del model,out,details,layer;torch.cuda.empty_cache()
+        print(f'VERIFIED {name} ({checked} checkpoints)',flush=True)
+        del graph,dataset
+    assert checked==status['expected']
+    save_json(folder/'verification.json',dict(status='passed',checkpoints=checked,protocol_sha256=fingerprint,
+        full_predictions_reproduced=True,common_linear_initialization=True,all_shared_parameters_matched=True,
+        all_routing_intermediates_finite=True,same_baseline_masks=True,validation_only_selection=True,
+        minimum_individual_scorer_weight_gradient=gradient_min))
+    save_json(folder/'score_diagnostics.json',dict(status='complete',runs=checked,rows=diagnostics))
+    print(f'ALL {checked} {phase} CHECKPOINTS PASSED',flush=True)
+
+if __name__=='__main__':main()

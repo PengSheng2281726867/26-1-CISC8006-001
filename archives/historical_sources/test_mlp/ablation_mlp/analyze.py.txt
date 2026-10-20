@@ -1,0 +1,101 @@
+"""Pair each single-factor variant with the frozen MLP control; no selection."""
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json
+from scripts.analyze_results import DATASETS,write_csv,paired_statistics,holm,METRICS
+from ablation_mlp.run import GROUP,METHODS,read,complete,baseline,signature
+import numpy as np
+
+def main():
+    group=ROOT/'runs'/GROUP;fingerprint,_=signature()
+    assert read(group/'full/verification.json')['status']=='passed'
+    assert read(group/'full/matrix_status.json')['completed']==480
+    fresh=read(ROOT/'results/mlp_components_inference.json');assert fresh['runs']==720
+    timings={(r['dataset'],r['k'],r['split_id'],r['routing_method']):r for r in fresh['rows']}
+    runs=[];lookup={};summaries=[];paired=[];raw_pairs=[]
+    for name in DATASETS:
+        for k in (1,2,3,4):
+            for split in range(10):
+                for method in ('mlp',*METHODS):
+                    if method=='mlp':folder,report=baseline(name,k,split)
+                    else:
+                        folder=group/'full'/name.lower()/f'k_{k}'/f'split_{split}'/method
+                        report=complete(folder,fingerprint);assert report is not None
+                    report={**report,'run_directory':str(folder.relative_to(ROOT)),
+                        'fresh_inference_ms_mean':timings[name,k,split,method]['inference_ms_mean'],
+                        'fresh_inference_ms_median':timings[name,k,split,method]['inference_ms_median'],
+                        'new_training':method!='mlp'}
+                    lookup[name,k,split,method]=report;runs.append(report)
+            for method in ('mlp',*METHODS):
+                subset=[lookup[name,k,split,method] for split in range(10)]
+                row=dict(dataset=name,k=k,routing_method=method,n=10,powers=list(range(k+1)))
+                for metric in [*METRICS,'fresh_inference_ms_mean','fresh_inference_ms_median']:
+                    values=np.asarray([r[metric] for r in subset],dtype=float);assert np.isfinite(values).all()
+                    row[metric+'_mean']=float(values.mean());row[metric+'_std']=float(values.std(ddof=1))
+                summaries.append(row)
+            for method in METHODS:
+                deltas=[]
+                for split in range(10):
+                    base=lookup[name,k,split,'mlp'];changed=lookup[name,k,split,method]
+                    for key in ('split_sha256','common_init_sha256','cpu_rng_sha256','cuda_rng_sha256'):
+                        assert base[key]==changed[key]
+                    assert changed['reference_full_init_sha256']==base['full_init_sha256']
+                    delta=100*(changed['test_accuracy']-base['test_accuracy']);deltas.append(delta)
+                    raw_pairs.append(dict(dataset=name,k=k,split_id=split,method=method,
+                        baseline_test_percent=100*base['test_accuracy'],variant_test_percent=100*changed['test_accuracy'],delta_pp=delta,
+                        train_step_ratio_historical=changed['epoch_training_ms_mean']/base['epoch_training_ms_mean'],
+                        peak_memory_delta_mib=changed['peak_gpu_allocated_mb']-base['peak_gpu_allocated_mb'],
+                        fresh_inference_ratio=changed['fresh_inference_ms_mean']/base['fresh_inference_ms_mean']))
+                paired.append(dict(dataset=name,k=k,method=method,**paired_statistics(deltas)))
+    for method in METHODS:
+        family=[row for row in paired if row['method']==method];holm(family)
+        for row in family:row['holm_p_24']=row.pop('holm_p')
+    holm(paired)
+    for row in paired:row['holm_p_48']=row.pop('holm_p')
+    interactions=[]
+    for method in METHODS:
+        family=[]
+        for name in DATASETS:
+            for k in (2,3,4):
+                d=lambda kk,s:100*(lookup[name,kk,s,method]['test_accuracy']-lookup[name,kk,s,'mlp']['test_accuracy'])
+                family.append(dict(dataset=name,k=k,reference_k=1,method=method,
+                    **paired_statistics([d(k,s)-d(1,s) for s in range(10)])))
+        holm(family)
+        for row in family:row['holm_p_18']=row.pop('holm_p')
+        interactions.extend(family)
+    raw=[]
+    for run in runs:
+        raw.append({key:value for key,value in run.items() if key not in ['model_kwargs','artifacts',
+            'hop_weights_mean','hop_weights_std','hop_weights_quantiles','node_cosine_by_hop']})
+    write_csv(ROOT/'results/mlp_components_runs.csv',raw)
+    write_csv(ROOT/'results/mlp_components_summary.csv',summaries)
+    write_csv(ROOT/'results/mlp_components_paired.csv',raw_pairs)
+    write_csv(ROOT/'results/mlp_components_paired_summary.csv',paired)
+    write_csv(ROOT/'results/mlp_components_k_interactions.csv',interactions)
+    diagnostics=read(group/'full/score_diagnostics.json')
+    write_csv(ROOT/'results/mlp_components_score_diagnostics.csv',diagnostics['rows'])
+    overview=[]
+    for method in METHODS:
+        family=[r for r in paired if r['method']==method];cost_rows=[r for r in raw_pairs if r['method']==method]
+        overview.append(dict(method=method,improved=sum(r['delta_mean_pp']>1e-9 for r in family),
+            degraded=sum(r['delta_mean_pp'] < -1e-9 for r in family),tied=sum(abs(r['delta_mean_pp'])<=1e-9 for r in family),
+            significant_gain_24=sum(r['delta_mean_pp']>0 and r['holm_p_24']<.05 for r in family),
+            significant_decline_24=sum(r['delta_mean_pp']<0 and r['holm_p_24']<.05 for r in family),
+            mean_delta_pp=float(np.mean([r['delta_mean_pp'] for r in family])),
+            by_k={str(k):float(np.mean([r['delta_mean_pp'] for r in family if r['k']==k])) for k in (1,2,3,4)},
+            mean_fresh_inference_ratio=float(np.mean([r['fresh_inference_ratio'] for r in cost_rows])),
+            mean_train_step_ratio_historical=float(np.mean([r['train_step_ratio_historical'] for r in cost_rows])),
+            mean_peak_memory_delta_mib=float(np.mean([r['peak_memory_delta_mib'] for r in cost_rows]))))
+    result=dict(status='complete',group=GROUP,new_runs=480,reused_control_runs=240,summary=summaries,
+        paired_summary=paired,k_interactions=interactions,overview=overview,diagnostics=diagnostics['rows'],
+        pilot_reused=sum('reused_from' in r for r in runs if r['routing_method']!='mlp'),
+        failed_attempts=len(list((group/'full').rglob('failure.json')))+len(list((group/'pilot').rglob('failure.json'))),
+        minimum_weight_gradient=min(value for r in runs if r['routing_method']!='mlp' for value in r['scorer_weight_gradient_first'].values()),
+        statistics='Sample SD; descriptive paired t intervals, exact two-sided sign flip; 24 tests per predeclared variant family; '
+        '48-test Holm sensitivity has minimum attainable adjusted p>=0.09375 at n=10 and cannot reject at .05. '
+        'Splits overlap, one training seed each; exploratory interpretation only.')
+    save_json(ROOT/'results/mlp_components_analysis.json',result)
+    print(__import__('json').dumps(overview,indent=2))
+
+if __name__=='__main__':main()

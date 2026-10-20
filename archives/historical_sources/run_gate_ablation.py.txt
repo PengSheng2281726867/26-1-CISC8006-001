@@ -1,0 +1,316 @@
+"""Paired dynamic-routing ablation using the repository's heterophilic model."""
+
+import argparse
+import copy
+import csv
+from datetime import datetime, timezone
+import hashlib
+import importlib.metadata
+import itertools
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import time
+
+os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+
+import numpy as np
+from scipy import stats
+import torch
+import torch_geometric
+from torch_geometric.datasets import Actor, WebKB, WikipediaNetwork
+from torch_geometric.transforms import NormalizeFeatures
+
+
+PROJECT = Path(__file__).resolve().parent / "GAMMA"
+sys.path.insert(0, str(PROJECT))
+from gamma_multi_split import GAMMA_GNN, set_seed
+
+DATASETS = ("Texas", "Wisconsin", "Cornell", "Actor", "Squirrel", "Chameleon")
+SHAPES = {"Texas": (183, 1703), "Wisconsin": (251, 1703), "Cornell": (183, 1703),
+          "Actor": (7600, 932), "Squirrel": (5201, 2089), "Chameleon": (2277, 2325)}
+MODEL_KWARGS = dict(hidden_channels=32, num_layers=2, num_iterations=2, powers=[0, 1, 2])
+
+
+def sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def write_json(path, value):
+    path.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+
+
+def state_hash(state):
+    digest = hashlib.sha256()
+    for key, value in sorted(state.items()):
+        digest.update(key.encode("utf-8"))
+        array = value.detach().cpu().contiguous().numpy()
+        digest.update(str(array.dtype).encode("ascii"))
+        digest.update(str(array.shape).encode("ascii"))
+        digest.update(array.tobytes())
+    return digest.hexdigest()
+
+
+def rng_hash():
+    return hashlib.sha256(torch.get_rng_state().numpy().tobytes() +
+                          torch.cuda.get_rng_state().cpu().numpy().tobytes()).hexdigest()
+
+
+def load_dataset(name):
+    kwargs = dict(root=str(PROJECT / "data" / name), transform=NormalizeFeatures())
+    if name in ("Texas", "Wisconsin", "Cornell"):
+        return WebKB(name=name, **kwargs)
+    if name == "Actor":
+        return Actor(**kwargs)
+    return WikipediaNetwork(name=name.lower(), **kwargs)
+
+
+def load_masks(name, split, n, output):
+    path = PROJECT / "splits" / f"{name.lower()}_split_0.6_0.2_{split}.npz"
+    with np.load(path) as saved:
+        masks = [saved[key].copy() for key in ("train_mask", "val_mask", "test_mask")]
+    sizes = [int(mask.sum()) for mask in masks]
+    train_n, val_n = int(0.6 * n), int(0.2 * n)
+    assert all(mask.shape == (n,) and mask.dtype == np.bool_ for mask in masks)
+    assert np.all(np.stack(masks).sum(axis=0) == 1)
+    assert sizes == [train_n, val_n, n - train_n - val_n]
+    perm = torch.randperm(n, generator=torch.Generator().manual_seed(102 + split)).numpy()
+    for mask, indices in zip(masks, np.split(perm, [train_n, train_n + val_n])):
+        expected = np.zeros(n, dtype=np.bool_)
+        expected[indices] = True
+        assert np.array_equal(mask, expected)
+    shutil.copy2(path, output / "splits" / path.name)
+    return masks, dict(file=path.name, sha256=sha256(path), train=sizes[0], val=sizes[1],
+                       test=sizes[2], seed=102 + split)
+
+
+def train_variant(model, graph, route, seed, run_dir, kwargs):
+    start = time.perf_counter()
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.02, weight_decay=0.0001)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode="max", factor=0.5, patience=50, min_lr=1e-6)
+    criterion = torch.nn.CrossEntropyLoss()
+    best_val, best_epoch, stale, best_state = 0.0, 0, 0, None
+    n_val, n_test = int(graph.val_mask.sum()), int(graph.test_mask.sum())
+    with (run_dir / "trace.csv").open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["epoch", "train_loss", "val_correct", "val_size", "val_accuracy", "learning_rate", "improved"])
+        for epoch in range(1, 501):
+            model.train()
+            optimizer.zero_grad()
+            out = model(graph.x, graph.edge_index)
+            loss = criterion(out[graph.train_mask], graph.y[graph.train_mask])
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            optimizer.step()
+            model.eval()
+            with torch.no_grad():
+                pred = model(graph.x, graph.edge_index).argmax(dim=1)
+                val_correct = int((pred[graph.val_mask] == graph.y[graph.val_mask]).sum())
+                val_acc = val_correct / n_val
+            scheduler.step(val_acc)
+            improved = val_acc > best_val
+            if improved:
+                best_val, best_epoch, stale = val_acc, epoch, 0
+                best_state = copy.deepcopy(model.state_dict())
+            else:
+                stale += 1
+            writer.writerow([epoch, float(loss.detach()), val_correct, n_val, val_acc,
+                             optimizer.param_groups[0]["lr"], int(improved)])
+            if stale >= 50:
+                break
+    assert best_state is not None
+    model.load_state_dict(best_state)
+    model.eval()
+    with torch.no_grad():
+        predictions = model(graph.x, graph.edge_index).argmax(dim=1)
+        restored_val = int((predictions[graph.val_mask] == graph.y[graph.val_mask]).sum()) / n_val
+        test_correct = int((predictions[graph.test_mask] == graph.y[graph.test_mask]).sum())
+    assert restored_val == best_val, (restored_val, best_val)
+    cpu_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
+    result = dict(routing=route, seed=seed, test_correct=test_correct, test_size=n_test,
+                  test_accuracy=test_correct / n_test, best_val_accuracy=best_val,
+                  best_epoch=best_epoch, stopped_epoch=epoch, seconds=time.perf_counter() - start,
+                  trained_state_sha256=state_hash(cpu_state))
+    np.savez_compressed(run_dir / "predictions.npz", predictions=predictions.cpu().numpy(),
+                        labels=graph.y.cpu().numpy(), train_mask=graph.train_mask.cpu().numpy(),
+                        val_mask=graph.val_mask.cpu().numpy(), test_mask=graph.test_mask.cpu().numpy())
+    torch.save(dict(state_dict=cpu_state, model_kwargs=kwargs, routing=route, result=result),
+               run_dir / "model.pt")
+    result.update(trace_sha256=sha256(run_dir / "trace.csv"),
+                  predictions_sha256=sha256(run_dir / "predictions.npz"),
+                  checkpoint_sha256=sha256(run_dir / "model.pt"))
+    write_json(run_dir / "result.json", result)
+    return result
+
+
+def summarize_pairs(pairs):
+    on = np.array([pair["routing"]["test_accuracy"] for pair in pairs])
+    off = np.array([pair["uniform"]["test_accuracy"] for pair in pairs])
+    difference = (on - off) * 100
+    n = len(pairs)
+    se = float(np.std(difference, ddof=1) / np.sqrt(n)) if n > 1 else 0.0
+    radius = float(stats.t.ppf(0.975, n - 1) * se) if n > 1 else 0.0
+    signs = np.array(list(itertools.product((-1, 1), repeat=n)))
+    null_diffs = np.abs(np.mean(signs * difference, axis=1))
+    observed = float(abs(np.mean(difference)))
+    p = float(np.mean(null_diffs >= observed - 1e-12))
+    return dict(n=n, routing_mean=float(on.mean()), routing_std_ddof0=float(on.std()),
+                uniform_mean=float(off.mean()), uniform_std_ddof0=float(off.std()),
+                mean_difference_pp=float(difference.mean()), paired_differences_pp=difference.tolist(),
+                paired_t_ci95_pp=[float(difference.mean() - radius), float(difference.mean() + radius)],
+                exact_sign_flip_p_two_sided=p, wins=int((difference > 0).sum()),
+                ties=int((difference == 0).sum()), losses=int((difference < 0).sum()))
+
+
+def save_report(output, state):
+    summaries = {name: summarize_pairs(pairs) for name, pairs in state["pairs"].items() if pairs}
+    completed = [name for name, summary in summaries.items() if summary["n"] == 10]
+    ordered = sorted(completed, key=lambda name: summaries[name]["exact_sign_flip_p_two_sided"])
+    running = 0.0
+    for rank, name in enumerate(ordered):
+        p = summaries[name]["exact_sign_flip_p_two_sided"] * (len(ordered) - rank)
+        running = max(running, p)
+        summaries[name]["holm_adjusted_p"] = min(1.0, running)
+    state["summary"] = summaries
+    write_json(output / "results.json", state)
+    with (output / "summary.csv").open("w", newline="", encoding="utf-8-sig") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["dataset", "pairs", "routing_mean_percent", "routing_std_percent_ddof0",
+                         "uniform_mean_percent", "uniform_std_percent_ddof0", "difference_pp",
+                         "paired_t_ci95_lower_pp", "paired_t_ci95_upper_pp", "exact_sign_flip_p", "holm_p"])
+        for name, summary in summaries.items():
+            writer.writerow([name, summary["n"], summary["routing_mean"] * 100, summary["routing_std_ddof0"] * 100,
+                             summary["uniform_mean"] * 100, summary["uniform_std_ddof0"] * 100,
+                             summary["mean_difference_pp"], *summary["paired_t_ci95_pp"],
+                             summary["exact_sign_flip_p_two_sided"], summary.get("holm_adjusted_p")])
+    lines = ["# Paired dynamic-routing ablation", "", f"Status: {state['status']}", "",
+             "| Dataset | Pairs | Routing accuracy (%) | Uniform accuracy (%) | Difference (pp) | Approx. paired 95% CI (pp) | Holm p |",
+             "| --- | ---: | ---: | ---: | ---: | ---: | ---: |"]
+    for name, s in summaries.items():
+        lo, hi = s["paired_t_ci95_pp"]
+        p = s.get("holm_adjusted_p")
+        p_label = f"{p:.4f}" if p is not None else "pending"
+        lines.append(f"| {name} | {s['n']} | {s['routing_mean']*100:.2f} ± {s['routing_std_ddof0']*100:.2f} | "
+                     f"{s['uniform_mean']*100:.2f} ± {s['uniform_std_ddof0']*100:.2f} | {s['mean_difference_pp']:+.2f} | "
+                     f"[{lo:+.2f}, {hi:+.2f}] | {p_label} |")
+    lines += ["", "The only difference between variants is each GAMMA layer's use_routing flag. Both retain "
+              "powers [0,1,2], the same projection weights, trainable hop-channel scaling, LayerNorm, squash, "
+              "dropout, classifier, optimizer and training configuration. Both are trained from scratch. "
+              "For every split their initialized parameter tensors and initial CPU/CUDA RNG states are "
+              "checked to be identical. Variant order alternates across splits.", "",
+              "Upstream GAMMA_GNN is imported unchanged. Settings: hidden_channels=32, num_layers=2 "
+              "(one GAMMA layer plus the classifier), routing iterations=2, Adam lr=0.02, weight_decay=0.0001, "
+              "gradient clip=1, ReduceLROnPlateau factor=0.5/patience=50/min_lr=1e-6, max_epochs=500, "
+              "early-stopping patience=50. Saved 60/20/20 split seeds are 102–111 and training seeds 42–51.", "",
+              "For this new experiment both variants use deep copies of the best-validation state. "
+              "The upstream shallow-copy bug is corrected equally for both variants; original reproduction "
+              "results are therefore not reused as the gated baseline. Strict deterministic algorithms are "
+              "enabled with CUBLAS_WORKSPACE_CONFIG=:4096:8. Test labels are used only after training and "
+              "validation-based checkpoint selection. The chosen checkpoint is saved for every run.", "",
+              "Accuracy std uses ddof=0. Differences are paired routing minus uniform in percentage points. "
+              "Approximate 95% intervals use a paired t interval. Two-sided exact sign-flip p values enumerate "
+              "all 2^10 signs of the paired differences; Holm adjustment covers the completed dataset comparisons. "
+              "Repeated splits of one graph overlap and are not independent new datasets; inference is "
+              "exploratory and conditional on these fixed hyperparameters and this splitting protocol. "
+              "Neither a positive mean alone nor these experiments establish a universal benefit.", "",
+              "Artifacts: results.json/summary.csv, immutable source_snapshot/, data_audit.json, split_audit.json, "
+              "and runs/<dataset>/split_<index>/<routing|uniform>/{trace.csv,model.pt,predictions.npz,result.json}.", ""]
+    (output / "REPORT.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--datasets", nargs="+", choices=DATASETS, default=list(DATASETS))
+    parser.add_argument("--output")
+    args = parser.parse_args()
+    output = PROJECT / (args.output or datetime.now().strftime("results/gate_ablation_%Y%m%d_%H%M%S"))
+    output.mkdir(parents=True, exist_ok=False)
+    (output / "splits").mkdir()
+    assert torch.cuda.is_available()
+    torch.use_deterministic_algorithms(True)
+    torch.backends.cuda.matmul.allow_tf32 = False
+    torch.backends.cudnn.allow_tf32 = False
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    state = dict(status="running", started_at=datetime.now(timezone.utc).isoformat(),
+                 configuration=dict(model=MODEL_KWARGS, max_epochs=500, patience=50,
+                                    best_checkpoint="deep copy, validation only", deterministic=True,
+                                    cublas_workspace_config=os.environ["CUBLAS_WORKSPACE_CONFIG"]),
+                 environment=dict(python=sys.version, torch=torch.__version__, pyg=torch_geometric.__version__,
+                                  cuda=torch.version.cuda, gpu=torch.cuda.get_device_name(),
+                                  numpy=np.__version__, scipy=importlib.metadata.version("scipy")),
+                 sources={}, pairs={name: [] for name in args.datasets}, checks=[])
+    snapshot = output / "source_snapshot"
+    snapshot.mkdir()
+    for path in (PROJECT / "gamma_multi_split.py", PROJECT / "GAMMA_layer.py", Path(__file__)):
+        shutil.copy2(path, snapshot / path.name)
+        state["sources"][str(path)] = sha256(path)
+    git_prefix = ["git", "-c", f"safe.directory={PROJECT.as_posix()}", "-C", str(PROJECT)]
+    state["commit"] = subprocess.check_output([*git_prefix, "rev-parse", "HEAD"]).decode().strip()
+    data_audit, split_audit = {}, {}
+    save_report(output, state)
+    for name in args.datasets:
+        dataset = load_dataset(name)
+        graph = dataset[0]
+        assert tuple(graph.x.shape) == SHAPES[name] and graph.y.shape == (graph.num_nodes,)
+        assert int(graph.edge_index.min()) >= 0 and int(graph.edge_index.max()) < graph.num_nodes
+        assert torch.isfinite(graph.x).all()
+        data_audit[name] = dict(nodes=graph.num_nodes, features=graph.num_node_features, edges=graph.num_edges,
+                                processed_sha256=sha256(dataset.processed_paths[0]),
+                                raw_files={str(Path(p).relative_to(PROJECT)): sha256(p) for p in dataset.raw_paths})
+        write_json(output / "data_audit.json", data_audit)
+        split_audit[name] = []
+        kwargs = dict(in_channels=dataset.num_node_features, out_channels=dataset.num_classes, **MODEL_KWARGS)
+        graph = graph.to("cuda")
+        for split in range(10):
+            masks, split_record = load_masks(name, split, graph.num_nodes, output)
+            for key, mask in zip(("train_mask", "val_mask", "test_mask"), masks):
+                graph[key] = torch.from_numpy(mask).to("cuda")
+            split_audit[name].append(split_record)
+            write_json(output / "split_audit.json", split_audit)
+            pair = dict(split=split, training_seed=42 + split, split_sha256=split_record["sha256"])
+            initial_hash = initial_rng = None
+            for variant in (("routing", "uniform") if split % 2 == 0 else ("uniform", "routing")):
+                seed = 42 + split
+                set_seed(seed)
+                model = GAMMA_GNN(**kwargs).to("cuda")
+                for conv in model.convs:
+                    conv.use_routing = variant == "routing"
+                    assert conv.use_scale_params and conv.use_shared_weights and conv.use_squash
+                    assert conv.num_iterations == 2
+                digest, rng = state_hash(model.state_dict()), rng_hash()
+                if initial_hash is None:
+                    initial_hash, initial_rng = digest, rng
+                assert digest == initial_hash and rng == initial_rng
+                run_dir = output / "runs" / name.lower() / f"split_{split}" / variant
+                run_dir.mkdir(parents=True)
+                result = train_variant(model, graph, variant == "routing", seed, run_dir, kwargs)
+                result.update(initial_state_sha256=digest, initial_rng_sha256=rng,
+                              parameter_count=sum(parameter.numel() for parameter in model.parameters()),
+                              directory=str(run_dir.relative_to(output)))
+                write_json(run_dir / "result.json", result)
+                pair[variant] = result
+            assert pair["routing"]["parameter_count"] == pair["uniform"]["parameter_count"]
+            state["pairs"][name].append(pair)
+            save_report(output, state)
+            difference = 100 * (pair["routing"]["test_accuracy"] - pair["uniform"]["test_accuracy"])
+            print(f"{name} {split+1}/10: routing={pair['routing']['test_accuracy']*100:.2f}% "
+                  f"uniform={pair['uniform']['test_accuracy']*100:.2f}% delta={difference:+.2f} pp", flush=True)
+        summary = state["summary"][name]
+        print(f"DONE {name}: mean paired difference {summary['mean_difference_pp']:+.2f} pp", flush=True)
+    for path, digest in state["sources"].items():
+        assert sha256(path) == digest
+    for records in split_audit.values():
+        for record in records:
+            assert sha256(PROJECT / "splits" / record["file"]) == record["sha256"]
+    state.update(status="complete", finished_at=datetime.now(timezone.utc).isoformat())
+    save_report(output, state)
+    print(f"COMPLETE: {output / 'REPORT.md'}", flush=True)
+
+
+if __name__ == "__main__":
+    main()

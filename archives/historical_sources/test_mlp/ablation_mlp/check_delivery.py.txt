@@ -1,0 +1,60 @@
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json,sha256
+import csv
+import json
+import re
+import numpy as np
+
+def read(path):return json.loads(Path(path).read_text(encoding='utf-8'))
+def csvrows(filename):
+    with (ROOT/'results'/filename).open(encoding='utf-8-sig',newline='') as stream:return list(csv.DictReader(stream))
+
+def main():
+    group=ROOT/'runs/mlp_components_v1'
+    assert read(group/'full/verification.json')['checkpoints']==480
+    assert read(group/'full/verification.json')['status']=='passed'
+    assert read(ROOT/'results/mlp_components_preservation.json')['status']=='passed'
+    assert read(ROOT/'results/mlp_components_unit_tests.json')['passed']
+    raw=csvrows('mlp_components_runs.csv');summary=csvrows('mlp_components_summary.csv')
+    pairs=csvrows('mlp_components_paired.csv');pstats=csvrows('mlp_components_paired_summary.csv')
+    assert len(raw)==720 and len(summary)==72 and len(pairs)==480 and len(pstats)==48
+    lookup={(r['dataset'],r['k'],r['split_id'],r['routing_method']):r for r in raw};assert len(lookup)==720
+    checked=0
+    for r in raw:
+        directory=ROOT/r['run_directory'];report=read(directory/'result.json')
+        artifact=directory/report['artifact_subdir']
+        for name,digest in report['artifacts'].items():assert sha256(artifact/name)==digest
+        with np.load(artifact/'predictions.npz') as arrays:
+            assert np.isfinite(arrays['alpha']).all()
+            np.testing.assert_allclose(arrays['alpha'].sum(1),1,atol=2e-6)
+        checked+=1
+    for row in summary:
+        selected=[r for r in raw if all(r[key]==row[key] for key in ('dataset','k','routing_method'))]
+        assert len(selected)==10
+        values=np.array([float(r['test_accuracy']) for r in selected])
+        assert np.isclose(values.mean(),float(row['test_accuracy_mean']),atol=1e-14)
+        assert np.isclose(values.std(ddof=1),float(row['test_accuracy_std']),atol=1e-14)
+    for row in pairs:
+        base=lookup[row['dataset'],row['k'],row['split_id'],'mlp']
+        variant=lookup[row['dataset'],row['k'],row['split_id'],row['method']]
+        assert np.isclose(float(row['delta_pp']),100*(float(variant['test_accuracy'])-float(base['test_accuracy'])),atol=1e-12)
+    manifest=read(ROOT/'results/mlp_components_delivery_manifest.json')
+    assert manifest['report_sha256']==sha256(ROOT/'MLP_COMPONENT_REPORT.md')
+    broken=[];links=0
+    for path in [ROOT/'MLP_COMPONENT_REPORT.md',ROOT/'docs/11_mlp_component_results.md']:
+        text=path.read_text(encoding='utf-8');assert '\ufffd' not in text
+        for link in re.findall(r'\[[^\]]*\]\(([^)]+)\)',text):
+            if link.startswith(('http://','https://','#')):continue
+            links+=1
+            if not (path.parent/link).resolve().exists():broken.append(link)
+    assert not broken,broken
+    figures=read(ROOT/'results/mlp_components_plots.json')['figures'];assert len(figures)==14
+    for name in figures:assert (ROOT/'plots'/name).stat().st_size>10000 and (ROOT/'plots'/Path(name).with_suffix('.svg')).exists()
+    save_json(ROOT/'results/mlp_components_delivery_validation.json',dict(status='passed',new_runs=480,reused_control_runs=240,
+        checked_artifact_sets=checked,summary_groups=72,paired_comparisons=480,paired_summary_groups=48,
+        figures=len(figures),valid_local_links=links,broken_links=broken,all_statistics_recomputed=True))
+    print(f'DELIVERY PASSED: {checked} model records, 72 groups, 48 paired summaries, 14 figures, {links} links')
+
+if __name__=='__main__':main()

@@ -1,0 +1,208 @@
+{
+  "status": "passed",
+  "utc": "2026-10-20T12:31:05.783985+00:00",
+  "git": {
+    "commit": "a7fb5a1b0feb7d8ce93dbe2be8017db2bf214c5c",
+    "dirty": false,
+    "status": [],
+    "interpretation": "current run only; not a recovered execution commit"
+  },
+  "tests_run": 13,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "alignment_cases": [
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 1,
+      "r": 1,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 1,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 1,
+      "r": 3,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 2,
+      "r": 1,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 2,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 2,
+      "r": 3,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 3,
+      "r": 1,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 3,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 3,
+      "r": 3,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 4,
+      "r": 1,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 4,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "k": 4,
+      "r": 3,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 1,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 1,
+      "r": 2,
+      "training": true,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 2,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 2,
+      "r": 2,
+      "training": true,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 3,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 3,
+      "r": 2,
+      "training": true,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 4,
+      "r": 2,
+      "training": false,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    },
+    {
+      "device": "cuda",
+      "dtype": "torch.float32",
+      "k": 4,
+      "r": 2,
+      "training": true,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0
+    }
+  ],
+  "seconds": 1.5048256000154652,
+  "environment": {
+    "python": "3.12.14",
+    "torch": "2.8.0+cu128",
+    "pyg": "2.7.0",
+    "numpy": "2.5.2",
+    "cuda_available": true
+  },
+  "synthetic_only": true,
+  "dataset_downloaded": false,
+  "full_training_started": false,
+  "source_mapping_sha256": "27c355ace5788f15d1b60a94f585e828f7197a4cb306533e5d441fb55a5f2d28"
+}

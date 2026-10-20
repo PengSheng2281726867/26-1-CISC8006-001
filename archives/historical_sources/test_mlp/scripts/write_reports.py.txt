@@ -1,0 +1,332 @@
+"""Build reviewable Markdown deliverables from verified complete results."""
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json,sha256
+from scripts.analyze_results import DATASETS,write_csv
+import json
+import numpy as np
+
+def write(relative,text):
+    (ROOT/relative).write_text(text.strip()+'\n',encoding='utf-8')
+
+def table(headers,rows):
+    return '| '+' | '.join(headers)+' |\n| '+' | '.join(['---']*len(headers))+' |\n'+''.join(
+        '| '+' | '.join(map(str,row))+' |\n' for row in rows)
+
+def main():
+    result=json.loads((ROOT/'results/analysis.json').read_text(encoding='utf-8'))
+    verification=json.loads((ROOT/f"results/full_verification_{result['group']}.json").read_text(encoding='utf-8'))
+    isolation=json.loads((ROOT/'results/original_integrity.json').read_text(encoding='utf-8'))
+    diagnostic=json.loads((ROOT/'results/diagnostic_summary.json').read_text(encoding='utf-8'))
+    assert result['unique_runs']==verification['verified_runs']==480
+    assert diagnostic['status']=='complete' and diagnostic['runs']==480
+    assert verification['status']==isolation['status']=='passed'
+    lookup={(r['dataset'],r['k'],r['routing_method']):r for r in result['summary']}
+    pairs=result['paired_summary']
+    data=json.loads((ROOT/'data/manifest.json').read_text(encoding='utf-8'))
+    improvements=[r for r in pairs if r['delta_mean_pp']>1e-9]
+    declines=[r for r in pairs if r['delta_mean_pp'] < -1e-9]
+    significant=[r for r in pairs if r['holm_p']<.05]
+    significant_improvements=[r for r in significant if r['delta_mean_pp']>0]
+    significant_declines=[r for r in significant if r['delta_mean_pp']<0]
+    def accuracy(name,k,method):
+        r=lookup[name,k,method]
+        return f"{100*r['test_accuracy_mean']:.2f} ± {100*r['test_accuracy_std']:.2f}"
+    full_table=table(['Dataset','K','Dot Test % (mean ± SD)','MLP Test % (mean ± SD)',
+        'Δ (pp)','配对差 95% CI (pp)','Holm p'],[
+        [r['dataset'],r['k'],accuracy(r['dataset'],r['k'],'dot'),accuracy(r['dataset'],r['k'],'mlp'),
+         f"{r['delta_mean_pp']:+.2f}",f"[{r['ci95_low_pp']:+.2f}, {r['ci95_high_pp']:+.2f}]",f"{r['holm_p']:.4f}"] for r in pairs])
+    overview_table=table(['K','六数据集等权平均 Δ (pp)','均值改善','均值退化','均值相同'],[
+        [r['k'],f"{r['mean_delta_pp']:+.2f}",', '.join(r['improved']) or '无',
+         ', '.join(r['degraded']) or '无',', '.join(r['tied']) or '无'] for r in result['k_overview']])
+    cost=result['cost']
+    cost_table=table(['指标','成对比值均值 MLP/Dot','成对比值中位数'],[
+        [label,f"{cost[key]['mean']:.3f}×",f"{cost[key]['median']:.3f}×"] for key,label in [
+            ('train_step_ratio','每轮训练步骤'),('inference_ratio','推理（20次计时的均值）'),
+            ('inference_median_ratio','推理（20次计时的中位数）'),('peak_memory_ratio','训练峰值分配显存')]])
+    parameter_table=table(['Dataset','Dot 参数 K=1→4','MLP 参数 K=1→4','增幅范围'],[
+        [name,f"{int(lookup[name,1,'dot']['parameter_count_mean']):,} → {int(lookup[name,4,'dot']['parameter_count_mean']):,}",
+         f"{int(lookup[name,1,'mlp']['parameter_count_mean']):,} → {int(lookup[name,4,'mlp']['parameter_count_mean']):,}",
+         f"{211300/lookup[name,4,'dot']['parameter_count_mean']:.2f}%–{211300/lookup[name,1,'dot']['parameter_count_mean']:.2f}%"] for name in DATASETS])
+    data_rows=[];split_quality=[]
+    for name in DATASETS:
+        item=data[name]
+        missing_train=0;missing_val=0
+        for split in item['splits']:
+            missing_train+=int(0 in split['class_counts'][0]);missing_val+=int(0 in split['class_counts'][1])
+            split_quality.append(dict(dataset=name,split_id=split['split'],seed=split['seed'],
+                sizes=split['sizes'],class_counts=split['class_counts'],
+                absent_train_classes=[i for i,n in enumerate(split['class_counts'][0]) if n==0],
+                absent_validation_classes=[i for i,n in enumerate(split['class_counts'][1]) if n==0]))
+        data_rows.append([name,item['nodes'],item['features'],item['edges'],' / '.join(map(str,item['splits'][0]['sizes'])),
+            f'{missing_train}/10',f'{missing_val}/10'])
+    data_table=table(['Dataset','N','Features','Edges','Train / Val / Test','训练缺类划分','验证缺类划分'],data_rows)
+    write_csv(ROOT/'results/split_quality.csv',split_quality)
+    main_conclusion=(f'24 个 Dataset×K 比较中，MLP 有 {len(improvements)} 组均值改善、{len(declines)} 组均值下降、'
+        f'{24-len(improvements)-len(declines)} 组相同。Holm 校正后 {len(significant_improvements)} 组改善、'
+        f'{len(significant_declines)} 组下降达到探索性 p<0.05。')
+    # Do not make a universal superiority claim from selective positive cells.
+    hypothesis=('MLP 在部分数据集和 K 上出现均值改善，但本协议未获得经多重比较校正后可靠的提升证据；当前结果不足以支持“可学习 Agreement 比 Dot Product 更有效”。'
+        if not significant_improvements else 'MLP 在部分设置出现校正后显著改善，但结果不足以支持它普遍优于 Dot Product。')
+    changed_k=[r for r in result['k_interactions'] if r['holm_p']<.05]
+    k_statement=(f'K 相对 K=1 的 18 个配对差异变化检验中，有 {len(changed_k)} 个在单独 Holm 校正后 p<0.05。'
+        '这些是不同 K 下 MLP−Dot 收益的比较；不能只凭各方法分别随 K 上升或下降就断言交互效应。')
+    protocol='''主实验优先遵循官方 `gamma_multi_split.py` 的实际前向与训练设置：真正 1 个 GAMMA 层 + Linear 分类头（命令行 num_layers=2），D=32、R=2、powers=[0,...,K]、共享投影、hop 通道缩放、LayerNorm、原始 squash/bias。Adam lr=0.02、weight_decay=1e-4，输入/隐藏 Dropout=0.2/0.8，clip=1，最多500 epoch、patience=50，验证集严格改善选择最早最佳轮次。ReduceLROnPlateau factor=0.5、patience=50、min_lr=1e-6。
+
+双方一致将官方浅拷贝 Checkpoint 修复为 deepcopy；初始最佳验证值设为 -inf，确保首轮可保存。使用官方 create_splits 的 CPU randperm(102+split)，floor(60%) / floor(20%) / 剩余测试，训练种子42+split。相同 Split/方法/K 共用随机未训练 K=4 模型的公共参数，MLP 独立随机流跨 K 保持相同初值，训练 RNG 重新对齐。全部从随机初始化训练，无预训练权重。
+
+这与论文实验段的两 GNN 层、50/25/25、L2 Normalization、调参后固定500轮协议不同；不宣称精确复现论文 Table 1 数值。这里含0-hop，不将它直接等同于 Appendix B 的1–K hop标注；未额外运行powers=[1,...,K]。没有混入历史门控开关实验或不含0-hop的实验。'''
+    statistics='''每组10份固定 Split，SD 使用样本标准差 ddof=1（官方汇总使用 ddof=0，原始数值可自行转换）。Δ=MLP−Dot，单位为百分点；95% CI 为未做多重比较校正的配对差 t 区间，不能把不跨0直接当作Holm校正后显著。p 值为2^10种符号翻转的双侧精确枚举，24个主比较做 Holm 校正，18个 K 相对 K=1 的收益变化比较单独校正。这些划分来自同一张图且有节点重叠，不能视为10张独立图；CI和检验仅作探索性描述，不能外推为普遍规律。跨数据集等权平均也仅作摘要。'''
+    measurement=f'''所有运行在同一 RTX 5090、同一 Conda 环境中顺序执行，按 Split 奇偶交替方法先后次序。GPU 同步后计时；训练步骤包含前向、反向、有限值检查、梯度裁剪和 Adam 更新，单独记录验证和完整 epoch 时间。推理为数据已在 GPU 上、5次预热后20次完整图前向，不含加载/数据传输。小图计时容易受 Python/系统调度影响，额外保留中位数；本机为日常 Windows 桌面环境，未关闭其他应用或独占整卡，不能将亚毫秒级差异视为稳定硬件极限。
+
+显存为 PyTorch `max_memory_allocated / 1024²`（字段名 mb，实际 MiB），在图和模型已驻留后重置峰值，包含训练中工作区、优化器、最佳权重副本及激活。另存初始占用和峰值增量；不等同于整卡 nvidia-smi 占用。每次训练前对双方同样清理本进程 cuBLAS 工作区，已验证修复前后24个 Pilot 训练后权重完全相同。成对峰值显存增量均值为 {cost['peak_memory_delta_mb']['mean']:.3f} MiB。'''
+    write('docs/06_full_results.md',f'''# 第六阶段：完整实验与结果统计
+
+已完成 480/480 个唯一主矩阵单元，其中复用 {result['pilot_reused']} 个同协议 Pilot，未重复计数；失败尝试 {result['failure_attempts']} 个。全部480个 Checkpoint重新载入，预测、验证最佳轮次、划分哈希、初始化和MLP有效梯度校验通过。证据：`results/full_verification_{result['group']}.json`。
+
+{protocol}
+
+## 全结果
+
+{full_table}
+
+{statistics}
+
+{overview_table}
+
+{k_statement}
+
+## 参数与效率
+
+{parameter_table}
+
+{cost_table}
+
+{measurement}
+
+总计实际训练计时 {result['total_training_seconds']/60:.2f} 分钟；Full 调度本次调用耗时 {result['full_scheduler_seconds']/60:.2f} 分钟（Pilot计时另计，Full复用已有Pilot）。每轮日志和每份原始结果均保留，不用总训练时间替代单轮成本。
+
+原始数据：`results/full_runs.csv`（480行）、`summary.csv`（48组）、`paired_deltas.csv`（240对）、`paired_summary.csv`（24组）、`k_interactions.csv`（18组）、`hop_statistics.csv`。图位于 `plots/`，PNG与SVG均可复用。
+
+效率图片：[每轮训练](../plots/training_time.png)、[完整图推理](../plots/inference_time.png)、[峰值显存](../plots/gpu_memory.png)。
+''')
+    mechanism_rows=[]
+    for r in pairs:
+        name=r['dataset'];k=r['k'];dot=lookup[name,k,'dot'];mlp=lookup[name,k,'mlp']
+        mechanism_rows.append([name,k,f"{r['delta_mean_pp']:+.2f}",
+            f"{dot['gating_entropy_normalized_mean']:.3f} / {mlp['gating_entropy_normalized_mean']:.3f}",
+            f"{dot['centered_score_std_mean']:.3f} / {mlp['centered_score_std_mean']:.3f}",
+            f"{100*dot['max_weight_over_095_fraction_mean']:.1f} / {100*mlp['max_weight_over_095_fraction_mean']:.1f}",
+            f"{100*(dot['train_accuracy_mean']-dot['test_accuracy_mean']):.1f} / {100*(mlp['train_accuracy_mean']-mlp['test_accuracy_mean']):.1f}"])
+    failure_rows=[]
+    for r in sorted(declines,key=lambda row:row['delta_mean_pp']):
+        name=r['dataset'];k=r['k'];dot=lookup[name,k,'dot'];mlp=lookup[name,k,'mlp']
+        failure_rows.append([name,k,f"{r['delta_mean_pp']:+.2f}",f"{r['wins']}/{r['ties']}/{r['losses']}",
+            f"{100*dot['train_accuracy_mean']:.1f}/{100*mlp['train_accuracy_mean']:.1f}",
+            f"{100*dot['val_accuracy_mean']:.1f}/{100*mlp['val_accuracy_mean']:.1f}",f"{r['holm_p']:.4f}"])
+    entropy_change=[]
+    for name in DATASETS:
+        for method in ('dot','mlp'):
+            entropy_change.append([name,method,f"{lookup[name,1,method]['gating_entropy_normalized_mean']:.3f}",
+                f"{lookup[name,4,method]['gating_entropy_normalized_mean']:.3f}",
+                f"{lookup[name,4,method]['mean_cross_hop_cosine_mean']:.3f}"])
+    initial_score_table=table(['Dataset','Method','初始→最终中心化score SD','初始→最终归一化熵','最终集中节点%'],[
+        [r['dataset'],r['routing_method'],f"{r['initial_centered_score_std']:.4f} → {r['final_centered_score_std']:.3f}",
+         f"{r['initial_entropy_normalized']:.3f} → {r['final_entropy_normalized']:.3f}",
+         f"{100*r['final_saturated_fraction']:.1f}"] for r in diagnostic['summary']])
+    diagnostic_text=f'''## 追加的只读验证：初始尺度与训练轨迹
+
+重新构建全部480个运行的随机初始模型，验证公共初值哈希，再评估其评分尺度；与保存的最佳模型诊断对照。此阶段未训练、未修改Checkpoint或主结果。下表跨K和Split等权平均，细分数据保存在 `score_diagnostics.csv`。
+
+{initial_score_table}
+
+初始MLP和Dot的评分尺度/门控分布并不相同，这是替换函数本身带来的差异，主实验没有加入额外温度来消除它。最终集中度变化说明优化确实改变了门控；若某组MLP分数过大且熵低，只能提出饱和候选解释，不能据此证明其造成分类退化。按数据集计算的描述性Spearman关联保存在 `diagnostic_summary.json`，因混合K和seed且非因果，不以关联系数宣称机制证据。
+
+实际观察到两类不同表现。Texas、Wisconsin、Cornell的MLP集中节点比例跨K平均为73%–86%，明显高于Dot的26%–29%；Wisconsin在K=2/3/4均值下降，因此更尖锐的门控值得后续排查。但Squirrel的MLP反而更均匀且四个K均退化，不能用同一个“过度饱和”解释所有失败。Chameleon更均匀而均值改善，Actor更集中而均值改善，说明熵的方向本身不足以判断优劣。
+
+此外，Texas/Wisconsin内部40次MLP运行中，集中节点比例与准确率的描述性相关系数反而为正（约0.54/0.43）；Squirrel也为正（约0.66）。这些反例不支持简单宣称“门控越饱和准确率越低”，可能混有K与优化状态的共同影响。Squirrel的K=1测试标准差由Dot的0.80增至MLP的2.37个百分点，而K=4两者为1.63/1.46；该数据集既有部分设置方差增大，也有方差未增但均值下降的设置，不能统一归结为随机不稳定。
+
+逐epoch轨迹显示，发生学习率下降的运行数为 {diagnostic['learning_rate_reduced_runs']}/480；达到500轮预算的运行数为 {diagnostic['epoch_budget_exhausted_runs']}/480。官方scheduler和early-stop同设patience=50，而scheduler通常在第51个不改善轮次才降低LR，early-stop已可能在第50轮停止。双方保留同一行为，没有只延长MLP训练或放宽其早停。每次运行的loss、裁剪前梯度范数和学习率记录见 `training_diagnostics.csv`；每类预测大小/正确数见 `class_diagnostics.csv`。
+'''
+    write('docs/08_mechanism_analysis.md',f'''# 第七阶段：失败案例与机制分析
+
+{main_conclusion} {hypothesis}
+
+## 全部均值下降组合
+
+{table(['Dataset','K','Δ pp','MLP胜/平/负 Split','Train% Dot/MLP','Val% Dot/MLP','Holm p'],failure_rows) if failure_rows else '无均值下降组合。'}
+
+每一行均作为主实验结果接受，保留原 Checkpoint、每轮轨迹和测试预测。没有为了提高 MLP 分数修改网络、划分、种子或只调一方超参数；修改前后性能表因此不存在未经披露的筛选版本。已有版本迭代只修复测量工作区，见 `07_failures_and_fixes.md`。
+
+## 梯度、评分尺度与门控集中度
+
+全部240个MLP训练均有有限且非零的首轮参数梯度、训练后的参数变化和重载预测。首轮scorer梯度范数最小为 {result['mlp_gradient_min']:.8f}。单元测试进一步验证了两个权重矩阵和首轮agreement的梯度，因此可排除“MLP根本没有参与分类训练”这一实现故障。不能由非零梯度推导收敛充分或必然有益。
+
+下表 entropy 已除以 log(K+1)，越接近1越均匀；centered score SD 先减去每节点各hop均值，更能反映softmax真正看到的差异。集中节点指最大alpha>0.95。全部使用第二轮融合实际采用的alpha，不使用官方辅助函数额外更新后的系数。
+
+{table(['Dataset','K','Δ pp','熵 Dot/MLP','中心化score SD Dot/MLP','集中节点% Dot/MLP','Train−Test pp Dot/MLP'],mechanism_rows)}
+
+这些指标用于识别分数尺度差异、过度集中或近均匀权重的候选原因。训练−测试间隙较大与过拟合相容，但不能单凭它将MLP退化因果归结为过拟合；验证早停、类别分布、优化随机性及评分归纳偏置都可能影响结果。两组共有初值和dropout初始RNG一致，已减少初始化混杂；每Split仅一个训练seed，仍不能分离划分变化与优化seed变化。
+
+{diagnostic_text}
+
+## K、均匀性和过平滑候选指标
+
+{table(['Dataset','Method','K1归一化熵','K4归一化熵','K4跨hop cosine'],entropy_change)}
+
+跨hop cosine表示同一节点不同hop向量相似程度；`hop_statistics.csv`还保存每hop随机节点对cosine，供观察更大传播范围是否更同质。它们受投影、可学习缩放、LayerNorm和图结构共同影响，只是过平滑代理，不能证明传播导致了准确率变化。原代码没有给邻接做额外度归一化，本实验忠实保留；数值有限检查全部通过。
+
+{k_statement}
+
+门控均值/节点分布/归一化熵/集中度图见 `hop_weights.png`、`gate_concentration_k4.png`、`gating_entropy.png`。高权重不等于高分类贡献；本实验未做逐hop因果删除或反事实重训练，不能作该解释。
+
+图片：[Hop权重](../plots/hop_weights.png)、[节点集中度分布](../plots/gate_concentration_k4.png)、[门控熵](../plots/gating_entropy.png)。
+
+## 数据划分与方差来源
+
+{data_table}
+
+缺类是官方非分层随机划分的实际结果，未修改划分来改善任何方法。Texas/Cornell每Split测试仅38节点，单个预测变化约2.63个百分点；Wisconsin为51节点，单个约1.96个百分点，种子波动不可忽略。两种方法始终加载相同文件；训练/验证/测试mask互斥完整；测试标签替换试验不改变训练轨迹和选中权重。完整图特征与边用于传导式分类，测试标签未进入训练或模型选择。
+
+## 后续价值与未检验因素
+
+{hypothesis} 后续可以在独立组中增加每Split多个seed、严格论文协议或不含0-hop的Appendix B设置，并对两组同时进行相同预算的验证集调参。评分尺度/宽度或Normalization新方案必须用新版本、新协议组独立报告，不覆盖当前主矩阵。本文只检验指定共享32宽MLP替换，未检验所有可学习评分函数。
+''')
+    write('FINAL_REPORT.md',f'''# GAMMA Dot Product vs MLP Routing：完整实验报告
+
+480/480次主矩阵训练已完成，全部Checkpoint和预测校验通过，原项目{isolation['original_files_before']:,}个文件的内容/修改时间及Git状态均与任务开始一致。官方快照提交 `36d054b4ae53c0c8e360d85d056f5207d61c8281` 未修改。
+
+## 结论
+
+独立Dot Baseline成功复现官方网络的实际前向与梯度，20个CPU/CUDA对齐子案例通过。MLP仅替换agreement，240个MLP运行均通过端到端梯度和参数更新检查，每个模型新增2,113个参数。这里是源码协议复现，不是论文Table 1数值的严格复现。
+
+{main_conclusion} {hypothesis}
+
+{overview_table}
+
+{k_statement}
+
+## 每个数据集与K的完整结果
+
+{full_table}
+
+{statistics}
+
+![Accuracy vs K](plots/accuracy_overview.png)
+
+![Paired delta](plots/delta_accuracy.png)
+
+## 协议与可信度
+
+{protocol}
+
+原始论文：[作者PDF](https://amir-ghz.github.io/PDFs/GAMMA.pdf)；官方实现：[amir-ghz/GAMMA](https://github.com/amir-ghz/GAMMA)。源码/论文差异逐项见[源码审计](docs/01_source_audit.md)。独立实现只读取官方快照；数据与固定Split、临时缓存、训练与分析产物均在test_mlp内。
+
+先通过原版一致性与MLP梯度/传播范围/标签隔离测试，再完成24次Pilot，随后补足480个唯一矩阵单元（含{result['pilot_reused']}个可复用Pilot）。v1资源基线漂移修复后建立v2组，24个对应模型训练后权重完全相同；主实验未依据Pilot结果调参。正式训练失败尝试数：{result['failure_attempts']}。结果校验文件为[full verification](results/full_verification_{result['group']}.json)及[original integrity](results/original_integrity.json)。
+
+## 参数与计算代价
+
+{parameter_table}
+
+{cost_table}
+
+{measurement}
+
+MLP评分单次每节点每hop约2,080个MAC（64×32+32×1，不含偏置/ReLU）；Dot约32个MAC。整个前向调用R次评分，所以MLP约R×N×(K+1)×2,080 MAC。该约65倍仅针对评分本身，不能当作完整模型耗时倍数；共享投影、传播、归一化和分类仍保持相同。官方最后一次score虽不影响本次输出仍照常计算，两组计时都保留此行为。
+
+效率图片：[每轮训练](plots/training_time.png)、[完整图推理](plots/inference_time.png)、[峰值显存](plots/gpu_memory.png)。
+
+总训练计时约{result['total_training_seconds']/60:.2f}分钟，Full调度本次调用约{result['full_scheduler_seconds']/60:.2f}分钟；每次运行的轮数、时间、loss、参数和显存都可在CSV与epochs.csv追溯。
+
+## 局限性与机制结论
+
+MLP有效梯度最小范数为{result['mlp_gradient_min']:.8f}，可排除评分器未训练的实现错误。评分尺度、门控熵、饱和比例、各hop权重分布、过拟合间隙和cosine代理详见[机制与失败分析](docs/08_mechanism_analysis.md)，所有下降组合均已保留。权重不是因果贡献；没有在主结果上额外调参或增加模块。
+
+三个小图上MLP通常产生更尖锐的门控，但Squirrel上的MLP更均匀却持续退化；Chameleon更均匀、Actor更集中，两者都有均值改善。因此不能把饱和或均匀性单独当作失败/成功原因。全部480次训练都提前停止且没有触发scheduler降LR，这是官方训练策略的实际结果，未为了MLP单独延长训练。
+
+仅六张图、10个重叠固定Split，每Split一个训练seed；源码协议与论文不同；全部含0-hop；没有单独证明MLP收益源自“可学习性”而非新增容量；没有独立硬件上的效率重复测量。因此不能将结果外推到所有数据、所有可学习scorer或严格论文协议。未来研究应增加独立seed与数据集，并用统一预算检验评分尺度或容量控制方案。
+
+## 交付与重跑
+
+- [README与一键命令](README.md)
+- [480次原始结果CSV](results/full_runs.csv)、[48组Mean±SD](results/summary.csv)、[240个配对差](results/paired_deltas.csv)
+- [K交互比较](results/k_interactions.csv)、[Hop统计](results/hop_statistics.csv)、[划分类别审计](results/split_quality.csv)
+- [训练/推理/显存完整报告](docs/06_full_results.md)、[版本记录](docs/VERSIONS.md)、[异常修复](docs/07_failures_and_fixes.md)
+- `runs/v2/full/` 下每次独立训练的model.pt、epochs.csv、predictions.npz、result.json全部保留；PNG与可编辑SVG位于plots/。
+
+不存在未完成主矩阵任务。论文PDF本地下载传输失败，但论文相关内容已通过网页PDF核验；不将此描述为本地PDF下载成功。
+''')
+    write('README.md',f'''# GAMMA Dot Product / MLP Routing 独立实验
+
+已完成全部480个主矩阵训练与逐Checkpoint校验。{main_conclusion} {hypothesis}
+
+最终结果与图见 [FINAL_REPORT.md](FINAL_REPORT.md)，原始每Split结果见 [results/full_runs.csv](results/full_runs.csv)。
+
+## 环境
+
+训练复用 `REDACTED_LOCAL_PATH'analysis_environment']['executable']}`，版本见 `results/analysis.json` 与 `plot_manifest.json`。未安装/升级其他项目依赖。
+
+## 一键执行与断点续跑
+
+在PowerShell中：
+
+```powershell
+Set-Location 'REDACTED_LOCAL_PATH'
+.\\scripts\\run_all.ps1
+```
+
+可通过 `-TrainingPython`、`-PlotPython` 指定兼容Python路径。脚本首次才准备快照/数据；已存在的固定数据与Split不重写。已完成且三个产物哈希校验通过的训练不会重复运行；中断的单次训练从头重试，失败尝试保留。默认额外重试2次，必要时Full命令增加 `--extra-retries 1`。协议源码或配置变化会被拒绝混入原组，修改后必须指定新 `--group` 并独立报告。
+
+单独继续主实验：
+
+```powershell
+& 'REDACTED_LOCAL_PATH' -B -u scripts/run_experiments.py --phase full --group v2
+& 'REDACTED_LOCAL_PATH' -B scripts/verify_runs.py --phase full --group v2
+python -B scripts/analyze_results.py --group v2
+& 'REDACTED_LOCAL_PATH' -B scripts/diagnose_results.py
+python -B scripts/plot_results.py
+& 'REDACTED_LOCAL_PATH' -B scripts/verify_isolation.py
+python -B scripts/write_reports.py
+```
+
+原版与MLP测试：使用训练Python运行 `-B tests/test_baseline.py`、`-B tests/test_mlp.py`、`-B tests/test_resume.py`。不要直接再次运行bootstrap.py或强制重建既有数据；其初始原目录审计基准不能被覆盖。Full重复调用的调度耗时只表示该次调用，逐运行training_seconds不变。
+
+## 模型与协议
+
+统一模型入口：`src.model.GammaNet(..., routing_score='dot'|'mlp', powers=list(range(K+1)), num_layers=2, num_iterations=2)`。num_layers包含Linear头，实际只有1个GAMMA层。MLP是共享Linear(64,32)→ReLU→Linear(32,1)，只替换Hop Agreement；新增2,113参数，与K无关。配置见 `configs/main.json`、`configs/pilot.json`。主框架的factory固定D=32/R=2/一层及源码Dropout；这些字段完整记录主协议，如研究其他结构应同步修改实现并建立新组。
+
+{protocol}
+
+## 隔离和目录
+
+原项目只读，快照来自Git对象中的官方提交，既有工作树改动未修改或回退。`docs/provenance.json`、原目录before/after文件清单、Git状态和 `results/original_integrity.json` 提供内容/时间戳证据；不读取.env密钥、不调用LLM API。Python以-B运行，缓存和临时目录由src.paths重定向到本实验cache/。
+
+- `upstream_snapshot/`：7个不可变官方文件；`src/`：独立模型、数据、初始化、训练。
+- `configs/`、`tests/`、`scripts/`：冻结配置、验证、训练/汇总/绘图入口。
+- `data/`：独立复制的原始数据缓存与持久化60份固定Split。
+- `runs/v2/`：主协议、环境、源码副本、Pilot与Full的全部日志/Checkpoint/预测。
+- `runs/v1/`：保留早期显存测量问题的Pilot，不参与主结果统计。
+- `results/`、`plots/`、`docs/`：CSV/JSON、PNG/SVG、各阶段报告与版本/失败记录。
+''')
+    doc=ROOT/'docs/02_baseline_reproduction.md'
+    content=doc.read_text(encoding='utf-8').split('\n## 已完成 Full Baseline 指标')[0]
+    baseline_table=table(['Dataset']+[f'K={k} Test% mean±SD' for k in range(1,5)],[
+        [name]+[accuracy(name,k,'dot') for k in range(1,5)] for name in DATASETS])
+    doc.write_text(content.rstrip()+'\n\n## 已完成 Full Baseline 指标\n\n'+baseline_table+
+        '\n240个Dot训练与240个MLP训练全部完成，480个Checkpoint重新载入验证通过。以上是源码协议加统一Checkpoint修复的结果；canonical K=4公共初始化用于公平控制变量，不要求与官方脚本逐随机数相同。\n',encoding='utf-8')
+    version=ROOT/'docs/VERSIONS.md';content=version.read_text(encoding='utf-8').split('\n## v2_full 验收与分析工具')[0]
+    version.write_text(content.rstrip()+f'''\n\n## v2_full 验收与分析工具
+
+- 主模型、训练器和runner在Full开始前冻结，协议哈希 `{result['protocol_sha256']}`；Full期间未修改核心源码或配置。
+- 新增只读汇总、配对统计、静态绘图、原目录完整性验证和报告生成脚本，均写入test_mlp；没有修改训练数学或重选结果。
+- 验证：480个完整结果、全部Checkpoint重载与预测校验、240个MLP有效梯度、24个Pilot复用、{result['failure_attempts']}个训练失败尝试；原目录与不可变快照完整性通过。
+- 汇总采用样本SD；统计检验为探索性并做多重比较校正。报告包含所有下降组合和资源代价，不根据结果追加只针对MLP的调参。
+''',encoding='utf-8')
+    files=['FINAL_REPORT.md','README.md','docs/06_full_results.md','docs/08_mechanism_analysis.md',
+        'results/full_runs.csv','results/summary.csv','results/paired_deltas.csv','results/paired_summary.csv']
+    save_json(ROOT/'results/delivery_manifest.json',dict(status='complete',runs=480,
+        protocol_sha256=result['protocol_sha256'],reports={name:sha256(ROOT/name) for name in files}))
+    print(main_conclusion);print(hypothesis);print('Wrote final report, README, stage reports and delivery manifest.')
+
+if __name__=='__main__':main()

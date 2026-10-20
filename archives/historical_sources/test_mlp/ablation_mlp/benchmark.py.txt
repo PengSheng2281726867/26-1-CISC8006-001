@@ -1,0 +1,48 @@
+"""Contemporaneous inference timings for all three trained scorers."""
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json
+from src.data import load_dataset
+from src.factory import configure_determinism
+from src.train import inference_benchmark
+from scripts.analyze_results import write_csv,DATASETS
+from ablation_mlp.model import ComponentNet
+from ablation_mlp.run import GROUP,read,complete,baseline,signature
+import gc
+import torch
+
+def main():
+    group=ROOT/'runs'/GROUP
+    assert read(group/'full/verification.json')['status']=='passed'
+    fingerprint,_=signature();configure_determinism();rows=[]
+    for name in DATASETS:
+        dataset=load_dataset(name);graph=dataset[0].to('cuda')
+        for k in (1,2,3,4):
+            for split in range(10):
+                methods=['mlp','mlp_ln','mlp_gelu'];offset=split%3
+                methods=methods[offset:]+methods[:offset]
+                if k%2==0:methods.reverse()
+                for method in methods:
+                    if method=='mlp':folder,report=baseline(name,k,split)
+                    else:
+                        folder=group/'full'/name.lower()/f'k_{k}'/f'split_{split}'/method
+                        report=complete(folder,fingerprint);assert report is not None
+                    torch.cuda.synchronize();gc.collect();torch._C._cuda_clearCublasWorkspaces();torch.cuda.empty_cache()
+                    checkpoint=torch.load(folder/report['artifact_subdir']/'model.pt',map_location='cpu',weights_only=True)
+                    model=ComponentNet(**checkpoint['model_kwargs']).to('cuda')
+                    model.load_state_dict(checkpoint['state_dict']);model.eval()
+                    stats=inference_benchmark(model,graph,warmup=5,repeats=20)
+                    rows.append(dict(dataset=name,k=k,split_id=split,routing_method=method,
+                        trained_state_sha256=report['trained_state_sha256'],**stats))
+                    del model,checkpoint;gc.collect();torch.cuda.empty_cache()
+        del graph,dataset
+        print('BENCHMARKED',name,flush=True)
+    assert len(rows)==720
+    write_csv(ROOT/'results/mlp_components_inference.csv',rows)
+    save_json(ROOT/'results/mlp_components_inference.json',dict(status='complete',runs=720,rows=rows,
+        protocol='All three trained scorers measured in one process, rotating order; five warmups, 20 synchronized repeats; '
+                 'GPU-resident full-graph forward, eval/no_grad; no training or checkpoint changes.'))
+    print('ALL 720 INFERENCE BENCHMARKS COMPLETE',flush=True)
+
+if __name__=='__main__':main()

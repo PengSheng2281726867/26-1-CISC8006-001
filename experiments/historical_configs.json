@@ -1,0 +1,48 @@
+{
+  "readme": {
+    "source": "authors scripts in upstream snapshot; commands retained per record",
+    "best_checkpoint": "shallow copy",
+    "determinism": "not strict"
+  },
+  "early_gate": {
+    "model": {
+      "hidden_channels": 32,
+      "num_layers": 2,
+      "num_iterations": 2,
+      "powers": [
+        0,
+        1,
+        2
+      ]
+    },
+    "max_epochs": 500,
+    "patience": 50,
+    "best_checkpoint": "deep copy, validation only",
+    "deterministic": true,
+    "cublas_workspace_config": ":4096:8"
+  },
+  "gate_sweep": {
+    "model": {
+      "hidden_channels": 32,
+      "num_layers": 2,
+      "num_iterations": 2,
+      "powers": [
+        0,
+        1,
+        2
+      ]
+    },
+    "canonical_powers": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "shared_canonical_initialization": true,
+    "max_epochs": 500,
+    "patience": 50,
+    "deterministic": true
+  },
+  "caution": "Recovered descriptions; no retroactive approval or execution Git commit."
+}

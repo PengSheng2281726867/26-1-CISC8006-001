@@ -1,0 +1,28 @@
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json,sha256
+from ablation_mlp.run import complete
+import tempfile
+import unittest
+
+class ResumeTests(unittest.TestCase):
+    def test_hash_status_protocol_and_partial_detection(self):
+        with tempfile.TemporaryDirectory(prefix='component_resume_',dir=ROOT/'cache/tmp') as temporary:
+            folder=Path(temporary);artifact=folder/'attempt_01';artifact.mkdir()
+            self.assertIsNone(complete(folder,'test_protocol'))
+            for name in ('model.pt','predictions.npz','epochs.csv'):(artifact/name).write_bytes(b'fixture')
+            report=dict(status='complete',protocol_sha256='test_protocol',artifact_subdir=artifact.name,
+                artifacts={name:sha256(artifact/name) for name in ('model.pt','predictions.npz','epochs.csv')})
+            save_json(folder/'result.json',report)
+            self.assertEqual(complete(folder,'test_protocol'),report)
+            with self.assertRaises(AssertionError):complete(folder,'different_protocol')
+            (artifact/'model.pt').write_bytes(b'corrupt')
+            self.assertIsNone(complete(folder,'test_protocol'))
+            (artifact/'model.pt').write_bytes(b'fixture');(artifact/'epochs.csv').unlink()
+            self.assertIsNone(complete(folder,'test_protocol'))
+
+if __name__=='__main__':
+    result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(ResumeTests))
+    save_json(ROOT/'results/mlp_components_resume_tests.json',dict(passed=result.wasSuccessful(),tests_run=result.testsRun))
+    sys.exit(0 if result.wasSuccessful() else 1)

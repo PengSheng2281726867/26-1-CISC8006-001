@@ -1,0 +1,98 @@
+"""Read-only initial/final score diagnostics and per-class prediction analysis."""
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json,tensor_hash
+from src.data import load_dataset
+from src.factory import build_model,configure_determinism
+from src.train import mechanism_metrics
+from scripts.analyze_results import DATASETS,write_csv
+import json
+import csv
+import numpy as np
+import torch
+from scipy import stats
+
+def main():
+    analysis=json.loads((ROOT/'results/analysis.json').read_text(encoding='utf-8'))
+    assert analysis['unique_runs']==480
+    configure_determinism();rows=[];classes=[];training=[];shared_initial={}
+    for name in DATASETS:
+        dataset=load_dataset(name);graph=dataset[0].to('cuda')
+        for k in range(1,5):
+            for split in range(10):
+                for method in ('dot','mlp'):
+                    folder=ROOT/'runs'/analysis['group']/'full'/name.lower()/f'k_{k}'/f'split_{split}'/method
+                    report=json.loads((folder/'result.json').read_text(encoding='utf-8'))
+                    model,meta=build_model(dataset.num_node_features,dataset.num_classes,k,method,42+split)
+                    assert meta['full_init_sha256']==report['full_init_sha256']
+                    shared_hash=tensor_hash({key:value for key,value in model.state_dict().items() if '.scorer.' not in key})
+                    key=(name,k,split);shared_initial.setdefault(key,shared_hash)
+                    assert shared_initial[key]==shared_hash,'All shared rows, including higher-hop scaling, must match'
+                    model.eval()
+                    with torch.no_grad():
+                        _,details=model(graph.x,graph.edge_index,return_diagnostics=True)
+                        initial=mechanism_metrics(details)
+                    row=dict(dataset=name,k=k,split_id=split,routing_method=method,
+                        full_common_init_sha256=shared_hash,
+                        initial_centered_score_std=initial['centered_score_std'],
+                        final_centered_score_std=report['centered_score_std'],
+                        initial_entropy_normalized=initial['gating_entropy_normalized'],
+                        final_entropy_normalized=report['gating_entropy_normalized'],
+                        initial_saturated_fraction=initial['max_weight_over_095_fraction'],
+                        final_saturated_fraction=report['max_weight_over_095_fraction'],
+                        train_test_gap=report['train_accuracy']-report['test_accuracy'],
+                        train_val_gap=report['train_accuracy']-report['val_accuracy'],
+                        test_accuracy=report['test_accuracy'])
+                    rows.append(row)
+                    with (folder/report['artifact_subdir']/'epochs.csv').open(newline='',encoding='utf-8') as handle:
+                        history=list(csv.DictReader(handle))
+                    lrs=np.array([float(r['learning_rate']) for r in history])
+                    norms=np.array([float(r['gradient_norm_before_clip']) for r in history])
+                    training.append(dict(dataset=name,k=k,split_id=split,routing_method=method,
+                        epochs=len(history),best_epoch=report['best_validation_epoch'],
+                        first_loss=float(history[0]['train_loss']),best_epoch_loss=report['train_loss_at_best'],
+                        last_loss=float(history[-1]['train_loss']),learning_rate_first=float(lrs[0]),
+                        learning_rate_final=float(lrs[-1]),learning_rate_min=float(lrs.min()),
+                        learning_rate_reduced=bool(lrs.min()<lrs[0]),
+                        gradient_norm_mean=float(norms.mean()),gradient_norm_max=float(norms.max()),
+                        gradient_clipped_fraction=float((norms>1).mean())))
+                    with np.load(folder/report['artifact_subdir']/'predictions.npz') as saved:
+                        target=saved['labels'];pred=saved['predictions']
+                        for part in ('train','val','test'):
+                            mask=saved[f'{part}_mask']
+                            for label in range(dataset.num_classes):
+                                selected=mask & (target==label);count=int(selected.sum())
+                                correct=int((pred[selected]==label).sum())
+                                classes.append(dict(dataset=name,k=k,split_id=split,routing_method=method,
+                                    partition=part,label=label,size=count,correct=correct,
+                                    accuracy=correct/count if count else ''))
+                    del model,details
+        del dataset,graph;torch.cuda.empty_cache()
+        print('DIAGNOSED',name,flush=True)
+    write_csv(ROOT/'results/score_diagnostics.csv',rows)
+    write_csv(ROOT/'results/class_diagnostics.csv',classes)
+    write_csv(ROOT/'results/training_diagnostics.csv',training)
+    summary=[];associations=[]
+    for name in DATASETS:
+        for method in ('dot','mlp'):
+            selected=[r for r in rows if r['dataset']==name and r['routing_method']==method]
+            summary.append(dict(dataset=name,routing_method=method,n=len(selected),**{
+                key:float(np.mean([r[key] for r in selected])) for key in selected[0] if key not in
+                ('dataset','k','split_id','routing_method','full_common_init_sha256')}))
+        # Within-dataset Spearman correlations: descriptive, pooled K and seeds.
+        selected=[r for r in rows if r['dataset']==name and r['routing_method']=='mlp']
+        for key in ('final_centered_score_std','final_entropy_normalized','final_saturated_fraction','train_val_gap'):
+            x=[r[key] for r in selected];y=[r['test_accuracy'] for r in selected]
+            coefficient=float(stats.spearmanr(x,y).statistic) if len(set(x))>1 else None
+            associations.append(dict(dataset=name,predictor=key,spearman_rho=coefficient,
+                note='Descriptive association over 40 MLP runs; K/seed confounding; no causal interpretation.'))
+    save_json(ROOT/'results/diagnostic_summary.json',dict(status='complete',runs=len(rows),
+        summary=summary,associations=associations,
+        learning_rate_reduced_runs=sum(r['learning_rate_reduced'] for r in training),
+        epoch_budget_exhausted_runs=sum(r['epochs']==500 for r in training),
+        training_modified=False,trained_checkpoints_modified=False,shared_initialization_all_hops=True,
+        note='Additional evaluations of reconstructed random initial models and saved final predictions; no tuning.'))
+    print('All 480 read-only diagnostics saved.')
+
+if __name__=='__main__':main()

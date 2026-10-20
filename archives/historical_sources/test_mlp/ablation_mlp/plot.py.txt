@@ -1,0 +1,92 @@
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json
+import json
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+NAMES=['Texas','Wisconsin','Cornell','Chameleon','Squirrel','Actor']
+METHODS=['mlp','mlp_ln','mlp_gelu']
+LABELS={'mlp':'MLP (ReLU)','mlp_ln':'MLP + LayerNorm','mlp_gelu':'MLP + GELU'}
+COLORS={'mlp':'#D65F24','mlp_ln':'#248150','mlp_gelu':'#7351B5'}
+KS=np.arange(1,5)
+
+def save(fig,name):
+    fig.savefig(ROOT/'plots'/f'components_{name}.png',dpi=180,bbox_inches='tight')
+    fig.savefig(ROOT/'plots'/f'components_{name}.svg',bbox_inches='tight')
+    plt.close(fig)
+
+def main():
+    data=json.loads((ROOT/'results/mlp_components_analysis.json').read_text());assert data['new_runs']==480
+    lookup={(r['dataset'],r['k'],r['routing_method']):r for r in data['summary']}
+    pairs={(r['dataset'],r['k'],r['method']):r for r in data['paired_summary']}
+    plt.rcParams.update({'font.size':10,'axes.spines.top':False,'axes.spines.right':False,
+        'axes.grid':True,'grid.alpha':.2,'axes.titleweight':'bold','figure.facecolor':'white','svg.fonttype':'none'})
+    handles=[Line2D([0],[0],color=COLORS[m],marker='o',label=LABELS[m]) for m in METHODS]
+    def decorate(fig,title):
+        fig.suptitle(title,y=.995)
+        fig.legend(handles=handles,loc='upper center',bbox_to_anchor=(.5,.965),ncol=3)
+        fig.tight_layout(rect=(0,0,1,.92))
+    def accuracy(ax,name):
+        for method in METHODS:
+            mean=np.array([100*lookup[name,k,method]['test_accuracy_mean'] for k in KS])
+            sd=np.array([100*lookup[name,k,method]['test_accuracy_std'] for k in KS])
+            ax.plot(KS,mean,'o-',color=COLORS[method],label=LABELS[method])
+            ax.fill_between(KS,mean-sd,mean+sd,color=COLORS[method],alpha=.11)
+        ax.set(title=name,xlabel='Maximum hop K (powers = 0,...,K)',ylabel='Test accuracy (%)',xticks=KS)
+    for name in NAMES:
+        fig,ax=plt.subplots(figsize=(6.4,4.5));accuracy(ax,name);ax.legend(fontsize=9)
+        fig.text(.5,.01,'10 paired splits; shading = sample SD',ha='center',fontsize=9)
+        fig.tight_layout(rect=(0,.04,1,1));save(fig,'accuracy_'+name.lower())
+    fig,axes=plt.subplots(2,3,figsize=(14,8.5))
+    for ax,name in zip(axes.flat,NAMES):accuracy(ax,name)
+    decorate(fig,'Single-component ablation: LayerNorm only vs GELU only');save(fig,'accuracy_overview')
+    fig,axes=plt.subplots(2,3,figsize=(14,8.5))
+    for ax,name in zip(axes.flat,NAMES):
+        for offset,method in [(-.04,'mlp_ln'),(.04,'mlp_gelu')]:
+            rows=[pairs[name,k,method] for k in KS]
+            means=np.array([r['delta_mean_pp'] for r in rows])
+            lower=np.array([r['ci95_low_pp'] for r in rows]);upper=np.array([r['ci95_high_pp'] for r in rows])
+            ax.errorbar(KS+offset,means,yerr=[means-lower,upper-means],fmt='o-',capsize=3,color=COLORS[method])
+        ax.axhline(0,color='black',lw=.8);ax.set(title=name,xticks=KS,xlabel='Maximum hop K',ylabel='Variant - MLP (percentage points)')
+    decorate(fig,'Paired accuracy change; unadjusted descriptive 95% CI');save(fig,'delta_accuracy')
+    specs=[('epoch_training_ms_mean','Training step per epoch (ms)','training_time','Training time; MLP baseline measured in prior experiment'),
+        ('fresh_inference_ms_mean','Full-graph inference (ms)','inference_time','Contemporaneous inference timings for all three trained scorers'),
+        ('peak_gpu_allocated_mb','Peak allocated GPU memory (MiB)','gpu_memory','Training memory; MLP baseline measured in prior experiment'),
+        ('gating_entropy_normalized','Entropy / log(K+1)','gate_entropy','Entropy of weights actually used in second fusion'),
+        ('centered_score_std','Within-node centered score SD','score_scale','Score scale at the validation-selected checkpoint')]
+    for metric,ylabel,filename,title in specs:
+        fig,axes=plt.subplots(2,3,figsize=(14,8.5))
+        for ax,name in zip(axes.flat,NAMES):
+            for method in METHODS:
+                mean=[lookup[name,k,method][metric+'_mean'] for k in KS]
+                sd=[lookup[name,k,method][metric+'_std'] for k in KS]
+                ax.errorbar(KS,mean,yerr=sd,fmt='o-',capsize=3,color=COLORS[method])
+            ax.set(title=name,xticks=KS,xlabel='Maximum hop K',ylabel=ylabel)
+            if metric=='gating_entropy_normalized':ax.set_ylim(-.05,1.05)
+        decorate(fig,title);save(fig,filename)
+    fig,axes=plt.subplots(6,3,figsize=(15,17),layout='constrained')
+    for row,name in enumerate(NAMES):
+        for col,method in enumerate(METHODS):
+            grid=np.full((4,5),np.nan)
+            for k in KS:
+                arrays=[]
+                for split in range(10):
+                    group='v2' if method=='mlp' else data['group']
+                    folder=ROOT/'runs'/group/'full'/name.lower()/f'k_{k}'/f'split_{split}'/method
+                    run=json.loads((folder/'result.json').read_text());arrays.append(run['hop_weights_mean'])
+                grid[k-1,:k+1]=np.mean(arrays,axis=0)
+            ax=axes[row,col];im=ax.imshow(grid,vmin=0,vmax=1,cmap='YlGnBu',aspect='auto')
+            for i in range(4):
+                for j in range(i+2):ax.text(j,i,f'{grid[i,j]:.2f}',ha='center',va='center',fontsize=8,color='white' if grid[i,j]>.55 else 'black')
+            ax.grid(False);ax.set(title=f'{name} | {LABELS[method]}',xticks=range(5),yticks=range(4),yticklabels=KS,xlabel='Hop',ylabel='Maximum K')
+    fig.colorbar(im,ax=axes,shrink=.35,label='Mean gate weight (nodes, then splits)');save(fig,'hop_weights')
+    figures=[p.name for p in sorted((ROOT/'plots').glob('components_*.png'))]
+    save_json(ROOT/'results/mlp_components_plots.json',dict(status='complete',figures=figures,matplotlib=matplotlib.__version__))
+    print('Saved',len(figures),'PNG/SVG figures')
+
+if __name__=='__main__':main()

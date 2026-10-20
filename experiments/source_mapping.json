@@ -1,0 +1,105 @@
+{
+  "upstream_commit": "36d054b4ae53c0c8e360d85d056f5207d61c8281",
+  "recovery_utc": "2026-10-20T11:49:44.733670+00:00",
+  "files": [
+    {
+      "destination": "research/ablation_mlp/factory.py",
+      "original_source": "test_mlp/ablation_mlp/factory.py",
+      "sha256": "c4f763a0e8c6de25c88cdde400d93a815942647e8ab46a43db53f175fbf432d4",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/ablation_mlp/model.py",
+      "original_source": "test_mlp/ablation_mlp/model.py",
+      "sha256": "cacde4d965d31fbee4c1875edf615b7bbdef9bcfc8ca9a6b9296292e1a5e18df",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/ablation_mlp/__init__.py",
+      "original_source": "test_mlp/ablation_mlp/__init__.py",
+      "sha256": "deb2e4b1e22d375f2fa44efbd5ca5f50406bcffd4db3e93636a55ecb4add06c1",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/src/data.py",
+      "original_source": "test_mlp/src/data.py",
+      "sha256": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/src/factory.py",
+      "original_source": "test_mlp/src/factory.py",
+      "sha256": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/src/model.py",
+      "original_source": "test_mlp/src/model.py",
+      "sha256": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/src/paths.py",
+      "original_source": "test_mlp/src/paths.py",
+      "sha256": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/src/train.py",
+      "original_source": "test_mlp/src/train.py",
+      "sha256": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/src/__init__.py",
+      "original_source": "test_mlp/src/__init__.py",
+      "sha256": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/tests/test_baseline.py",
+      "original_source": "test_mlp/tests/test_baseline.py",
+      "sha256": "e513e206861b1d8a7f23a93413340f6e7c01fbd815941be1da6d47921b20b01b",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/upstream_snapshot/create_splits.py",
+      "original_source": "test_mlp/upstream_snapshot/create_splits.py",
+      "sha256": "b8de95330f85b6687af9c726e52775b1024d351a84cccbbc93dad720ba1b35b8",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/upstream_snapshot/gamma.py",
+      "original_source": "test_mlp/upstream_snapshot/gamma.py",
+      "sha256": "4548ceb431b551422c047809340f3aa6a8c3a479385a755b7d52eceb96573983",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/upstream_snapshot/GAMMA_layer.py",
+      "original_source": "test_mlp/upstream_snapshot/GAMMA_layer.py",
+      "sha256": "53ef1f9deaa26a11866cbc378ef55c6b261b27ed0daa9481c9f87783d479e689",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    },
+    {
+      "destination": "research/upstream_snapshot/gamma_multi_split.py",
+      "original_source": "test_mlp/upstream_snapshot/gamma_multi_split.py",
+      "sha256": "82882e501dda6fb3be48e5b2581d908f7ead0751cc5c9607875949c398636a0e",
+      "execution_commit": "UNKNOWN",
+      "history_status": "pre-git experiment"
+    }
+  ],
+  "note": "Import hashes are not historical execution Git commits."
+}

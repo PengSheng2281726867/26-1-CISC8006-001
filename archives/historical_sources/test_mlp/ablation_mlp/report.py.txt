@@ -1,0 +1,181 @@
+"""Standalone Markdown conclusion for the predeclared single-factor experiment."""
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json,sha256
+import json
+import numpy as np
+
+NAMES=['Texas','Wisconsin','Cornell','Chameleon','Squirrel','Actor']
+LABELS={'mlp':'原MLP','mlp_ln':'仅加LayerNorm','mlp_gelu':'仅换GELU'}
+
+def read(path):return json.loads(Path(path).read_text(encoding='utf-8'))
+def signed(value):return '0.00' if abs(value)<1e-9 else f'{value:+.2f}'
+def table(headers,rows):
+    return '| '+' | '.join(headers)+' |\n| '+' | '.join(['---']*len(headers))+' |\n'+''.join('| '+' | '.join(map(str,r))+' |\n' for r in rows)
+
+def main():
+    data=read(ROOT/'results/mlp_components_analysis.json');group=ROOT/'runs'/data['group']
+    verified=read(group/'full/verification.json');preserved=read(ROOT/'results/mlp_components_preservation.json')
+    assert data['new_runs']==verified['checkpoints']==480
+    assert verified['status']==preserved['status']=='passed'
+    lookup={(r['dataset'],r['k'],r['routing_method']):r for r in data['summary']}
+    pairs={(r['dataset'],r['k'],r['method']):r for r in data['paired_summary']}
+    fmt=lambda name,k,m:f"{100*lookup[name,k,m]['test_accuracy_mean']:.2f} ± {100*lookup[name,k,m]['test_accuracy_std']:.2f}"
+    result_rows=[]
+    for name in NAMES:
+        for k in (1,2,3,4):
+            ln=pairs[name,k,'mlp_ln'];gelu=pairs[name,k,'mlp_gelu']
+            result_rows.append([name,k,fmt(name,k,'mlp'),fmt(name,k,'mlp_ln'),fmt(name,k,'mlp_gelu'),
+                signed(ln['delta_mean_pp']),signed(gelu['delta_mean_pp']),
+                f"{ln['holm_p_24']:.4f}",f"{gelu['holm_p_24']:.4f}"])
+    result_table=table(['Dataset','K','原MLP %','仅LN %','仅GELU %','LN−MLP pp','GELU−MLP pp','LN Holm24 p','GELU Holm24 p'],result_rows)
+    overview_table=table(['修改','均值改善/相同/下降组数','六图四K平均Δ pp','Holm24显著改善/下降'],[
+        [LABELS[r['method']],f"{r['improved']}/{r['tied']}/{r['degraded']}",f"{r['mean_delta_pp']:+.2f}",
+         f"{r['significant_gain_24']}/{r['significant_decline_24']}"] for r in data['overview']])
+    ktable=table(['修改','K1平均Δ pp','K2平均Δ pp','K3平均Δ pp','K4平均Δ pp'],[
+        [LABELS[r['method']]]+[f"{r['by_k'][str(k)]:+.2f}" for k in (1,2,3,4)] for r in data['overview']])
+    dataset_table=table(['Dataset','LN相对MLP：各K差值pp','GELU相对MLP：各K差值pp'],[
+        [name,' / '.join(f"{pairs[name,k,'mlp_ln']['delta_mean_pp']:+.2f}" for k in (1,2,3,4)),
+         ' / '.join(f"{pairs[name,k,'mlp_gelu']['delta_mean_pp']:+.2f}" for k in (1,2,3,4))] for name in NAMES])
+    costtable=table(['修改','新增参数vs原MLP','本次重测推理平均比值','历史单轮训练平均比值','训练峰值分配平均差MiB'],[
+        [LABELS[r['method']],64 if r['method']=='mlp_ln' else 0,f"{r['mean_fresh_inference_ratio']:.3f}×",
+         f"{r['mean_train_step_ratio_historical']:.3f}×",f"{r['mean_peak_memory_delta_mib']:+.3f}"] for r in data['overview']])
+    mechanism=[]
+    for name in NAMES:
+        for method in ('mlp','mlp_ln','mlp_gelu'):
+            rows=[lookup[name,k,method] for k in (1,2,3,4)]
+            mechanism.append([name,LABELS[method],f"{np.mean([r['centered_score_std_mean'] for r in rows]):.3f}",
+                f"{np.mean([r['gating_entropy_normalized_mean'] for r in rows]):.3f}",
+                f"{100*np.mean([r['max_weight_over_095_fraction_mean'] for r in rows]):.1f}",
+                f"{100*np.mean([r['train_accuracy_mean']-r['test_accuracy_mean'] for r in rows]):.1f}"])
+    negative=[]
+    for method in ('mlp_ln','mlp_gelu'):
+        rows=sorted([r for r in data['paired_summary'] if r['method']==method and r['delta_mean_pp'] < -1e-9],key=lambda r:r['delta_mean_pp'])
+        for r in rows[:3]:
+            negative.append([LABELS[method],r['dataset'],r['k'],f"{r['delta_mean_pp']:+.2f}",
+                f"[{r['ci95_low_pp']:+.2f}, {r['ci95_high_pp']:+.2f}]",f"{r['wins']}/{r['ties']}/{r['losses']}"])
+    significant=[r for r in data['paired_summary'] if r['holm_p_24']<.05 and r['delta_mean_pp']>0]
+    previous=read(ROOT/'results/analysis.json')
+    mlp_dot_gap=float(np.mean([r['delta_mean_pp'] for r in previous['paired_summary']]))
+    dot_context='；'.join(f"{LABELS[r['method']]} {r['mean_delta_pp']+mlp_dot_gap:+.2f} pp" for r in data['overview'])
+    conclusion=('本协议中观察到部分经各自24项校正后的改善，具体范围见下表；不能将它外推为所有图、所有K的优势。'
+        if significant else '本协议未获得经预设各24项多重比较校正后可靠的改善证据；均值差仅作探索性观察，不据此宣称某一修改普遍更好。')
+    norm_deltas=[r['layernorm_affine_change_l2'] for r in data['diagnostics'] if r['routing_method']=='mlp_ln']
+    assert len(norm_deltas)==240 and min(norm_deltas)>0
+    note='''两项修改各有24个Dataset×K比较，分别做Holm校正；另给出48项合并校正敏感性分析。每项仅10对，双侧精确符号翻转p值最小为2/1024，48项Holm首项最小校正p=0.09375，因此该敏感性分析在0.05下本身无法拒绝任何首项，不能把它解释为证明没有效应。配对t的95%区间未做多重校正，不能与Holm显著性混为一谈。重叠Split和每Split一个训练seed使统计仅有探索性含义；没有把节点当独立重复样本。'''
+    text=f'''# MLP单因素消融：分别加入LayerNorm与替换GELU
+
+已完成480/480个新增主矩阵训练，逐Checkpoint重载通过；旧240个MLP对照只读复用。没有运行LayerNorm+GELU组合，没有改变原项目或旧实验产物。
+
+## 结论
+
+{overview_table}
+
+{conclusion}
+
+以上差值相对原MLP，并不直接代表优于原始Dot。补充按相同24组条件计算的六图四K等权均值差（相对Dot）：{dot_context}。这是从既有Dot结果推导的描述性对照，未新增显著性检验；原始记录见[此前Dot/MLP报告](FINAL_REPORT.md)。
+
+{ktable}
+
+六数据集、四K的等权平均不是跨图泛化保证；不同数据集/不同K的结果均完整保留。
+
+## 实际测试的三种评分网络
+
+| 组别 | 共享scorer | scorer参数 | 唯一修改 |
+| --- | --- | --- | --- |
+| 原MLP | Linear(64,32)→ReLU→Linear(32,1) | 2,113 | 已有基线 |
+| mlp_ln | Linear(64,32)→LayerNorm(32)→ReLU→Linear(32,1) | 2,177 | 隐藏层加LN，eps=1e-5、affine=True |
+| mlp_gelu | Linear(64,32)→GELU→Linear(32,1) | 2,113 | 仅把ReLU改成GELU，approximate='none' |
+
+归一化作用于32维隐藏向量，不作用于最终标量；每个Hop输出一个score，仍保留b累加、沿Hop维softmax、weighted sum、squash和原始routing循环。原GAMMA特征层的LayerNorm始终保留。MLP的两个Linear、全部共有GAMMA参数及初始CPU/CUDA RNG在各方法配对一致，LN额外gamma=1/beta=0。
+
+## 全部准确率与配对差
+
+每组10 Split，测试准确率Mean±样本SD（ddof=1），单位%；差值为修改版−原MLP，单位百分点。正数为均值改善；不直接代表统计显著。
+
+{result_table}
+
+{note}
+
+![Accuracy](plots/components_accuracy_overview.png)
+
+![Delta](plots/components_delta_accuracy.png)
+
+## 各数据集的K依赖
+
+以下差值按K=1/2/3/4排列，完整CI、胜/平/负和p值保存在CSV，不依据测试集最高分挑选有利K。
+
+{dataset_table}
+
+两项修改相对K1的收益变化另分别做18项Holm校正，原始差值和检验保存在 `mlp_components_k_interactions.csv`。本轮未增加每Split的第二训练seed，不能将种子波动和划分效应完全分开。
+
+## 结构、梯度与基线复现验证
+
+4项组件单元测试通过，包括原MLP的16个CPU/CUDA前向及参数梯度精确对齐子案例、新组件16个不同设备/K的有效梯度检查、R=2首轮score到次轮alpha的反向路径、每次forward logits清零、测试标签替换不改变训练。全部480次新训练中，scorer两个Linear权重均有非零有限梯度，LayerNorm组的gamma权重也有有效梯度；最小首轮裁剪前权重张量梯度范数为{data['minimum_weight_gradient']:.8g}。
+
+LayerNorm的240个模型在最佳Checkpoint中均有仿射参数变化，gamma/beta联合变化L2最小为{min(norm_deltas):.8g}。这证明新增模块参与了训练，不能由此推导它必然改善性能。共享输出标量bias仍可能因softmax平移不变性而梯度为0，这是原结构性质。
+
+在正式Pilot前，Texas K2 split0及Chameleon K2 split0的原MLP各从随机初始化重放一次，训练后权重、预测、log_probs、实际alpha、最佳/停止轮次与旧结果完全相同。随后24个Pilot全部重载核验，再启动Full并复用这24个运行；480矩阵不重复计入锚点或Pilot。主训练失败尝试数为{data['failed_attempts']}，失败文件如有均保留，未隐藏下降结果。
+
+协议哈希 `{verified['protocol_sha256']}`；源模型、factory、scheduler冻结，Full期间没有修改训练核心。旧的{preserved['previous_files_checked']:,}个文件内容/修改时间及原项目{preserved['original_gamma_files_checked']:,}个文件均通过保持不变的复核。
+
+## 参数与计算成本
+
+{costtable}
+
+推理比值来自训练完成后，将720个已训练模型在同一进程中重新测量：三方法轮换先后次序、5次预热、20次GPU同步计时，数据驻留GPU，eval/no_grad完整图前向，不更新权重。该测量比复用旧推理日志更有可比性，但日常Windows桌面仍有系统噪声。
+
+表中训练耗时及训练峰值的原MLP来自旧运行，两新方法来自本次运行；它们不是同时期三组重训的严格性能对照。新组首轮还读取一次各scorer权重梯度用于验证，存在很小的额外诊断开销。不能将总训练秒数差当作单轮复杂度收益。峰值为PyTorch分配量（MiB），不是nvidia-smi整卡占用。
+
+LayerNorm比原MLP增加64个仿射参数；GELU没有新增参数。本轮不能单独区分LayerNorm归一化运算与新增64个参数的贡献；也不能由这两项单独实验推断LN+GELU组合一定更好。
+
+[训练时间图](plots/components_training_time.png) · [本次重测推理图](plots/components_inference_time.png) · [显存图](plots/components_gpu_memory.png)
+
+## 机制与下降案例
+
+下表跨K/Split等权平均。中心化score SD先减去节点内hop平均值，归一化熵为entropy/log(K+1)，集中节点指max(alpha)>0.95；alpha均为第二轮融合实际使用的系数。
+
+{table(['Dataset','方法','中心化score SD','归一化熵','集中节点%','Train−Test pp'],mechanism)}
+
+各方法最明显的最多三个下降组如下，其余下降均在全表与CSV中保留：
+
+{table(['修改','Dataset','K','Δ pp','未校正95%CI','胜/平/负'],negative) if negative else '未观察到均值下降组。'}
+
+有效梯度、参数变化、固定初始化及同一划分检查可排除未接入训练或初始化错配的解释，但不能排除优化难度、归纳偏置或过拟合差异。输入/隐藏归一化与最终score尺度不是一回事；即使加LN，最后Linear仍能学习不同分数幅度，不能保证softmax不集中。评分尺度和熵与准确率的对应关系仅作观察，不作因果结论。
+
+每个新模型的初始/最终评分尺度、熵及LN仿射参数变化已保存。高权重不代表高分类贡献；cosine是过平滑代理，不能替代逐Hop反事实或干预实验。没有为了提高MLP分数追加宽度、温度、tanh或单方调参。
+
+[Hop权重](plots/components_hop_weights.png) · [门控熵](plots/components_gate_entropy.png) · [评分尺度](plots/components_score_scale.png)
+
+## 协议、局限与重跑
+
+六个异配图、K1..4、powers=[0,...,K]、实际1个GAMMA层、R2、D32，沿用固定60/20/20划分和原训练超参数；双方一致深拷贝验证集最佳Checkpoint。该协议复现源码实际行为，不等同于论文的两GNN层、L2 normalization及50/25/25设置。最后一次score更新仍像官方一样计算但不影响输出。
+
+完整执行入口：
+
+```powershell
+Set-Location 'REDACTED_LOCAL_PATH'
+.\\ablation_mlp\\run_all.ps1
+```
+
+只继续未完成训练：`& 'REDACTED_LOCAL_PATH' -B -u ablation_mlp/run.py --phase full`。完成且产物哈希一致的运行直接复用；未完成单次训练从头重试，每个失败尝试独立保留。改变训练核心必须新协议组，不能混入本组。
+
+- [预先冻结的协议](docs/09_mlp_component_protocol.md)与[Pilot验收](docs/10_mlp_component_pilot.md)。
+- [实现版本与验证说明](docs/MLP_COMPONENT_VERSIONS.md)。
+- [720条原始记录（含240只读对照）](results/mlp_components_runs.csv)、[72组Mean±SD](results/mlp_components_summary.csv)。
+- [480个配对差](results/mlp_components_paired.csv)、[48组配对统计](results/mlp_components_paired_summary.csv)、[K交互](results/mlp_components_k_interactions.csv)。
+- [720模型本次推理测量](results/mlp_components_inference.csv)、[初始/最终score诊断](results/mlp_components_score_diagnostics.csv)。
+- [Full核验](runs/{data['group']}/full/verification.json)、[旧产物保护核验](results/mlp_components_preservation.json)。
+- `runs/{data['group']}/`保留环境、源码快照、所有Checkpoint、epochs.csv、预测及失败记录；PNG/SVG使用components_前缀保存，不覆盖旧图。
+
+本轮新增实验完整完成。任何“更好”的后续结论仍需更多独立seed、独立图或新评估数据确认，不以重复查看同一批测试结果替代确认性评估。
+'''
+    (ROOT/'MLP_COMPONENT_REPORT.md').write_text(text,encoding='utf-8')
+    (ROOT/'docs/11_mlp_component_results.md').write_text('# 单因素消融 Full 验收\n\n'+overview_table+'\n'+ktable+
+        '\n新增480次训练及全部Checkpoint已通过，原MLP对照240次只读复用，未训练组合模型。\n\n完整数据、参数/效率与机制讨论见[完整报告](../MLP_COMPONENT_REPORT.md)。\n',encoding='utf-8')
+    save_json(ROOT/'results/mlp_components_delivery_manifest.json',dict(status='complete',new_training_runs=480,
+        reused_control_runs=240,protocol_sha256=verified['protocol_sha256'],report_sha256=sha256(ROOT/'MLP_COMPONENT_REPORT.md')))
+    print(overview_table);print(conclusion)
+
+if __name__=='__main__':main()

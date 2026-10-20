@@ -1,0 +1,254 @@
+"""Read existing experiments and write one Chinese Markdown synthesis; no training."""
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT,save_json,sha256
+import json
+import re
+import numpy as np
+
+NAMES=['Texas','Wisconsin','Cornell','Chameleon','Squirrel','Actor']
+WORKSPACE=ROOT.parent
+OLD=WORKSPACE/'GAMMA/results/hop_sweep_20261019_143309'
+EARLY=WORKSPACE/'GAMMA/results/gate_ablation_20261019_130814'
+
+def load(path):return json.loads(Path(path).read_text(encoding='utf-8'))
+def table(headers,rows):
+    return '| '+' | '.join(headers)+' |\n| '+' | '.join(['---']*len(headers))+' |\n'+''.join(
+        '| '+' | '.join(map(str,row))+' |\n' for row in rows)
+def describe(values):
+    values=100*np.asarray(values,dtype=float)
+    return f'{values.mean():.2f} ± {values.std(ddof=1):.2f}'
+
+def main():
+    source_paths=[OLD/'results.json',OLD/'verification.json',EARLY/'results.json',EARLY/'verification.json',
+        WORKSPACE/'GAMMA/results/readme_all_results.json',ROOT/'results/analysis.json',
+        ROOT/'results/full_verification_v2.json',ROOT/'results/diagnostic_summary.json']
+    source_paths += [OLD/f'k_{k}/results.json' for k in (2,3,4)]
+    before={str(p.relative_to(WORKSPACE)):sha256(p) for p in source_paths}
+    old=load(OLD/'results.json');early=load(EARLY/'results.json');new=load(ROOT/'results/analysis.json')
+    readme=load(WORKSPACE/'GAMMA/results/readme_all_results.json')
+    assert old['status']==early['status']==new['status']=='complete'
+    assert load(OLD/'verification.json')['checkpoints_checked']==360
+    assert load(EARLY/'verification.json')['checkpoints_checked']==120
+    assert load(ROOT/'results/full_verification_v2.json')['verified_runs']==480
+    values={};checks=[];new_runs={};old_summaries={}
+    for k in (1,2,3,4):
+        for name in NAMES:
+            for method in ('dot','mlp'):
+                runs=[]
+                for split in range(10):
+                    folder=ROOT/'runs/v2/full'/name.lower()/f'k_{k}'/f'split_{split}'/method
+                    run=load(folder/'result.json');assert run['status']=='complete'
+                    runs.append(run);new_runs[name,k,split,method]=(folder,run)
+                values[name,k,method]=[r['test_accuracy'] for r in runs]
+    for k in (2,3,4):
+        stage=load(OLD/f'k_{k}/results.json')
+        assert stage['configuration']['model']['powers']==list(range(k+1))
+        for name in NAMES:
+            pairs=sorted(stage['pairs'][name],key=lambda p:p['split'])
+            assert [p['split'] for p in pairs]==list(range(10))
+            values[name,k,'uniform']=[pair['uniform']['test_accuracy'] for pair in pairs]
+            old_summaries[name,k]=stage['summary'][name]
+            for pair in pairs:
+                split=pair['split'];folder,run=new_runs[name,k,split,'dot']
+                assert pair['split_sha256']==run['split_sha256']
+                assert pair['training_seed']==run['seed']
+                assert pair['routing']['best_epoch']==run['best_validation_epoch']
+                assert pair['routing']['stopped_epoch']==run['stopped_epoch']
+                assert pair['routing']['test_accuracy']==run['test_accuracy']
+                old_path=OLD/f'k_{k}'/pair['routing']['directory']/'predictions.npz'
+                uniform_path=OLD/f'k_{k}'/pair['uniform']['directory']/'predictions.npz'
+                new_path=folder/run['artifact_subdir']/'predictions.npz'
+                with np.load(old_path) as previous,np.load(uniform_path) as uniform,np.load(new_path) as current:
+                    for key in ('predictions','labels','train_mask','val_mask','test_mask'):
+                        np.testing.assert_array_equal(previous[key],current[key])
+                    for key in ('labels','train_mask','val_mask','test_mask'):
+                        np.testing.assert_array_equal(uniform[key],current[key])
+                checks.append(dict(dataset=name,k=k,split_id=split,exact_predictions=True,
+                    identical_split=True,identical_selection_epochs=True))
+    assert len(checks)==180
+    def delta(name,k,left,right):
+        return 100*float(np.mean(np.asarray(values[name,k,left])-np.asarray(values[name,k,right])))
+    rows=[]
+    for name in NAMES:
+        for k in (1,2,3,4):
+            available=k>1
+            rows.append([name,k,describe(values[name,k,'uniform']) if available else '未运行',
+                describe(values[name,k,'dot']),describe(values[name,k,'mlp']),
+                f"{delta(name,k,'dot','uniform'):+.2f}" if available else '—',
+                f"{delta(name,k,'mlp','dot'):+.2f}",
+                f"{delta(name,k,'mlp','uniform'):+.2f}" if available else '—'])
+    all_table=table(['数据集','K','Uniform %','Dot %','MLP %','Dot−Uniform pp','MLP−Dot pp','MLP−Uniform pp'],rows)
+    old_positive=sum(s['mean_difference_pp']>1e-9 for s in old['summary'])
+    new_positive=sum(s['delta_mean_pp']>1e-9 for s in new['paired_summary'])
+    old_significant=sum(s['holm_adjusted_p_18_comparisons']<.05 for s in old['summary'])
+    new_significant=sum(s['holm_p']<.05 for s in new['paired_summary'])
+    assert old_significant==new_significant==0
+    early_rows=[]
+    for name in NAMES:
+        pairs=early['pairs'][name]
+        on=[p['routing']['test_accuracy'] for p in pairs];off=[p['uniform']['test_accuracy'] for p in pairs]
+        early_rows.append([name,describe(on),describe(off),f'{100*np.mean(np.asarray(on)-np.asarray(off)):+.2f}'])
+    overview=table(['K','六数据集平均 Dot−Uniform（pp）','六数据集平均 MLP−Dot（pp）'],[
+        [k,f"{np.mean([delta(name,k,'dot','uniform') for name in NAMES]):+.2f}" if k>1 else '未运行Uniform',
+         f"{np.mean([delta(name,k,'mlp','dot') for name in NAMES]):+.2f}"] for k in (1,2,3,4)])
+    costs=new['cost']
+    text=f'''# GAMMA 两轮实验汇总：动态门控、多 Hop 与 MLP Agreement
+
+本报告将上次“动态门控开/关 × K=2、3、4”实验与本次“Dot Product / MLP × K=1、2、3、4”实验合并总结，并在附录交代更早的命令复现和K=2初轮消融。本文只读取既有记录，未追加训练、修改模型或覆盖原始结果。
+
+## 1. 结论先行
+
+1. 门控开关确实生效，MLP也确实参与端到端训练；观察到的差异不是只改了配置名称。
+2. 上次18个Dataset×K比较中，Dot动态门控有{old_positive}组均值高于均匀聚合、{18-old_positive}组更低；18项经Holm校正后均不显著。
+3. 本次24个比较中，MLP有{new_positive}组均值高于Dot、{24-new_positive}组更低；24项经Holm校正后均不显著。因此当前证据不足以支持“可学习Agreement比Dot更有效”。
+4. 增加K没有带来一致收益，也未确认“门控收益”或“MLP相对Dot的收益”随K增大而稳定增强。
+5. 均匀聚合是有竞争力的参照。Chameleon中MLP在四个K下均值均高于Dot，但K=3/4仍低于Uniform；仅比较MLP与Dot容易忽略这一点。
+
+“没有显著证据”不等于证明三种方法相同，也不等于证明门控无效；结论限于这些图、固定超参数和10个重叠Split。
+
+## 2. 两次实验分别回答什么
+
+| 阶段 | 研究问题 | 比较对象 | 矩阵与运行记录 |
+| --- | --- | --- | --- |
+| 上次核心实验 | 节点级动态路由是否优于等权融合？差异是否随K变化？ | Uniform / 原始Dot门控 | 6数据集 × 3个K × 2方法 × 10 Split = 360 |
+| 本次核心实验 | 可学习MLP评分是否优于Dot Agreement？差异是否随K变化？ | 原始Dot门控 / MLP门控 | 6数据集 × 4个K × 2方法 × 10 Split = 480 |
+
+两次核心矩阵共有840条训练记录；其中180组Dot配置相同，本次重新训练后与上次的完整预测、划分、最佳轮次、停止轮次和测试准确率逐Split一致。它们可作为跨实现复现证据，不能合并成20个Split或当作额外独立样本。按Dataset/K/方法/Split条件去重后为660个单元：Uniform180、Dot240、MLP240。新实验的24个合格Pilot已计入480，未额外重复计数。
+
+## 3. 方法定义与共同协议
+
+设hop特征为H∈R^(N×P×D)，融合表示为v∈R^(N×D)。
+
+| 方法 | 如何融合/评分 | 保留的结构 |
+| --- | --- | --- |
+| Uniform（关闭动态门控） | 各hop等权求和，随后执行原始squash和bias；不执行routing softmax | 多hop传播、共享投影、可学习hop通道缩放、LayerNorm、分类头 |
+| Dot（原始门控） | agreement[i,p]=Σ_d H[i,p,d]·v[i,d]；b=b+agreement | 原始softmax、weighted sum、squash、routing循环和bias |
+| MLP（学习评分） | agreement[i,p]=MLP(concat(H[i,p],v[i]))；b=b+agreement | 与Dot相同，只有agreement计算被替换 |
+
+MLP是共享的Linear(64,32)→ReLU→Linear(32,1)，所有节点、Hop和路由轮次共用参数；输入[N,P,64]、输出[N,P]，新增2,113个参数，与K无关。训练中没有detach/no_grad切断评分路径。
+
+共同主协议：六个异配基准Texas、Wisconsin、Cornell、Chameleon、Squirrel、Actor；D=32；真正1个GAMMA消息传递层加Linear头（num_layers=2）；R=2；保留0-hop，即powers=[0,...,K]。K控制最大传播步数，P=K+1，既不等于层数，也不等于routing轮数。原代码逐分支重新传播，总传播调用数K=1/2/3/4分别为1/3/6/10，单个分支最大路径仍为K步。
+
+两次核心实验均使用源码生成的固定60/20/20整数划分，划分种子102–111、训练种子42–51；共享随机K=4模型的公共初值，较小K截取对应通道缩放行。同一Split的共有参数和初始随机状态对齐，各模型分别从头训练，没有预训练权重。
+
+Adam lr=0.02、weight_decay=1e-4，输入/隐藏Dropout=0.2/0.8，梯度裁剪1，最多500轮、早停patience=50；ReduceLROnPlateau factor=0.5、patience=50、min_lr=1e-6。双方均深拷贝保存验证集最佳权重，选择后再评估测试；严格确定性运算、关闭TF32。
+
+## 4. 三种方法的完整并列表
+
+所有准确率均为10个Split的测试Mean±样本SD（ddof=1），单位%。本汇总从逐Split原始值重新计算：旧报告使用ddof=0，因此本表±值会略有不同，均值不变。差值单位为百分点，均从未四舍五入的数值计算。
+
+{all_table}
+
+Uniform的K=1未运行，不能推断或填充其结果。Dot/Uniform对应上次实验，Dot/MLP对应本次实验；共同Dot基线的180组记录已经逐一核对。MLP−Uniform是本汇总从既有数据推导的描述性差值，没有追加第三类预设显著性检验。
+
+## 5. 对各数据集的联合解读
+
+- **Texas**：K=2/3/4时Dot均高于Uniform；MLP均低于Dot，但仍高于Uniform。Dot−Uniform差值随K增大，并不代表Dot准确率单调上升，Uniform退化也是差值扩大的原因。
+- **Wisconsin**：K=2/3/4时Uniform均值均最高，MLP均低于Dot。K=1时MLP略高于Dot，但缺少Uniform对照，不能说它在三种方法中最好。
+- **Cornell**：K=2/3时Dot最高，K=4时MLP最高；加入更多hop没有一致提升，K=4的Dot均值低于K=2/3。
+- **Chameleon**：MLP在各K均高于Dot；K=2时MLP也略高于Uniform，K=3/4时Uniform更高。改善原始Dot并不等于优于等权融合。
+- **Squirrel**：K=2/3/4均呈Dot > Uniform > MLP的均值排序；MLP在K=1也低于Dot。此次替换在该数据集没有均值优势。
+- **Actor**：MLP在各K均高于Dot，且K=2/3/4均高于Uniform；提升幅度有限，多重比较校正后不足以确认稳定优势。
+
+{overview}
+
+跨数据集平均为六张图等权的描述性摘要，不按节点数加权，不是跨数据集泛化保证。
+
+## 6. 统计证据与K的含义
+
+上次的18项Dot−Uniform和本次的24项MLP−Dot分别保留各阶段的Holm检验族；两类问题没有混成一个事后预设的统一检验。两阶段校正后显著比较数均为0。上次增加K的配对增量/门控交互检验，以及本次18项“MLP−Dot收益相对K=1是否变化”的检验，各自校正后也均未达到0.05。
+
+配对t区间是未做多重比较校正的描述性95%区间；原始符号翻转p值来自2^10种符号枚举。不跨0的单项区间不能直接当作Holm校正后显著。同一图的Split存在重叠，且每Split只有一个训练seed，难以分离划分波动和优化随机性。
+
+累积加入第3/4跳并重新训练，测量的是可用传播范围变化后的模型表现；它不能给出固定模型中某个hop的因果贡献。p-hop是p步游走，也不等于仅含最短距离恰好为p的邻居集合。
+
+## 7. 实现生效与可信度证据
+
+上次在真实模型上核对：开启/关闭动态门控分别调用2/0次routing softmax；关闭输出与手算“hop等权融合→squash→bias”误差为0。R=1时输出与均匀融合一致，关闭路由后改变R不改变输出。360个保存模型已重载复现预测。
+
+本次独立Dot网络通过20个CPU/CUDA前向与梯度对齐案例；K=1..4形状、传播范围、临时logits重置、R=2首轮评分影响次轮融合、测试标签隔离等测试均通过。240个MLP运行均有有效梯度和参数更新，480个Checkpoint全部重载验证；最后一次score更新不影响本次输出，这一官方行为仍保留。
+
+跨两次实验额外核对180组Dot记录，完整预测、标签、mask及选权重轮次均一致，证据见[汇总核验JSON](results/combined_summary_verification.json)。这里不将不同脚本生成的权重哈希直接比较，因为其哈希编码定义不同。
+
+## 8. 效率与机制分析
+
+MLP新增2,113参数，依数据集约为原参数量的2.82%–6.99%。本次240对运行中，平均单轮训练步骤耗时比Dot增加{100*(costs['train_step_ratio']['mean']-1):.1f}%，完整图推理增加{100*(costs['inference_ratio']['mean']-1):.1f}%，峰值分配显存平均增加{costs['peak_memory_delta_mb']['mean']:.2f} MiB。推理为GPU驻留、5次预热后20次测量；显存为PyTorch分配量而非整卡占用，日常Windows桌面上的小图计时存在系统噪声。
+
+上次Uniform/Dot没有本次同样的显存基线控制，不能将两次记录的总训练秒数混成公平的三方法速度排名。早停轮数不同也不能替代单轮耗时对照。本次全部模型均提前停止，且没有触发scheduler降LR；这解释了实际训练未跑满500轮，不能据耗时短推断使用了预训练。
+
+机制上，三个小图的MLP通常更集中；但Squirrel更均匀却持续退化，Chameleon更均匀而均值改善，Actor更集中而均值改善。不能用“更尖锐”或“更均匀”统一解释优劣。Texas的10份划分中6份训练缺少至少一类、7份验证缺类，小测试集也使均值容易波动。完整的score尺度、熵、集中度、类别与训练轨迹见[机制分析](docs/08_mechanism_analysis.md)。
+
+高门控权重不直接等于高分类贡献；cosine只是过平滑代理。本次未据这些观察增加模块、调整单方超参数或筛选更有利的Split。
+
+## 9. 与论文、原版脚本的协议差异
+
+本系列核心比较优先忠实保留官方实际前向：1个GAMMA层、LayerNorm、60/20/20划分、含0-hop和源码训练超参数，同时对双方统一修复最佳权重浅拷贝。论文描述的两GNN层、L2归一化、50/25/25及固定轮数/调参设置并不完全相同。本文不声称逐项复现论文Table 1，也不把含0-hop的主实验直接等同于Appendix B的1–K hop标注。
+
+官方提交为36d054b4ae53c0c8e360d85d056f5207d61c8281。本次MLP实验所有新增文件位于test_mlp，原项目2,570个文件及Git状态未改变；本次汇总也只读取旧项目和旧结果。具体差异见[源码审计](docs/01_source_audit.md)。
+
+## 10. 更早实验记录与为什么数字不同
+
+### 10.1 初轮K=2门控消融（120次训练）
+
+这是K扫描之前的独立实验，powers=[0,1,2]，双方已统一修复最佳权重并开启严格确定性，但尚未采用后续扫描的K=4公共初始化。以下统一重算样本SD；不能与扫描的K=2合并为20个Split。
+
+{table(['数据集','Dot %','Uniform %','Dot−Uniform pp'],early_rows)}
+
+这组实验也没有校正后显著结果。相同seed不保证不同构造流程的初始权重相同，所以其数值与后续K=2不同不构成矛盾。后续比较以已经对齐跨K初值的360次扫描为准。
+
+### 10.2 README命令执行（100次训练）
+
+六个异配配置、一个Chameleon 64/3/2配置及Cora/CiteSeer/PubMed各10 Split，共100次。以下仅作历史运行记录，统一重算样本SD：
+
+{table(['配置','Test % Mean±SD'],[[name,describe(record['accuracies'])] for name,record in readme['results'].items()])}
+
+这一阶段保留原脚本浅拷贝Checkpoint及GPU非严格确定性，不能作为后续消融的匹配对照。Cora/CiteSeer/PubMed是同配数据集；其gamma.py实际R=1，即使命令行默认写2，也不能据此检验R=2动态门控的收益。原始日志中的ddof=0数值保留在[命令复现记录](../REPRODUCTION.md)。
+
+核心两次实验840条记录，加上上述历史100+120条记录为1,060条已报告运行；这不是1,060个独立配置或样本，也不包含本次为资源测量修复而另存的早期Pilot过程记录。
+
+## 11. 下一步研究判断
+
+当前更可靠的结论是：门控和可学习评分都具有数据集依赖性，增加表达能力或最大hop范围不会自动提高准确率。现有结果不足以宣称门控普遍优于Uniform，或共享MLP普遍优于Dot；也不能据非显著结果宣称它们完全等效。
+
+若继续研究，应在独立版本中增加每Split多个seed、采用统一预算的验证集调参，并保留Uniform参照。评分尺度、MLP宽度、R或归一化的调整都应明确标为新实验，不能覆盖本报告或只为MLP单独争取调参优势。
+
+## 12. 图表与原始记录索引
+
+上次门控开关的准确率随K变化：
+
+![Uniform与Dot随K变化](../GAMMA/results/hop_sweep_20261019_143309/accuracy_vs_k.png)
+
+本次Dot与MLP的准确率随K变化：
+
+![Dot与MLP随K变化](plots/accuracy_overview.png)
+
+两张既有图各保留原实验的标准差口径；统一ddof=1的数值比较以本报告第4节为准。
+
+- 上次：[简表](../HOP_RESULTS.md)、[完整说明](../HOP_SWEEP.md)、[原始JSON](../GAMMA/results/hop_sweep_20261019_143309/results.json)、[360模型核验](../GAMMA/results/hop_sweep_20261019_143309/verification.json)。
+- 本次：[最终报告](FINAL_REPORT.md)、[480次原始CSV](results/full_runs.csv)、[逐组统计](results/summary.csv)、[480模型核验](results/full_verification_v2.json)、[启动说明](README.md)。
+- 机制与效率：[门控权重](plots/hop_weights.png)、[门控熵](plots/gating_entropy.png)、[训练时间](plots/training_time.png)、[推理时间](plots/inference_time.png)、[显存](plots/gpu_memory.png)。
+- 历史：[初轮门控消融](../GATE_ABLATION.md)、[README复现](../REPRODUCTION.md)。
+
+本文件由scripts/summarize_combined.py读取已完成实验生成，可在test_mlp内运行 `python -B scripts/summarize_combined.py` 更新；不启动训练。
+'''
+    output=ROOT/'EXPERIMENTS_SUMMARY.md'
+    output.write_text(text,encoding='utf-8')
+    for relative,digest in before.items():assert sha256(WORKSPACE/relative)==digest
+    broken=[];links=0
+    for target in re.findall(r'\[[^\]]*\]\(([^)]+)\)',text):
+        if target.startswith(('http://','https://','#')):continue
+        if not (output.parent/target).resolve().exists() and target!='results/combined_summary_verification.json':broken.append(target)
+        links+=1
+    assert not broken,broken
+    save_json(ROOT/'results/combined_summary_verification.json',dict(status='passed',
+        document=output.name,document_sha256=sha256(output),shared_dot_runs_checked=180,
+        exact_full_predictions=True,identical_labels_masks_and_selection_epochs=True,
+        main_historical_records=360,main_mlp_records=480,unique_condition_units=660,
+        standard_deviation='sample SD, ddof=1, recomputed from per-split values',
+        input_result_files_unchanged=True,source_sha256=before,checks=checks,
+        local_links_checked=links,broken_links=broken,training_performed=False))
+    print(f'Wrote {output.name}; verified 180 shared Dot runs, 24 table rows, {links} local links; no training.')
+
+if __name__=='__main__':main()

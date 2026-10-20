@@ -1,0 +1,157 @@
+"""Aggregate the frozen main experiment without importing torch or selecting runs."""
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src.paths import ROOT, save_json, sha256
+import argparse
+import csv
+import itertools
+import json
+import numpy as np
+import scipy
+from scipy import stats
+
+DATASETS = ['Texas', 'Wisconsin', 'Cornell', 'Chameleon', 'Squirrel', 'Actor']
+METRICS = ['train_accuracy', 'val_accuracy', 'test_accuracy', 'best_validation_epoch',
+           'stopped_epoch', 'train_loss_at_best', 'last_train_loss', 'parameter_count',
+           'epoch_training_ms_mean', 'epoch_wall_ms_mean', 'training_seconds',
+           'inference_ms_mean', 'inference_ms_median', 'peak_gpu_allocated_mb',
+           'peak_gpu_reserved_mb', 'initial_gpu_allocated_mb', 'peak_training_increment_mb',
+           'scorer_gradient_norm_first', 'scorer_parameter_change_l2',
+           'gating_entropy_normalized', 'max_weight_over_095_fraction',
+           'score_mean', 'score_std', 'score_min', 'score_max', 'centered_score_std',
+           'mean_cross_hop_cosine']
+
+def write_csv(path, rows):
+    assert rows
+    columns = list(dict.fromkeys(key for row in rows for key in row))
+    with Path(path).open('w', newline='', encoding='utf-8-sig') as handle:
+        writer = csv.DictWriter(handle, fieldnames=columns)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({key: json.dumps(value) if isinstance(value, (list, dict)) else value
+                             for key, value in row.items()})
+
+def paired_statistics(deltas):
+    values = np.asarray(deltas, dtype=float)
+    n = len(values)
+    mean = float(values.mean())
+    std = float(values.std(ddof=1)) if n > 1 else 0.0
+    width = float(stats.t.ppf(.975, n-1) * std / np.sqrt(n)) if n > 1 else 0.0
+    signs = np.asarray(list(itertools.product([-1, 1], repeat=n)))
+    randomized = (signs * values).mean(axis=1)
+    p = float((np.abs(randomized) >= abs(mean)-1e-12).mean())
+    return dict(n=n, delta_mean_pp=mean, delta_std_pp=std,
+                ci95_low_pp=mean-width, ci95_high_pp=mean+width,
+                exact_signflip_p=p, wins=int((values>1e-9).sum()),
+                ties=int((np.abs(values)<=1e-9).sum()), losses=int((values < -1e-9).sum()))
+
+def holm(rows):
+    ordered = sorted(rows, key=lambda row: row['exact_signflip_p'])
+    previous = 0.0
+    for index, row in enumerate(ordered):
+        previous = max(previous, min(1.0, (len(rows)-index)*row['exact_signflip_p']))
+        row['holm_p'] = previous
+
+def aggregate(group='v2'):
+    directory = ROOT/'runs'/group/'full'
+    status = json.loads((directory/'matrix_status.json').read_text(encoding='utf-8'))
+    assert status['status'] == 'complete' and status['completed'] == 480
+    config = json.loads((ROOT/'configs/main.json').read_text(encoding='utf-8'))
+    protocol = json.loads((ROOT/'runs'/group/'protocol.json').read_text(encoding='utf-8'))
+    fingerprint = protocol['sha256']
+    # Hash-check every frozen source, without loading the torch-dependent runner.
+    for relative, digest in protocol['sources'].items():
+        assert sha256(ROOT/relative) == digest, f'Frozen source changed: {relative}'
+    assert sha256(ROOT/'data/manifest.json') == protocol['data_manifest_sha256']
+    reports=[]; raw=[]; lookup={}; hop_rows=[]
+    for name in DATASETS:
+        for k in config['ks']:
+            for split in config['splits']:
+                for method in config['methods']:
+                    folder=directory/name.lower()/f'k_{k}'/f'split_{split}'/method
+                    report=json.loads((folder/'result.json').read_text(encoding='utf-8'))
+                    assert report['status']=='complete' and report['protocol_sha256']==fingerprint
+                    assert (report['dataset'],report['k'],report['split_id'],report['routing_method'])==(name,k,split,method)
+                    assert report['powers']==list(range(k+1)) and report['actual_gamma_layers']==1 and report['r']==2
+                    artifact=folder/report['artifact_subdir']
+                    for filename,digest in report['artifacts'].items():
+                        assert sha256(artifact/filename)==digest
+                    report['run_directory']=str(folder.relative_to(ROOT))
+                    reports.append(report);lookup[name,k,split,method]=report
+                    row={key:report[key] for key in ['dataset','routing_method','k','powers','actual_gamma_layers',
+                        'r','seed','split_id','split_sha256','protocol_sha256','common_init_sha256','full_init_sha256',
+                        'scorer_init_sha256','cpu_rng_sha256','cuda_rng_sha256','trained_state_sha256',
+                        'train_correct','train_size','val_correct','val_size','test_correct','test_size',
+                        'scorer_parameter_count','run_directory']+METRICS}
+                    row['reused_from']=report.get('reused_from','')
+                    raw.append(row)
+                    for hop in range(k+1):
+                        hop_rows.append(dict(dataset=name,k=k,split_id=split,routing_method=method,hop=hop,
+                            alpha_mean=report['hop_weights_mean'][hop],alpha_node_std=report['hop_weights_std'][hop],
+                            alpha_q0=report['hop_weights_quantiles'][0][hop],alpha_q25=report['hop_weights_quantiles'][1][hop],
+                            alpha_median=report['hop_weights_quantiles'][2][hop],alpha_q75=report['hop_weights_quantiles'][3][hop],
+                            alpha_q100=report['hop_weights_quantiles'][4][hop],node_pair_cosine=report['node_cosine_by_hop'][hop]))
+    groups=[]; paired=[]; pairs=[]; interactions=[]
+    for name in DATASETS:
+        for k in config['ks']:
+            for method in config['methods']:
+                subset=[lookup[name,k,split,method] for split in config['splits']]
+                row=dict(dataset=name,k=k,routing_method=method,n=len(subset),powers=list(range(k+1)))
+                for metric in METRICS:
+                    values=np.asarray([run[metric] for run in subset],dtype=float)
+                    assert np.isfinite(values).all()
+                    row[metric+'_mean']=float(values.mean());row[metric+'_std']=float(values.std(ddof=1))
+                groups.append(row)
+            deltas=[]
+            for split in config['splits']:
+                dot=lookup[name,k,split,'dot'];mlp=lookup[name,k,split,'mlp']
+                # full_init includes the extra MLP parameters and is intentionally different.
+                for key in ('split_sha256','common_init_sha256','cpu_rng_sha256','cuda_rng_sha256'):
+                    assert dot[key]==mlp[key]
+                delta=100*(mlp['test_accuracy']-dot['test_accuracy']);deltas.append(delta)
+                pairs.append(dict(dataset=name,k=k,split_id=split,seed=42+split,dot_test_percent=100*dot['test_accuracy'],
+                    mlp_test_percent=100*mlp['test_accuracy'],delta_pp=delta,
+                    train_step_ratio=mlp['epoch_training_ms_mean']/dot['epoch_training_ms_mean'],
+                    inference_ratio=mlp['inference_ms_mean']/dot['inference_ms_mean'],
+                    inference_median_ratio=mlp['inference_ms_median']/dot['inference_ms_median'],
+                    peak_memory_ratio=mlp['peak_gpu_allocated_mb']/dot['peak_gpu_allocated_mb'],
+                    peak_memory_delta_mb=mlp['peak_gpu_allocated_mb']-dot['peak_gpu_allocated_mb']))
+            paired.append(dict(dataset=name,k=k,**paired_statistics(deltas)))
+        for k in (2,3,4):
+            changes=[]
+            for split in config['splits']:
+                d=lambda kk:100*(lookup[name,kk,split,'mlp']['test_accuracy']-lookup[name,kk,split,'dot']['test_accuracy'])
+                changes.append(d(k)-d(1))
+            interactions.append(dict(dataset=name,k=k,reference_k=1,**paired_statistics(changes)))
+    holm(paired);holm(interactions)
+    results=ROOT/'results'
+    write_csv(results/'full_runs.csv',raw);write_csv(results/'summary.csv',groups)
+    write_csv(results/'paired_deltas.csv',pairs);write_csv(results/'paired_summary.csv',paired)
+    write_csv(results/'k_interactions.csv',interactions);write_csv(results/'hop_statistics.csv',hop_rows)
+    overview=[]
+    for k in config['ks']:
+        subset=[row for row in paired if row['k']==k]
+        overview.append(dict(k=k,mean_delta_pp=float(np.mean([row['delta_mean_pp'] for row in subset])),
+            improved=[row['dataset'] for row in subset if row['delta_mean_pp']>1e-9],
+            degraded=[row['dataset'] for row in subset if row['delta_mean_pp'] < -1e-9],
+            tied=[row['dataset'] for row in subset if abs(row['delta_mean_pp'])<=1e-9]))
+    cost={key:dict(mean=float(np.mean([row[key] for row in pairs])),median=float(np.median([row[key] for row in pairs])))
+          for key in ['train_step_ratio','inference_ratio','inference_median_ratio','peak_memory_ratio','peak_memory_delta_mb']}
+    result=dict(status='complete',group=group,unique_runs=len(reports),pilot_reused=sum('reused_from' in row for row in reports),
+        protocol_sha256=fingerprint,summary=groups,paired_summary=paired,k_interactions=interactions,k_overview=overview,
+        cost=cost,mlp_parameters_added=2113,mlp_gradient_min=min(row['scorer_gradient_norm_first'] for row in reports if row['routing_method']=='mlp'),
+        total_training_seconds=sum(row['training_seconds'] for row in reports),full_scheduler_seconds=status['elapsed_seconds'],
+        failure_attempts=len(list(directory.rglob('failure.json'))),
+        analysis_environment=dict(python=sys.version,executable=sys.executable,numpy=np.__version__,scipy=scipy.__version__),
+        analysis_script_sha256=sha256(__file__),
+        statistics_note='Sample SD (ddof=1); paired t 95% descriptive CI; exact two-sided sign-flip p over 2^10 patterns. '
+            'Holm across 24 main comparisons; separate Holm across 18 K-vs-K1 interactions. '
+            'Splits overlap on one graph; tests are exploratory and do not establish independent-dataset generalization.')
+    save_json(results/'analysis.json',result)
+    print(json.dumps({key:result[key] for key in ['status','unique_runs','pilot_reused','k_overview','cost','failure_attempts']},indent=2))
+    return result
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('--group',default='v2')
+    aggregate(parser.parse_args().group)

@@ -1,0 +1,106 @@
+"""Summarize cumulative-hop effects separately from dynamic-routing effects."""
+
+import argparse
+import csv
+import itertools
+import json
+import math
+from pathlib import Path
+import statistics
+
+from scipy.stats import t
+
+
+def contrast(values):
+    mean = statistics.mean(values)
+    radius = t.ppf(0.975, len(values) - 1) * statistics.stdev(values) / math.sqrt(len(values))
+    null = [abs(statistics.mean(a * b for a, b in zip(signs, values)))
+            for signs in itertools.product((-1, 1), repeat=len(values))]
+    p = sum(value >= abs(mean) - 1e-12 for value in null) / len(null)
+    return dict(mean_pp=mean, ci95_lower_pp=float(mean - radius), ci95_upper_pp=float(mean + radius),
+                exact_sign_flip_p=p, paired_differences_pp=values)
+
+
+def holm(rows):
+    running = 0.0
+    for rank, row in enumerate(sorted(rows, key=lambda item: item["exact_sign_flip_p"])):
+        running = max(running, row["exact_sign_flip_p"] * (len(rows) - rank))
+        row["holm_p"] = min(1.0, running)
+
+
+def save_csv(path, rows):
+    columns = [key for key in rows[0] if key != "paired_differences_pp"]
+    with path.open("w", encoding="utf-8-sig", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=columns, extrasaction="ignore")
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("output", type=Path)
+    args = parser.parse_args()
+    root = args.output.resolve()
+    state = json.loads((root / "results.json").read_text(encoding="utf-8"))
+    assert state["status"] == "complete"
+    runs = {int(key): json.loads((root / path / "results.json").read_text(encoding="utf-8"))
+            for key, path in state["experiments"].items()}
+    names = list(runs[2]["pairs"])
+    accuracy_rows, effects, interactions = [], [], []
+    for name in names:
+        for k in (2, 3, 4):
+            s = runs[k]["summary"][name]
+            accuracy_rows.append(dict(dataset=name, k=k, routing_mean_percent=s["routing_mean"] * 100,
+                                      uniform_mean_percent=s["uniform_mean"] * 100,
+                                      gate_gain_pp=s["mean_difference_pp"]))
+        for low, high in ((2, 3), (3, 4)):
+            lower, upper = runs[low]["pairs"][name], runs[high]["pairs"][name]
+            assert [pair["split"] for pair in lower] == [pair["split"] for pair in upper]
+            for variant in ("routing", "uniform"):
+                differences = [100 * (hi[variant]["test_accuracy"] - lo[variant]["test_accuracy"])
+                               for lo, hi in zip(lower, upper)]
+                effects.append(dict(dataset=name, variant=variant, from_k=low, to_k=high, **contrast(differences)))
+            differences = [100 * ((hi["routing"]["test_accuracy"] - hi["uniform"]["test_accuracy"]) -
+                                   (lo["routing"]["test_accuracy"] - lo["uniform"]["test_accuracy"]))
+                           for lo, hi in zip(lower, upper)]
+            interactions.append(dict(dataset=name, from_k=low, to_k=high, **contrast(differences)))
+    holm(effects)
+    holm(interactions)
+    save_csv(root / "accuracy_by_k.csv", accuracy_rows)
+    save_csv(root / "incremental_hop_effects.csv", effects)
+    save_csv(root / "gate_hop_interactions.csv", interactions)
+    result = dict(hop_convention=state["hop_convention"], accuracy_by_k=accuracy_rows,
+                  incremental_hop_effects=effects, gate_hop_interactions=interactions,
+                  interpretation="Paired exploratory contrasts; repeated graph splits overlap. "
+                  "An extra hop also adds its original trainable channel scale parameters. "
+                  "Hop powers count walks and do not isolate strict-distance neighborhoods.")
+    (root / "hop_effects.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    lines = ["# Hop effects", "", f"Convention: {state['hop_convention']}", "",
+             "Each cell is routing / uniform mean test accuracy (%).", "",
+             "| Dataset | K=2 | K=3 | K=4 |", "| --- | ---: | ---: | ---: |"]
+    for name in names:
+        cells = []
+        for k in (2, 3, 4):
+            summary = runs[k]["summary"][name]
+            cells.append(f"{100*summary['routing_mean']:.2f} / {100*summary['uniform_mean']:.2f}")
+        lines.append(f"| {name} | " + " | ".join(cells) + " |")
+    lines += ["", "Incremental effects are paired higher-K minus lower-K accuracy in percentage points. "
+              "The added-hop effect includes retraining the model with the additional hop and scale row; "
+              "it is not an attribution of an individual hop inside a fixed trained model.", "",
+              "| Dataset | Routing K2→3 | Routing K3→4 | Uniform K2→3 | Uniform K3→4 |",
+              "| --- | ---: | ---: | ---: | ---: |"]
+    for name in names:
+        values = [next(row["mean_pp"] for row in effects if row["dataset"] == name and
+                       row["variant"] == variant and row["from_k"] == low)
+                  for variant, low in (("routing", 2), ("routing", 3), ("uniform", 2), ("uniform", 3))]
+        lines.append(f"| {name} | " + " | ".join(f"{value:+.2f}" for value in values) + " |")
+    lines += ["", "CSV/JSON include approximate paired-t intervals, exact two-sided sign-flip p values "
+              "and Holm corrections within the 24 incremental-hop contrasts and the 12 gate/hop interaction contrasts. "
+              "These are exploratory comparisons of fixed hyperparameters, not test-set-based hyperparameter selection.", ""]
+    (root / "HOP_EFFECTS.md").write_text("\n".join(lines), encoding="utf-8")
+    print("\n".join(lines[:15]))
+    print(f"Saved 24 incremental-hop effects and 12 gate/hop interactions to {root}")
+
+
+if __name__ == "__main__":
+    main()
