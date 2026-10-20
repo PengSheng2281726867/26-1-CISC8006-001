@@ -154,24 +154,26 @@ class ModelAndProtocolTests(unittest.TestCase):
         config=json.loads((ROOT/'configs/baseline_texas.json').read_text())
         config['synthetic_test_fixture']=True
         config['training']['epochs']=4
-        before=set((ROOT/'outputs').glob('*/metadata.json'))
-        with patch.object(runner,'RESEARCH',fixture), \
-             patch('src.data.load_dataset',return_value=ToyDataset()), \
-             patch('src.data.load_masks',return_value=masks), \
-             patch('src.data.split_path',return_value=fixture/'synthetic_split.npz'):
-            code=runner.execute(next(jobs(config)),config,'synthetic-fixture-config-sha','cpu')
-        self.assertEqual(code,0)
-        created=set((ROOT/'outputs').glob('*/metadata.json'))-before
-        self.assertEqual(len(created),1)
-        metadata_path=created.pop();metadata=json.loads(metadata_path.read_text())
-        self.assertEqual(metadata['status'],'complete')
-        self.assertIn('model.pt',metadata['artifacts'])
-        self.assertIn('metrics.json',metadata['artifacts'])
-        result=json.loads((metadata_path.parent/'metrics.json').read_text())
-        self.assertEqual(result['report']['test_accuracy'],result['independently_checked']['accuracy'])
-        self.assertEqual(result['report']['git']['commit'],metadata['git']['commit'])
-        self.assertEqual(result['report']['seed'],42)
-        self.assertTrue(metadata['config']['synthetic_test_fixture'])
+        for device in ('cpu','cuda') if torch.cuda.is_available() else ('cpu',):
+            before=set((ROOT/'outputs').glob('*/metadata.json'))
+            with patch.object(runner,'RESEARCH',fixture), \
+                 patch('src.data.load_dataset',return_value=ToyDataset()), \
+                 patch('src.data.load_masks',return_value=masks), \
+                 patch('src.data.split_path',return_value=fixture/'synthetic_split.npz'):
+                code=runner.execute(next(jobs(config)),config,'synthetic-fixture-config-sha',device)
+            self.assertEqual(code,0)
+            created=set((ROOT/'outputs').glob('*/metadata.json'))-before
+            self.assertEqual(len(created),1)
+            metadata_path=created.pop();metadata=json.loads(metadata_path.read_text())
+            self.assertEqual(metadata['status'],'complete')
+            self.assertEqual(metadata['cuda_workspace_reset'],device=='cuda')
+            self.assertIn('model.pt',metadata['artifacts'])
+            self.assertIn('metrics.json',metadata['artifacts'])
+            result=json.loads((metadata_path.parent/'metrics.json').read_text())
+            self.assertEqual(result['report']['test_accuracy'],result['independently_checked']['accuracy'])
+            self.assertEqual(result['report']['git']['commit'],metadata['git']['commit'])
+            self.assertEqual(result['report']['seed'],42)
+            self.assertTrue(metadata['config']['synthetic_test_fixture'])
 
 
 class EvidenceTests(unittest.TestCase):

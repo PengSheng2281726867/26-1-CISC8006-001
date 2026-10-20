@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "tests_run": 13,
+  "official_alignment_cases": 20,
+  "cpu_and_cuda_synthetic_success_paths": true,
+  "source_sha256": {
+    "course/common.py": "5d6072ab71d9ce9b4121a2b62d4e37f2ac09d84555c1cbbc4978715fcbf0bcef",
+    "course/metrics.py": "88d8ab47c6335b20716ad3ff26a73c6dc4638975cb36d793d9728fb03906256e",
+    "course/__init__.py": "5cabf05c5ea5037a89fb3bc588b257b89908cf6e3b9f220f2fcfdee91cead2ae",
+    "scripts/check_publication.py": "fd47c40b589d34834cc1ab5dedececca2677d5f5149762d6765747930a029091",
+    "scripts/evaluate.py": "73bcfa4ed19764b79ab7dceea557fc9a3e7c660325768800a3e620142e079452",
+    "scripts/prepare_data.py": "4278950f38a85bd5fd7c15e1005f4e522c7984390072b55f507cbe77924cb375",
+    "scripts/run_experiment.py": "17bdc1849e1f7446e522df48dd43d078f4fad3b7edfc15bc24d600a9629a74ac",
+    "scripts/smoke_test.py": "8000985069149bcedb435e54d75c43afd20dfaa03bd7466d85e46b3d972474e5",
+    "tests/test_course.py": "35afb1ff0e88bf08bbbd47c1f13ce727b30890650d3a3b7e64d7043c7bc6c646"
+  },
+  "real_dataset_training_started": false,
+  "note": "Final adapter version adds the validated per-run CUDA workspace reset. Smoke ran before publication; its actual dirty state is retained."
+}

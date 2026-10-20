@@ -1,19 +1,20 @@
-# Actual system-test evidence
+# Actual final system-test evidence
 
-Current recovery smoke result: **passed**.
+All13 tests and20 official CPU/CUDA forward/gradient cases passed. The final provenance adapter was also exercised successfully on CPU and CUDA using a four-epoch synthetic fixture; no existing scientific model or real-data experiment was retrained. A deliberate missing-data failure fixture and earlier failed tests remain in ignored outputs/.
 
-The copied original alignment test was actually run during import:2 unittest
-methods covering20 CPU/CUDA forward/gradient subcases passed. No datasets or
-existing models were trained. Course smoke details below are populated only from
-a real output report, never an anticipated outcome.
+The last adapter changes were tested before their final publication commit, so the actual dirty=true status is retained. reports/adapter_validation.json gives exact hashes of the tested new source; frozen scientific model hashes remain in experiments/source_mapping.json. Earlier clean-tree test reports remain in Git history and local outputs.
 
+```json
 {
   "status": "passed",
-  "utc": "2026-10-20T12:31:05.783985+00:00",
+  "utc": "2026-10-20T12:43:39.001398+00:00",
   "git": {
-    "commit": "a7fb5a1b0feb7d8ce93dbe2be8017db2bf214c5c",
-    "dirty": false,
-    "status": [],
+    "commit": "0f061de5377202f232afd26899826e8c5a825fb3",
+    "dirty": true,
+    "status": [
+      "M scripts/run_experiment.py",
+      " M tests/test_course.py"
+    ],
     "interpretation": "current run only; not a recovered execution commit"
   },
   "tests_run": 13,
@@ -202,7 +203,7 @@ a real output report, never an anticipated outcome.
       "parameter_gradient_max_error": 0.0
     }
   ],
-  "seconds": 1.5048256000154652,
+  "seconds": 1.776316500036046,
   "environment": {
     "python": "3.12.14",
     "torch": "2.8.0+cu128",
@@ -215,9 +216,4 @@ a real output report, never an anticipated outcome.
   "full_training_started": false,
   "source_mapping_sha256": "27c355ace5788f15d1b60a94f585e828f7197a4cb306533e5d441fb55a5f2d28"
 }
-
-The smoke log/report stays in ignored `outputs/`; a public derivative may be
-saved as `reports/smoke_verification.json` after validation. The test creates an
-intentional missing-data failure fixture to exercise log/metadata retention.
-This is not a scientific run. Actual Git dirty state is preserved in the report;
-tests run before their commit can truthfully show dirty=true.
+```

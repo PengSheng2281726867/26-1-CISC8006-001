@@ -5,6 +5,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from course.common import ROOT, RESEARCH, save, sha256, git_state, utc_now, jobs
 import argparse
 import contextlib
+import gc
 import importlib.metadata
 import json
 import time
@@ -57,6 +58,15 @@ def execute(job, config, config_sha, device):
                 for label, mask in zip(('train_mask', 'val_mask', 'test_mask'),
                                        load_masks(job['dataset'], job['split_id'], graph.num_nodes)):
                     graph[label] = torch.from_numpy(mask).to(device)
+                metadata['cuda_workspace_reset'] = False
+                if str(device).startswith('cuda'):
+                    torch.cuda.synchronize()
+                    gc.collect()
+                    # Preserve the previously validated v2 resource-measurement
+                    # reset in this new provenance adapter, for both methods.
+                    torch._C._cuda_clearCublasWorkspaces()
+                    torch.cuda.empty_cache()
+                    metadata['cuda_workspace_reset'] = True
                 builder = build_model if job['method'] in ('dot', 'mlp') else component_model
                 model, initial = builder(dataset.num_node_features, dataset.num_classes, job['k'],
                                          job['method'], job['seed'], device)

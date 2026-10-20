@@ -20,3 +20,7 @@ Subsequent test failures, if any, remain in ignored `outputs/smoke-*/tests.log`;
 passing evidence does not remove prior failures. The smoke test also deliberately
 exercises and retains a missing-data failure to verify provenance; it is a synthetic
 test fixture, not a failed scientific experiment.
+
+## Final adapter audit
+
+The new prospective runner initially omitted the old v2 per-run CUDA workspace reset. Before any real-data training, the adapter was brought into line with the validated v2 resource-measurement protocol for both methods. CPU and CUDA four-epoch synthetic success-path tests passed along with all13 tests/20 official-alignment cases. Frozen model/factory/train bytes were not edited. This correction changes future resource instrumentation, not any historical result.

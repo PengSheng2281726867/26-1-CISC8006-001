@@ -35,3 +35,7 @@ recovery commit hashes need not be publicly reachable; they are identified as
 local, never as historical model-execution commits. The remote and local
 published tree hashes must match. Publication status is verified only after
 the connector updates main and Git fetch reads it back.
+
+## Verified publication update
+
+The authorized GitHub connector published the full source snapshot at `0f061de5377202f232afd26899826e8c5a825fb3`; Git fetched it and independently read remote main at that exact commit. Its tree `543896fb30f28a3fea0a3878bada89891e76f831` exactly matches the reviewed local snapshot (134 files). The original local commits remain on `recovery-local`. A final handoff commit adds verification evidence and a tested CUDA-workspace-reset adapter correction without changing frozen scientific source. The local published main is advanced only after ancestry and index/remote-tree equality checks. No reset/rebase/force push is used. See ../reports/remote_verification.json.

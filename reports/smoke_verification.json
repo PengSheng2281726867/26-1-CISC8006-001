@@ -1,10 +1,13 @@
 {
   "status": "passed",
-  "utc": "2026-10-20T12:31:05.783985+00:00",
+  "utc": "2026-10-20T12:43:39.001398+00:00",
   "git": {
-    "commit": "a7fb5a1b0feb7d8ce93dbe2be8017db2bf214c5c",
-    "dirty": false,
-    "status": [],
+    "commit": "0f061de5377202f232afd26899826e8c5a825fb3",
+    "dirty": true,
+    "status": [
+      "M scripts/run_experiment.py",
+      " M tests/test_course.py"
+    ],
     "interpretation": "current run only; not a recovered execution commit"
   },
   "tests_run": 13,
@@ -193,7 +196,7 @@
       "parameter_gradient_max_error": 0.0
     }
   ],
-  "seconds": 1.5048256000154652,
+  "seconds": 1.776316500036046,
   "environment": {
     "python": "3.12.14",
     "torch": "2.8.0+cu128",

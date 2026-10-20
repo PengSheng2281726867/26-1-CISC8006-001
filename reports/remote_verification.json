@@ -1,0 +1,24 @@
+{
+  "status": "verified_source_snapshot",
+  "verified_utc": "2026-10-20T12:45:08.952484+00:00",
+  "repository": "https://github.com/PengSheng2281726867/26-1-CISC8006-001",
+  "snapshot_commit": "0f061de5377202f232afd26899826e8c5a825fb3",
+  "snapshot_tree": "543896fb30f28a3fea0a3878bada89891e76f831",
+  "snapshot_files": 134,
+  "local_recovery_commit": "09ce553936fc84a8a6b6e83e93e7041ad1807e1a",
+  "git_fetch_verified": true,
+  "git_ls_remote_verified": true,
+  "tree_identical_to_reviewed_index": true,
+  "publication_method": "Authorized GitHub connector: Git blobs/tree/commit and non-force fast-forward ref",
+  "normal_git_push": "BLOCKED_NO_NONINTERACTIVE_HTTPS_USERNAME_CREDENTIAL",
+  "credential_extracted": false,
+  "force_push": false,
+  "recovery_branch_preserved": true,
+  "original_research_preservation": {
+    "status": "passed",
+    "recovery_source_files": 1049,
+    "original_project_files": 2570,
+    "hash_and_mtime_unchanged": true
+  },
+  "note": "This proof identifies the verified full import. A following real commit adds this handoff/proof and tested CUDA-reset adapter fix; it is not a historical model execution commit."
+}
