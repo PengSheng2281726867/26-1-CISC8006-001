@@ -157,3 +157,6 @@ as Proposed, not completed pilots.
 - Teacher approvals, full multi-seed follow-up, fresh environment installation,
   externally accessible artifact archive, final course slides and Week12 freeze
   are not complete. No Week12 final tag is created.
+
+
+- [Fixed-propagation / variable-hop-gating study (2026-10-25)](experiments/hop_scope_study/README.md):300 retrainings and300 inference-only mask evaluations; technical matrix complete, teacher approval NOT_VERIFIED.

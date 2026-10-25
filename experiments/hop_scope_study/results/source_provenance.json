@@ -1,0 +1,41 @@
+{
+  "base_main_sha": "935a4303ed0d1410e29d9374cc1ce91b82dc527c",
+  "upstream_sha": "36d054b4ae53c0c8e360d85d056f5207d61c8281",
+  "scientific_source_bundle_sha256": "dd087c4e01643682ee12f98c5ce14779f069419776c323bf7b609dc7a173c4b1",
+  "scientific_sources": {
+    "experiments/hop_scope_study/scripts/eval_only.py": "4f7766fab09c098756724585c3e4b705ad3429323cc1396e1aec0cf6976a316d",
+    "experiments/hop_scope_study/scripts/prepare.py": "07bdee467292c061b7621e8741636e55a73e082af9fef1b648aceabdc7df1bba",
+    "experiments/hop_scope_study/scripts/run.py": "849ac57883694b8e7f0ca9aceae104c7498b7e4137e5142987ec4771660e2fc9",
+    "experiments/hop_scope_study/src/__init__.py": "979db6c1151e9663cfcf32f71e51eb08b4544954bda198fafc1feae78386ea54",
+    "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+    "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+    "experiments/hop_scope_study/src/model.py": "d52dba2e31379dae02dd18a3be37f427a9fb58ac7c209cd78331f1893d28a84a",
+    "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+    "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+    "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+    "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+    "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+    "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+  },
+  "analysis_and_acceptance_sources": {
+    "experiments/hop_scope_study/scripts/aggregate.py": "270237c36e33294348ab122aade20bc5793faef76dbc31cfc507144292c1f9ca",
+    "experiments/hop_scope_study/scripts/check.py": "923d8835181ae609f66e736bf98541d2d06259b822bb96095488d799818ae47e",
+    "experiments/hop_scope_study/scripts/check_preservation.py": "3e7452be2816b1607a81b180b9067ad953aaa4a18c18ba30d9062e567e769468",
+    "experiments/hop_scope_study/scripts/eval_only.py": "4f7766fab09c098756724585c3e4b705ad3429323cc1396e1aec0cf6976a316d",
+    "experiments/hop_scope_study/scripts/finalize_report.py": "f5e2778d68384581bc78dcf58f9b7f66413c5ff3a278cf09b913c645674139d8",
+    "experiments/hop_scope_study/scripts/integrate_docs.py": "1791ead43f5c789e35cfe7ea8909dbf34b2b387f7fa2697d5dc4ebd0167918d5",
+    "experiments/hop_scope_study/scripts/plot.py": "080d65a849af808a8d6dbf0c9eedd33122d47e9cd55f6b459d9ea10a7c4f85fa",
+    "experiments/hop_scope_study/scripts/prepare.py": "07bdee467292c061b7621e8741636e55a73e082af9fef1b648aceabdc7df1bba",
+    "experiments/hop_scope_study/scripts/publication_snapshot.py": "d19625f110b4c1ec277cead5db2d2891a7d301bc5402296ec9e41bb7340d2d1a",
+    "experiments/hop_scope_study/scripts/run.py": "849ac57883694b8e7f0ca9aceae104c7498b7e4137e5142987ec4771660e2fc9",
+    "experiments/hop_scope_study/scripts/verify_reference_cache.py": "ae4d1f7088fda1a94c4a0790656f78cdc0587bb0edfac67b5ef563491dfb0da8",
+    "experiments/hop_scope_study/tests/test_analysis.py": "48f7f36a1c5d5dd98d6433a5b7853abf3ac402f0dd604e424f3be8165d46ea39",
+    "experiments/hop_scope_study/tests/validate.py": "e276a07117a234660e6ee7bcfc692ec3ad02b0c479a657a7e4eafd80a5778e06"
+  },
+  "protocol_sha256": "77e43694d1089b88fa4f33261a0bbd993657ae75343a3bf8087676bc283438a3",
+  "execution_git_commits": [
+    "935a4303ed0d1410e29d9374cc1ce91b82dc527c"
+  ],
+  "all_executions_truthfully_dirty": true,
+  "all_checkpoint_reloads_verified": true
+}
