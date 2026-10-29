@@ -41,3 +41,12 @@ frozen source changes and test-driven threshold selection for scientific effects
 were rejected. Human verification of scientific interpretation, attribution and
 teacher approval remains PENDING / NOT_VERIFIED. Evidence: experiments/loho_diagnostic/
 PROTOCOL.md, reports/IMPLEMENTATION_AUDIT.md and subsequent reports/evidence.
+
+LOHO completion: audited180 primary checkpoints plus60 historical weights;
+executed validation/test on180 models, generated all prespecified descriptive
+statistics and68 figures, retained negative/undefined outcomes and real failure
+records. Test analysis followed committed validation/source freeze.9 LOHO unit
+tests and13 root smoke tests passed; no benchmark retraining. Agent implementation
+and reports are complete; human review remains PENDING, teacher NOT_VERIFIED.
+Public evidence: experiments/loho_diagnostic/reports/FINAL_REPORT.md and
+EVIDENCE_MANIFEST.md. Publication is authorized by the user; PR merge is not.

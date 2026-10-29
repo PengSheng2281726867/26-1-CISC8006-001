@@ -52,3 +52,10 @@ sample SD across split means. Within-split `*_sample_sd` measures seed variation
 Per-node arrays include all required losses, weights, predictions, correctness
 and true-label probabilities, with dataset/split/seed/checkpoint/mask/hop encoded
 by metadata and column axes. They are private and never staged.
+
+Actual outputs: [final report](reports/FINAL_REPORT.md),
+[validation](reports/VALIDATION_REPORT.md), [test summaries](results/full_test/),
+[checks](reports/SYSTEM_TESTS.md), [evidence](reports/EVIDENCE_MANIFEST.md).
+The executed extension command additionally used `--reuse-batch` with the actual
+pilot batch path; pass both pilot and extension paths to summary/plots.
+See results/private_artifact_checksums.csv for relative executed batch IDs.
