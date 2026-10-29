@@ -27,3 +27,17 @@ the missing historical reproduction, improvement-design and final-evaluation
 interactions. Human verification of this log and phase coverage is still required.
 Commits use the authorized repository account; this does not imply that the human
 person manually wrote agent-generated code or reviewed every scientific decision.
+
+## 2026-10-29 ? LOHO diagnostic
+
+User authorized all diagnostic phases and publication to an isolated branch.
+Codex (precise model version UNKNOWN) audited frozen source/checkpoints, proposed
+a source-faithful masked-routing adapter, synthetic controls and descriptive
+seed/split hierarchy. These engineering choices were implemented; this records
+agent execution, not human scientific acceptance. Shared environments and
+protected scientific source were preserved. No expensive new training authorized
+or started. Initial overstrict alpha-difference test assertion was corrected;
+frozen source changes and test-driven threshold selection for scientific effects
+were rejected. Human verification of scientific interpretation, attribution and
+teacher approval remains PENDING / NOT_VERIFIED. Evidence: experiments/loho_diagnostic/
+PROTOCOL.md, reports/IMPLEMENTATION_AUDIT.md and subsequent reports/evidence.

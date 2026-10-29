@@ -1,0 +1,6 @@
+private_outputs/
+private_inputs/
+cache/
+*.npz
+*.pt
+*.log
