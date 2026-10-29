@@ -1,0 +1,9 @@
+dataset,evaluation_set,hop,n_units,mean_paired_difference_mean_mean,mean_paired_difference_mean_sample_sd,mean_paired_difference_mean_n,median_paired_difference_mean_mean,median_paired_difference_mean_sample_sd,median_paired_difference_mean_n,mean_absolute_paired_difference_mean_mean,mean_absolute_paired_difference_mean_sample_sd,mean_absolute_paired_difference_mean_n,sign_reversal_fraction_mean_mean,sign_reversal_fraction_mean_sample_sd,sign_reversal_fraction_mean_n
+Actor,val,1,1,0.006666097867613037,NA,1,0.00022675314297278723,NA,1,0.027785209628442924,NA,1,0.04649122807017544,NA,1
+Actor,val,2,1,0.004877554097523292,NA,1,0.00014093766609827677,NA,1,0.019930342212319374,NA,1,0.1074561403508772,NA,1
+Actor,val,3,1,0.005428780568763614,NA,1,0.00016000277052323023,NA,1,0.026961270719766617,NA,1,0.0712719298245614,NA,1
+Actor,val,4,1,0.00803353039858242,NA,1,-6.846090157826741e-05,NA,1,0.03439956220487753,NA,1,0.04736842105263158,NA,1
+Chameleon,val,1,1,0.0528519277771314,NA,1,9.143756081660588e-05,NA,1,0.08129649609327316,NA,1,0.02857142857142857,NA,1
+Chameleon,val,2,1,0.05809837952256203,NA,1,6.834014008442561e-05,NA,1,0.08686658988396327,NA,1,0.02197802197802198,NA,1
+Chameleon,val,3,1,0.06203720346093178,NA,1,9.031886778150995e-05,NA,1,0.09215978036324184,NA,1,0.019047619047619046,NA,1
+Chameleon,val,4,1,0.054903446386257805,NA,1,7.361853689265747e-05,NA,1,0.0824631080031395,NA,1,0.015384615384615385,NA,1
