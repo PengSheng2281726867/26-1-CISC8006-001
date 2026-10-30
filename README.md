@@ -157,3 +157,5 @@ as Proposed, not completed pilots.
 - Teacher approvals, full multi-seed follow-up, fresh environment installation,
   externally accessible artifact archive, final course slides and Week12 freeze
   are not complete. No Week12 final tag is created.
+
+- [Frozen-weight LOHO routing diagnostic](experiments/loho_diagnostic/README.md).

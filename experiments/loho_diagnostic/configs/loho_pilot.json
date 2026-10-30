@@ -1,0 +1,21 @@
+{
+  "protocol": "v1",
+  "teacher_approval": "NOT_VERIFIED",
+  "datasets": [
+    "Chameleon",
+    "Actor"
+  ],
+  "splits": [
+    0
+  ],
+  "seeds": [
+    2026,
+    2027,
+    2028
+  ],
+  "k": 4,
+  "r": 2,
+  "epsilon": 1e-05,
+  "device": "cuda",
+  "cohort": "stability_v1_core"
+}
