@@ -1,0 +1,3242 @@
+[
+  {
+    "run_id": "2026-10-30T042511847524+0000-bdba0497",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 42,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:11.847524+00:00",
+    "ended_utc": "2026-10-30T04:25:15.664086+00:00",
+    "init_sha256": "c86d8f3b1cb448910764a2f62758cf8b69bfcff53c6000449bce69ba5fe8fe31",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "2988501c0074432e2ac0fa1270d21c9cb0111027039925fcc52bc487a348909e",
+    "artifacts": {
+      "model.pt": "eabaf318673b4b07cf76ebd45cc16ad0a06df3ae271285f09209fb69618a05db",
+      "epochs.csv": "a8901982071c15b0199ed6142c6f18d77b0f9361154adef70eae42b2bdf902f9",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "f4540c58af3a2e2ae98f8030da847861114152f6aa4fd50decf67a1f3e4326c9"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042515675300+0000-5fef0821",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 42,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:15.675300+00:00",
+    "ended_utc": "2026-10-30T04:25:16.961333+00:00",
+    "init_sha256": "c86d8f3b1cb448910764a2f62758cf8b69bfcff53c6000449bce69ba5fe8fe31",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "20d70dfdf0dbf079428c0326a7ff8fc30aadac1ed90723e55a6e262afa866b1b",
+    "artifacts": {
+      "model.pt": "41c6f6f01effe3ed7e837658949df9ae07b6381bf95cb7cb70e2c27d68313bfd",
+      "epochs.csv": "c1400c91cd53d67fe603e67bc28b14578b6409de3f67bd355beab83623f77cdd",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "dcdf206404fdc873a453ae1624204f30083ff23b9c3d16b02ad7b9c6a0446e17"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 2.6226043701171875e-06,
+      "alpha_max_abs": 2.980232238769531e-07,
+      "gradient_max_abs": 2.9802322387695312e-08
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042506089350+0000-a66aa0db",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 42,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:06.090347+00:00",
+    "ended_utc": "2026-10-30T04:25:08.841835+00:00",
+    "init_sha256": "c86d8f3b1cb448910764a2f62758cf8b69bfcff53c6000449bce69ba5fe8fe31",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "4edd42cee4fa0e7acd2ec0b4d080f49c62549c6a540065c9db740ca309300fdf",
+    "artifacts": {
+      "model.pt": "e5f689ce6997822da81ebb4b68de9ffb9d2e8b20afa6da12eccfe7cdbb90a67a",
+      "epochs.csv": "6e40602d381c2975cf902f02a806678f21484b87bbf8ffcfa08dd0096c17a2ee",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "374379bad03b71a842df95895536b7bfc0e35f5b391926a4815a858e0399db8c"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042508859473+0000-7d74dd58",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 42,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:08.859473+00:00",
+    "ended_utc": "2026-10-30T04:25:11.838927+00:00",
+    "init_sha256": "c86d8f3b1cb448910764a2f62758cf8b69bfcff53c6000449bce69ba5fe8fe31",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "510bb39530cddd84d4533be09aec67987414c621a2ce91e39d2101ab09837f29",
+    "artifacts": {
+      "model.pt": "4391ffa9a3076f6e8c402eef3d8d474126a6879e1ce9322ca4e0a89f3c95a1df",
+      "epochs.csv": "6fd94a19b60111af66d9238df4c43e3d4d4ba9a3f4fa04e7d4897a27ffa97a88",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "e39daaae9581de36cef5a979f54a2148a853560a0e5bb132b8f5c8bf48d7d0d4"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042520504738+0000-ccaca7e6",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 43,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:20.504738+00:00",
+    "ended_utc": "2026-10-30T04:25:23.683113+00:00",
+    "init_sha256": "b61114d77ccaf551c3beb8d2a8d662d63bd73f390cb215a2dac9b62f84389ac7",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "b63e1142ffaafefe0cd8b2b416f84c2cfe6ee577ca7b34ec18d08a372c214f12",
+    "artifacts": {
+      "model.pt": "dacc3c0a3cbc0680d6539392a7136801a83200cec8986f8deb1354761a5d42de",
+      "epochs.csv": "e9321472d25d182f827b313a47702126c436aab3c5e0860d3e146d9dfdd5b43a",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "a501b526b8dd12040cfd5a00df3c0aa5ece6d32a5520fe6bfe2dbb602704fa0d"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042523691617+0000-2700f5ca",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 43,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:23.691617+00:00",
+    "ended_utc": "2026-10-30T04:25:25.116623+00:00",
+    "init_sha256": "b61114d77ccaf551c3beb8d2a8d662d63bd73f390cb215a2dac9b62f84389ac7",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "5ec83cd423cae88188c9ca0e5d2aca2e36359f07075bce0628bedd4cda0aa9ea",
+    "artifacts": {
+      "model.pt": "04942939769e6da155087e2aa14e22585bb86c826efa919834929a9230149e73",
+      "epochs.csv": "0fc740de19c22d4dcf3631107ea0fd045242fcaf56df2dae84aa7140827fdd72",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "bc877d8cca32bca0e43ddd76e1d5193d2605536a62740b3fc91cfe3c38c53feb"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 2.384185791015625e-06,
+      "alpha_max_abs": 2.384185791015625e-07,
+      "gradient_max_abs": 4.470348358154297e-08
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042525129681+0000-ecebcfe3",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 43,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:25.129681+00:00",
+    "ended_utc": "2026-10-30T04:25:26.493966+00:00",
+    "init_sha256": "b61114d77ccaf551c3beb8d2a8d662d63bd73f390cb215a2dac9b62f84389ac7",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "4cc4f68f01f805cecb9d54bf66192210b53cba0d0004403fc6e107d7c81d16c5",
+    "artifacts": {
+      "model.pt": "c07a3786a07dc2520efdfe6e197946c16816b2eef80fdb32f42b7be575cf4404",
+      "epochs.csv": "2245e26eb5feee01633c0bc6d538cb7fdb5c047d6ef68a0cdb88b01d120916d0",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "7292dd41ab0c103e48cc3f861c38e5c95cc00512e64332fcee2f2772fd0d713a"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042516976914+0000-d219a68b",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 43,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:16.976914+00:00",
+    "ended_utc": "2026-10-30T04:25:20.489123+00:00",
+    "init_sha256": "b61114d77ccaf551c3beb8d2a8d662d63bd73f390cb215a2dac9b62f84389ac7",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "50fbbd40b6b720841325a4a634ef382cf7940d13887fbed9f619784eacbc5a25",
+    "artifacts": {
+      "model.pt": "8ace5e0b87d50a7323f752d1990788fe83dba03943747e25597961f1893e35ee",
+      "epochs.csv": "17ef451991ef33301f583f19e28c581f480d0d0ab477da8e96c5c7adf77f47e2",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "b42ce691595aa844aae3d8d685bd75439bf51f6a1faa5ef1ccb05599d41512b0"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042526505054+0000-c908aa5f",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 44,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:26.505054+00:00",
+    "ended_utc": "2026-10-30T04:25:29.518336+00:00",
+    "init_sha256": "d9eceff976801e14954c75f794dc2daca99a362faf176d9b42d84d6ed998505f",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "b50c50afafcd8b07abe73f8b21c556d439971d2b8b82799db5d403942e1df0ef",
+    "artifacts": {
+      "model.pt": "438f5937059587996c34cf86eb7ba358612d1730e639e1662721fd7d40d98604",
+      "epochs.csv": "f2b200305f686647661e428840bfef9fe740c2ed3b2d7847e32f501c986030fd",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "27eb0e5a7c8d75d895bca969cb30ef541232d881155a90d4b3dfe8ccab697bae"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042529534972+0000-1e477830",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 44,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:29.534972+00:00",
+    "ended_utc": "2026-10-30T04:25:31.025945+00:00",
+    "init_sha256": "d9eceff976801e14954c75f794dc2daca99a362faf176d9b42d84d6ed998505f",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "31b0359db66294056fca033e706263825bd4ff59c9cbfc70d9f8768e1f767d1c",
+    "artifacts": {
+      "model.pt": "74bac30e2bad6a9671c6cffd6e4694fe9c2a72061d37bd9d939ab935c8e29e41",
+      "epochs.csv": "9b56da830d3cb26726ad2f3923cd3b47932b97b70465defe15c7bdfce6bf5fe1",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "e1cd02b369e6e20f462d65ad3ea52f957f40dae717267b362ed6ebd325f789c9"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 1.9073486328125e-06,
+      "alpha_max_abs": 2.384185791015625e-07,
+      "gradient_max_abs": 2.9802322387695312e-08
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042531034947+0000-e7b1fa1f",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 44,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:31.034947+00:00",
+    "ended_utc": "2026-10-30T04:25:32.380210+00:00",
+    "init_sha256": "d9eceff976801e14954c75f794dc2daca99a362faf176d9b42d84d6ed998505f",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "e6d9061e759967867cb43d604ec9573da2d1e7e01e39f6b3a43ecd95cb1ed51b",
+    "artifacts": {
+      "model.pt": "51bc624e74d0c4b74fdff2c379365353b4ca0279629abbd71b9f6a2a1e2e9dd1",
+      "epochs.csv": "9b45743a896c6a380aef401399e09bd6e1959ebdaa86a85499a6a560265dcc15",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "a7adf21487b3b547aac0a9844ee18175c73111f9f708414e5c2ada483e3be9b9"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042532395717+0000-42774810",
+    "dataset": "Chameleon",
+    "split": 0,
+    "seed": 44,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:32.395717+00:00",
+    "ended_utc": "2026-10-30T04:25:34.681355+00:00",
+    "init_sha256": "d9eceff976801e14954c75f794dc2daca99a362faf176d9b42d84d6ed998505f",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "12a0d5be842705770d38259b8d68605466eb6366d8be341786061f1a211299e7",
+    "split_array_sha256": "6d104706f60edce94492d3475dea888919211d5466d722357fb39370dac14753",
+    "trained_state_sha256": "723a252cbd3f8193e89cb1282058e002a2fc5787080371f2e2b4aaf56a873abd",
+    "artifacts": {
+      "model.pt": "b8c4872d8be4d056503c7b502e3b89db1e6912bc0493453caac58f2457deedb8",
+      "epochs.csv": "db2e31e0127635681741df863c201a0e10c846e0d9f175c034724d6662d8f3bf",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "c35b2e6096499576640355efa4e4ca6a6cd1e2dce2bb0181fe85af1880ef2724"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042536551414+0000-d8f4e6c9",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 42,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:36.551414+00:00",
+    "ended_utc": "2026-10-30T04:25:38.892559+00:00",
+    "init_sha256": "c86d8f3b1cb448910764a2f62758cf8b69bfcff53c6000449bce69ba5fe8fe31",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "dc981e50a35558d717c644806dc4aa20f6b314dbd0b34ad4455f2c52fac335ab",
+    "artifacts": {
+      "model.pt": "1a7119f51db81971482d984c8b020543db87680802a193e2cc8c35da219fb0fd",
+      "epochs.csv": "032ca73c16208122c3e2ecfcd082494063a45b56b74588dbec162dc54c4ae3c5",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "2411c98da3a7c50d8b329d570dcc58d5596ed5f069a48eec0ffcfbc0fdb57e02"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042538908398+0000-c88e2c68",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 42,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:38.909901+00:00",
+    "ended_utc": "2026-10-30T04:25:40.519974+00:00",
+    "init_sha256": "c86d8f3b1cb448910764a2f62758cf8b69bfcff53c6000449bce69ba5fe8fe31",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "0c5d3d5b112c89c071fb130c1de0584e0b1f4f3c983c4a828acd06ec972da6b5",
+    "artifacts": {
+      "model.pt": "f1ac84941abd346fd80508aa7e39bac3ff9ca934fe0763d13c7789df24f14339",
+      "epochs.csv": "f735e0bec2b1deac5ac98bc7ad4bee62342ca7a5f5d8eee47c4acde8bc7a0308",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "0432220ca83b18304a9e66527074b20c617a77f955c853c2247ef095fb6e0eb8"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 2.86102294921875e-06,
+      "alpha_max_abs": 2.384185791015625e-07,
+      "gradient_max_abs": 2.9802322387695312e-08
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042540536464+0000-24be89ac",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 42,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:40.536464+00:00",
+    "ended_utc": "2026-10-30T04:25:41.940430+00:00",
+    "init_sha256": "c86d8f3b1cb448910764a2f62758cf8b69bfcff53c6000449bce69ba5fe8fe31",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "eee9d9d4a0c26e1ed92d848093509a249a84bc627033688e931ddff63009698e",
+    "artifacts": {
+      "model.pt": "68f1e29cd3ca1dee395098954808565e9d486c83cfd12188e838ba67cae3869e",
+      "epochs.csv": "bae78f0f02fb05f3155a103fa65c84b0aafc5d55f1350579312864d30b05cc90",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "7d4dc43323fd0cb5a3fe91f0f1c89d696d1777a1cb91e7f4f596678c1e1b9c73"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042534700395+0000-de10bc4c",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 42,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:34.700395+00:00",
+    "ended_utc": "2026-10-30T04:25:36.538810+00:00",
+    "init_sha256": "c86d8f3b1cb448910764a2f62758cf8b69bfcff53c6000449bce69ba5fe8fe31",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "1f3292aace62d1c994cab5621528f5226b716c0384f597b1eb63be4775557798",
+    "artifacts": {
+      "model.pt": "1ec4f525c8bd15ea4ee8a99b1a1048d74405250fc3ca072cfe988f4e1e09af63",
+      "epochs.csv": "2874fdd20b910daa284626dd018554116cc26c6089f8d299abf7f2ae017db1d0",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "4cab3847c8b2279469d683c05e040250db79f4cd6f8ff0c15afd34835897d227"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042541948939+0000-065f85c6",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 43,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:41.948939+00:00",
+    "ended_utc": "2026-10-30T04:25:44.134355+00:00",
+    "init_sha256": "b61114d77ccaf551c3beb8d2a8d662d63bd73f390cb215a2dac9b62f84389ac7",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "97e31b65691ac09c02a83010315cab03c580523290068de951672ce2c9928697",
+    "artifacts": {
+      "model.pt": "87b28b1c413d10097cc190216fa02b338c635a3e2238447538c94e0dc4fdcaf1",
+      "epochs.csv": "db4e564f0f37278303cee19f96ffcef0af8fd6fd9cc5bdd55212e49e6f7091bc",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "c34f31d0805c3b281314cc3b6eab1643ef8f2755a68a45a21418dbec5a76b95a"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042544145476+0000-fcc750d9",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 43,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:44.145476+00:00",
+    "ended_utc": "2026-10-30T04:25:45.506251+00:00",
+    "init_sha256": "b61114d77ccaf551c3beb8d2a8d662d63bd73f390cb215a2dac9b62f84389ac7",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "f1319b0a942228a3df6786543eecebe811bcc3c1521bf1adaaa00fa5f44734c6",
+    "artifacts": {
+      "model.pt": "4abee7446d49f117fcfcb727feffb7e53d9a076e8de16c42f9b4e34c5401dccf",
+      "epochs.csv": "98209376c61d0636fdef446f38ba7b5dc9bdb4f6f8e564b4e576f740c00478cb",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "09da982ab041dc3db232543d3b394dc72a59efa4bbf7db9c8247e97ed91d111e"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 1.6689300537109375e-06,
+      "alpha_max_abs": 2.980232238769531e-07,
+      "gradient_max_abs": 4.470348358154297e-08
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042545516371+0000-398337ed",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 43,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:45.516371+00:00",
+    "ended_utc": "2026-10-30T04:25:47.080901+00:00",
+    "init_sha256": "b61114d77ccaf551c3beb8d2a8d662d63bd73f390cb215a2dac9b62f84389ac7",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "a366af0b0b84187a6a76f6e5fcfe476b8da0b6d3b58e98e2593bcd89ef430ab9",
+    "artifacts": {
+      "model.pt": "aa102bdac0180f11e0f179e2b904ac21198fb1c270bcff9f22b6f8de97d461c4",
+      "epochs.csv": "ad197f75665a2bf68b2ea192730a25df150eb81f5d52b7c4efd30955865b8d87",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "d2fa6e699a1539dd0513a7f18189ad2e6424f18bb7ef78d5a527928e5a17a10f"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042547095731+0000-9c533cdd",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 43,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:47.095731+00:00",
+    "ended_utc": "2026-10-30T04:25:49.174827+00:00",
+    "init_sha256": "b61114d77ccaf551c3beb8d2a8d662d63bd73f390cb215a2dac9b62f84389ac7",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "940a614aec2ddc5e893796e719bc1d0e41648c96e3f4d7122366aa361a0238ea",
+    "artifacts": {
+      "model.pt": "4523657a01450be264b326f91b91966fa69e3ce39dc388ab3001b5b49f6d5781",
+      "epochs.csv": "abdd263e845a1929c1048652578487f6eeb8b3e7583127101d96ac0315eb2f9d",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "6330d769af8dc620f8ad8c1e707f0fd3ddf356c37a47d5661c806b97515ab1c6"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042553905208+0000-ce4fc849",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 44,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:53.905208+00:00",
+    "ended_utc": "2026-10-30T04:25:56.587740+00:00",
+    "init_sha256": "d9eceff976801e14954c75f794dc2daca99a362faf176d9b42d84d6ed998505f",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "d84be545089299019080542b6379f6139a91decc887030421cd90024d42f001a",
+    "artifacts": {
+      "model.pt": "453087d195108da122a78b1cb55430424e2cd952cefb3045255703855c4eeac9",
+      "epochs.csv": "b0681a6147a67341037957b9d8c91477e2ef3193d5d8adda3e38d9aed83eb539",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "98aeea3e9ec31601366dd69bb20f782ef6a01882fee37873213a8e81ea04f658"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042549190022+0000-f54cfb32",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 44,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:49.190022+00:00",
+    "ended_utc": "2026-10-30T04:25:50.521247+00:00",
+    "init_sha256": "d9eceff976801e14954c75f794dc2daca99a362faf176d9b42d84d6ed998505f",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "831a57e4a6664babbf1792656cbd75f52bb11f36c6f2d432f7ffccf7eec15f8e",
+    "artifacts": {
+      "model.pt": "15b12e508ad0ebd19c33d5349f5abca0ab5bc3d3f1928764ac2ff778fb203111",
+      "epochs.csv": "c7d5afe81559975935e32afbc53e863fa3439daec0f3d389aaaf840108b7ac8c",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "ae1735719e44fd8dbd65fb86b78d9658ad2eee43dfab48b80726ce3e6035fb9b"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 1.430511474609375e-06,
+      "alpha_max_abs": 2.5331974029541016e-07,
+      "gradient_max_abs": 5.960464477539063e-08
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042550541019+0000-d5cc2342",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 44,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:50.541019+00:00",
+    "ended_utc": "2026-10-30T04:25:51.834943+00:00",
+    "init_sha256": "d9eceff976801e14954c75f794dc2daca99a362faf176d9b42d84d6ed998505f",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "66affae3992b8def043b133fab351a3a41a846c1401f6138a5a81c4a3d55739a",
+    "artifacts": {
+      "model.pt": "bbf8e84bb2b01abb14b90c32b7cfaf219e9b82908e2f02243e5acf2788d69906",
+      "epochs.csv": "1d95e3a919968e4d3f8404da4777a42664120ef8b2cf7266849a280ffe118d88",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "43f7e139de1c4d924f3e79c4401a9e19739d9c43e00717c2f9d39b422c9f8117"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042551847959+0000-a0232d28",
+    "dataset": "Chameleon",
+    "split": 1,
+    "seed": 44,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:51.847959+00:00",
+    "ended_utc": "2026-10-30T04:25:53.891276+00:00",
+    "init_sha256": "d9eceff976801e14954c75f794dc2daca99a362faf176d9b42d84d6ed998505f",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+    "split_sha256": "ed658faa0db4ea7725f3d70c706e75a407521af7f27dd353db510bfd02a2d7f1",
+    "split_array_sha256": "154fb4a3ce0071b3160744a0e18417958451a264add97a22c84b3af90433197c",
+    "trained_state_sha256": "31d3dd7568744485c85e45f697eb0a8e90ae5fd86e4e7e1820a2066bbbbc7cb5",
+    "artifacts": {
+      "model.pt": "42a07ee315b28ebf3d3a82781a535a693238e291ba8ac9ec29d3256b2abca534",
+      "epochs.csv": "ff46d0b8fcbb277d0f1edf60b8176882697929df4c0947a02c1a2ba7f1281b65",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "531a7b3bb8e055079ba338f7709949f325bb449909319b7cc71dd46e7bd8abd2"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042602585300+0000-abb9c486",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 42,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:02.585300+00:00",
+    "ended_utc": "2026-10-30T04:26:06.731997+00:00",
+    "init_sha256": "8f005bf949f2e962e69f264d2f9efc8e9a34b80158fcfc688c9aac824b91cdca",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "6781929c7270ce4540604f03737c57342c5b4efc9a356ab0c4155d1d63c53fdb",
+    "artifacts": {
+      "model.pt": "dd1699e3648aefb8cb0c911374853f002d424550498fffc4bedc9333c1e55848",
+      "epochs.csv": "6f5d26069ab8aceb836821d3d490d1ce50e942547d9475b603ac1478107bf4f0",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "47dffc284098ca016353d6060543b192fc81a52583ce8e6ec244916c787fb6c0"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042606744156+0000-195100c4",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 42,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:06.744156+00:00",
+    "ended_utc": "2026-10-30T04:26:08.844813+00:00",
+    "init_sha256": "8f005bf949f2e962e69f264d2f9efc8e9a34b80158fcfc688c9aac824b91cdca",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "b4d7d83e148493bb2b58a12c94afb92d52b83912f82977a9146666245fbb8cfc",
+    "artifacts": {
+      "model.pt": "e33a6a02568ac1e6cb1406063d956b3c0d041db02a05bfc36ad17a3897d09943",
+      "epochs.csv": "2c5105ec6caa5772f76bcfea02b2fc1c467744895fa881dcbcef70c20c742f1b",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "fe620298d56a940855b3d7b17f3c71d348139dbe5bc4cd4d90d749c9d6ed3b67"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 1.9073486328125e-06,
+      "alpha_max_abs": 2.980232238769531e-07,
+      "gradient_max_abs": 2.9802322387695312e-08
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042556603602+0000-c4513ff8",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 42,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:56.603602+00:00",
+    "ended_utc": "2026-10-30T04:25:59.951563+00:00",
+    "init_sha256": "8f005bf949f2e962e69f264d2f9efc8e9a34b80158fcfc688c9aac824b91cdca",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "32c0eff53b3a835d9f2eae8324b3608260d439843f07f3359dc97b606cfaf1d2",
+    "artifacts": {
+      "model.pt": "936c30709c109251a55a0b14a6e5276aad91fa1e9be707e9e45d28fff4cf530d",
+      "epochs.csv": "ae6d8ce76c502cc9ca9317334392886d0e0313df19114e85db8b9889c48acae5",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "ea43a5fb1e7c80035d9c7553bb5ead9f1fe7c20f77213f741e22dc9d67a5542c"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042559960077+0000-09066c40",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 42,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:25:59.960077+00:00",
+    "ended_utc": "2026-10-30T04:26:02.569164+00:00",
+    "init_sha256": "8f005bf949f2e962e69f264d2f9efc8e9a34b80158fcfc688c9aac824b91cdca",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "cf6b117bb72afccfa348379930b7a60508c391dbc4b476f286f90f3bd83d763c",
+    "artifacts": {
+      "model.pt": "8b5f93700ccb77ff554211c3de98de7b8559dd6a5d1581eb8bf773cc5910ed94",
+      "epochs.csv": "5acc2ed7b12885aef5b33a7341826b115472a7313844757cc6aefb0c137943b3",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "b34ff647bd60fa8b126f318e5ab27ec11ce1908b6810036ac7b4f08a3775ca61"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042611319189+0000-d17aace2",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 43,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:11.319189+00:00",
+    "ended_utc": "2026-10-30T04:26:14.222209+00:00",
+    "init_sha256": "edbecab3f8e5a138d0f9f85111df2e742b636ce8b7d5d328c174f8fa10e3e38a",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "22bf6c7217613af8f222f23a04f5b17507dcb6e0d9930f48ecc0581f6cde4f24",
+    "artifacts": {
+      "model.pt": "8ae60a30e63deee08b27f0393a391783c327dd2081829eac5d797116d5c01418",
+      "epochs.csv": "41bcc193149b1d647d0f2eef7936095815e55528132fb19c51e20576dd87cbe9",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "f5584137863c7eb881238c0846b63cd572882b62f222766f9af36c5c58c8cf03"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042614232482+0000-5070d2b0",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 43,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:14.232482+00:00",
+    "ended_utc": "2026-10-30T04:26:18.415803+00:00",
+    "init_sha256": "edbecab3f8e5a138d0f9f85111df2e742b636ce8b7d5d328c174f8fa10e3e38a",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "5363d3674be8b2ecae4132bb4513091597313847e8f10724b562066fa6622e8b",
+    "artifacts": {
+      "model.pt": "b311f67fc45e7cf4ea452e2146298800b9040611871953c51236ef700bcbcb6b",
+      "epochs.csv": "f729bd88fb794f3ab485b713f8dff94199d059744ccc01dcf0d052672897a124",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "d2e1042fbb41d48780328fc1bf7435011f2022fcc33e053c21a6b8a9989f686d"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 5.7220458984375e-06,
+      "alpha_max_abs": 3.5762786865234375e-07,
+      "gradient_max_abs": 2.9802322387695312e-08
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042618436901+0000-7ff96e1a",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 43,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:18.437898+00:00",
+    "ended_utc": "2026-10-30T04:26:19.508272+00:00",
+    "init_sha256": "edbecab3f8e5a138d0f9f85111df2e742b636ce8b7d5d328c174f8fa10e3e38a",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "2337df6ca3251815ca577e655907630047fc9dbcf9626439c83f1a8c8dc29458",
+    "artifacts": {
+      "model.pt": "55bb5d09d18d0777a47e2ffd41e3b5cc781ad285392dfd2039dc53c0ebebaa35",
+      "epochs.csv": "e31ed642445396bc3a3ba0c5c95edb3472ab5071ab0813ed4486fe5b9ba46a88",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "75682f8214a7ebf80149d360e83dbbbf5014d17555752298c35c4f0ec1a855a2"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042608859283+0000-2e80b2b6",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 43,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:08.859283+00:00",
+    "ended_utc": "2026-10-30T04:26:11.307999+00:00",
+    "init_sha256": "edbecab3f8e5a138d0f9f85111df2e742b636ce8b7d5d328c174f8fa10e3e38a",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "5679668448bf153827ab1fe4598220ebab25b5e75b231b6c292b93db59d4393c",
+    "artifacts": {
+      "model.pt": "992c5c64672dd62ab98be4dea591abb7c0c22bb54dc8b5b4bb3b6f3b462cf846",
+      "epochs.csv": "f45974890b58c11bfd503dee9dab08a7fa5c4a03fa168590cb84bf3975bf1a9b",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "6a8821552165c3adf82b8626368f81d29dc6a7f8368c2f57d4de15c8619be39e"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042619516264+0000-dc5db6ff",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 44,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:19.517269+00:00",
+    "ended_utc": "2026-10-30T04:26:22.887799+00:00",
+    "init_sha256": "44cc059cd660c98ad8046063a6491e7a9cabd60c852a5cb97862e4e01f8e696d",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "10da4dbdc51d79584a2d1efe04d3998f6fd214fe3ab56bb1deac200d0e43fa09",
+    "artifacts": {
+      "model.pt": "3589681e72a0a885e51503834fdc223af7decbf795f4cb5d21d7c5bff78c25ea",
+      "epochs.csv": "ce4e1d5d734e74a60a6885fd2eb562af42d552ed589c21fe55c699e9075bbec0",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "439437e33068e2fdd8db364f9c454c2754cf34d59058f8e4943d99a362086cdc"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042622903535+0000-01271bc5",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 44,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:22.903535+00:00",
+    "ended_utc": "2026-10-30T04:26:24.838625+00:00",
+    "init_sha256": "44cc059cd660c98ad8046063a6491e7a9cabd60c852a5cb97862e4e01f8e696d",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "7c9b7cdf449fda306bf24c0db0a2d28671187e8bc382dbdcebe3ac774106d5f6",
+    "artifacts": {
+      "model.pt": "7bd251ed6c922cf35c106e0421ce8353f2707663f77f618c49c5383a7ead34f8",
+      "epochs.csv": "10f5b10bc17fa3d069aa70a1d2e66bb717676c964c7233364f0643e243432490",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "55674528e1308961597102a3712ccb912076033b6526d48a9773dfcb6fdb84e8"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 1.9073486328125e-06,
+      "alpha_max_abs": 2.980232238769531e-07,
+      "gradient_max_abs": 3.725290298461914e-09
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042624853766+0000-72002c84",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 44,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:24.853766+00:00",
+    "ended_utc": "2026-10-30T04:26:26.095075+00:00",
+    "init_sha256": "44cc059cd660c98ad8046063a6491e7a9cabd60c852a5cb97862e4e01f8e696d",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "adce0e6ad0027421faa49afbaca6b4a2d98592e110c7856a3e1a194da1fd7850",
+    "artifacts": {
+      "model.pt": "8405cb33608c9fca4df81e0e05981651d8e54e67b0bd7480459658d2bf615ef4",
+      "epochs.csv": "221df8f2cfadde504567ec57e7260c1368b9c7600b86cb590a08384fff26e467",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "d314c60a70c170713f571d2c27c51c1ce0606fa27bb04fd6e754c27d56d95b16"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042626110339+0000-9ad37ecb",
+    "dataset": "Actor",
+    "split": 0,
+    "seed": 44,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:26.110339+00:00",
+    "ended_utc": "2026-10-30T04:26:28.849781+00:00",
+    "init_sha256": "44cc059cd660c98ad8046063a6491e7a9cabd60c852a5cb97862e4e01f8e696d",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "1d5f90322e125d0c8435ff7939a179280bdbe457ee52c7ee3fefb3ce7965f955",
+    "split_array_sha256": "4a3aca777585e6f9f230ae92cd33cb9899e1fcace9164ca708e7e6d01d93d8f3",
+    "trained_state_sha256": "817697e2f2cbdb2b1bb36aae92ed71ac86712ce10a0680289a979570a65c189c",
+    "artifacts": {
+      "model.pt": "63c2762c3b97161c2ef3e9cb560ab1b82575b5faac2a14d5fd6fbb2727954ca0",
+      "epochs.csv": "743284f4e0f33e091d8f656ee172a2de4c297a706918ef7379f162c38ff6cef2",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "956e9284a79be3ae95e2c0ddfd79e7aa42f788518632307d7ecda3b381ba6a11"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042632537848+0000-c03bfaea",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 42,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:32.537848+00:00",
+    "ended_utc": "2026-10-30T04:26:35.838153+00:00",
+    "init_sha256": "8f005bf949f2e962e69f264d2f9efc8e9a34b80158fcfc688c9aac824b91cdca",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "c1870f1fe37e034816066dda3ccf5d4566d9238e596e01d006e63c13ec0b79d9",
+    "artifacts": {
+      "model.pt": "8179aded8186cdf9ec5c10c26f4b8874392d684e234f9c8a38ad6ac6cee35b25",
+      "epochs.csv": "3f6d4ac235d9eb67719b00bdcc2262e71bd73d851fb75df9a565b555ca3120b3",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "43c280bbdaee87ca1d646e5d2f5837c658f5a6c7c6bfb0c8d25cce668ef15a33"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042635858839+0000-675ab7d4",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 42,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:35.858839+00:00",
+    "ended_utc": "2026-10-30T04:26:38.514414+00:00",
+    "init_sha256": "8f005bf949f2e962e69f264d2f9efc8e9a34b80158fcfc688c9aac824b91cdca",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "a8082cb0f95cd45bf0c1f83af5216f3da54ef278bd8727b7119ed09e5764931d",
+    "artifacts": {
+      "model.pt": "219e9226fafb60a644eed68ed2fa051a845ed8cbfcf48eb0545b0beec27e5abf",
+      "epochs.csv": "27e66522ef570833643b348ebbedace217613b9cf7f190ec10e3600df4203d7a",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "a9b78e1b3acf00f3f8aa58a52c5462eadd18fec3670ad73eb4d6b995969d92c9"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 2.86102294921875e-06,
+      "alpha_max_abs": 2.980232238769531e-07,
+      "gradient_max_abs": 7.450580596923828e-09
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042638525732+0000-fe5e3662",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 42,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:38.526236+00:00",
+    "ended_utc": "2026-10-30T04:26:39.740921+00:00",
+    "init_sha256": "8f005bf949f2e962e69f264d2f9efc8e9a34b80158fcfc688c9aac824b91cdca",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "c65465eba56d114d0278db774bbe8177832ac047521e7784e208c0505c00d1db",
+    "artifacts": {
+      "model.pt": "edcd5b31c7ac71428e3de6e89347ea08944d6feb9892889d1143349c39f71da6",
+      "epochs.csv": "af2a0633a4cf8a37c7f39dbb225a16a700e038d0593946435871e3949c423fc2",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "3784daef79d214a26602b83b6fbb2f5059aff559fc6c64e302d013f145696870"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042628866101+0000-1904707d",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 42,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:28.866101+00:00",
+    "ended_utc": "2026-10-30T04:26:32.525006+00:00",
+    "init_sha256": "8f005bf949f2e962e69f264d2f9efc8e9a34b80158fcfc688c9aac824b91cdca",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "2daf9c23d670165cadd82de361e4e95764f3d7bd78bdd9461fddbb2a2f800e4c",
+    "artifacts": {
+      "model.pt": "df38529985c836c38374f626e530119580849140cf1cad076abcae2ac2fb9188",
+      "epochs.csv": "6a6d64a7f7fa161b31c5eb989b263838d6a8e34ffcb3a51fa2aaa3907bd60a09",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "689495675e4252a45326b006d0d8a5bf65abbb8c37b358dd03cbbf0167a755a7"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042639760667+0000-e68cfc8a",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 43,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:39.760667+00:00",
+    "ended_utc": "2026-10-30T04:26:44.567775+00:00",
+    "init_sha256": "edbecab3f8e5a138d0f9f85111df2e742b636ce8b7d5d328c174f8fa10e3e38a",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "1c4c43f6f41c4c63c8492f45d73bdfc874e74047315e62661fb1bf0b8675980e",
+    "artifacts": {
+      "model.pt": "2bf04bbb2517f14c376e4d26698287e0e74110d09dd3960f76661afe3bddb035",
+      "epochs.csv": "920d6be5c3b10102482e2c9e2959af2f5ce04450b378da8fb7de6ab91419d845",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "150c306d1d3be884d8a67e8e6190fbb5f92b60d1e7db3d926c0c42cf423094f2"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042644584120+0000-15323abc",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 43,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:44.584120+00:00",
+    "ended_utc": "2026-10-30T04:26:47.290405+00:00",
+    "init_sha256": "edbecab3f8e5a138d0f9f85111df2e742b636ce8b7d5d328c174f8fa10e3e38a",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "756573a1a541a2ea91dc4b9ca0954627137fa84eeaf8bc43f36cb6171415f7f7",
+    "artifacts": {
+      "model.pt": "120b13e48afd7387b28166b9016506c02c803f994858daf661163c24b6ed6433",
+      "epochs.csv": "b6ddc7f44732018e6dc7d98e2c42b94754eb7024c5578f7df631b4fb31a8932b",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "bfa966d59c5a605a592d438e3ac73f40587764879257fff02bd0f2d39d6e9999"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 2.86102294921875e-06,
+      "alpha_max_abs": 3.5762786865234375e-07,
+      "gradient_max_abs": 7.450580596923828e-09
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042647299401+0000-fd8fc573",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 43,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:47.299401+00:00",
+    "ended_utc": "2026-10-30T04:26:48.484701+00:00",
+    "init_sha256": "edbecab3f8e5a138d0f9f85111df2e742b636ce8b7d5d328c174f8fa10e3e38a",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "c2ca73b2c22b767161237c38ccbc4e8904af07478e17e32f151a5d6cf68f40b5",
+    "artifacts": {
+      "model.pt": "e3f20de2a053423bdd6fe12411a300d31ee5500caad56e6c00d94e2ad2ee37dd",
+      "epochs.csv": "4cac0dc87bcf8737b636f6790f4847df604579e9d1893c747e5392330c2fee34",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "424982a27bb0521f71a893ee25fc2a125992cd67f7d2bc143fea7bb59984fff9"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042648499883+0000-782deef3",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 43,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:48.500882+00:00",
+    "ended_utc": "2026-10-30T04:26:51.107209+00:00",
+    "init_sha256": "edbecab3f8e5a138d0f9f85111df2e742b636ce8b7d5d328c174f8fa10e3e38a",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "a12218510132506441d55b9bc59239c7908f7e220464b1fdd7e27e564af6343e",
+    "artifacts": {
+      "model.pt": "60741606f22d18c30329cfa71adc81d027d4d7f38655e297468410177f809960",
+      "epochs.csv": "a67a136d79c3fdbeed12ac078c49f7d83f4ee695f59a92fdb0acd6dee6089d06",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "44ee68f86c04d9c63f230a4b34e77a6d063bdf926fa37cd35f1bf87029485362"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042657546174+0000-5e377a8d",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 44,
+    "group": "G0",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:57.546174+00:00",
+    "ended_utc": "2026-10-30T04:27:00.430650+00:00",
+    "init_sha256": "44cc059cd660c98ad8046063a6491e7a9cabd60c852a5cb97862e4e01f8e696d",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "57996305d9aa2733c990b0da79eb2d2dd262cd0356dd74a573234b8cf85aeea0",
+    "artifacts": {
+      "model.pt": "43d5832b4d6258353d8e06fc75fd0b53622d0e9fc78670a906e1d3df96b6e066",
+      "epochs.csv": "53506f4bbfa5ec6c2d4b0936be18cb5f25b688b0f6e7c70083f8545fee10a967",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "e7c552c17f95fb1c8d9aac67edb1e68b844d9a5fee8fd9fdbcfd21a6044ab041"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "operations": {
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    }
+  },
+  {
+    "run_id": "2026-10-30T042651115853+0000-df24a94c",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 44,
+    "group": "G1",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:51.116851+00:00",
+    "ended_utc": "2026-10-30T04:26:53.091058+00:00",
+    "init_sha256": "44cc059cd660c98ad8046063a6491e7a9cabd60c852a5cb97862e4e01f8e696d",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "45ec16f37363eccdbb9275e820063d4005191a4e41c7a6a68ca4fd7e8e2ed097",
+    "artifacts": {
+      "model.pt": "c7d44708352bf289f9949be44f2a4bdf36185b55bb61686942051b65e8acf0e9",
+      "epochs.csv": "468f1f75d3db8b85ba7b8fafded2c6c9be3caaaf56d9b34c18f9f22e2e2ef569",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "d29bd42c6ff5be5d6a794c05319b5f494d9eacd4a406ee313d9e8cf3f7bb74e9"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 1.9073486328125e-06,
+      "alpha_max_abs": 3.5762786865234375e-07,
+      "gradient_max_abs": 2.9802322387695312e-08
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042653100129+0000-90a38fdf",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 44,
+    "group": "G2",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:53.100129+00:00",
+    "ended_utc": "2026-10-30T04:26:54.313003+00:00",
+    "init_sha256": "44cc059cd660c98ad8046063a6491e7a9cabd60c852a5cb97862e4e01f8e696d",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "74701354afdb378c7066dfff4c818d830b904ed79de1bcc6c8c691184c944b01",
+    "artifacts": {
+      "model.pt": "66d59b7162ec970bc69e9b6513341c3a161248c6458c6af8b6fd8a84f9d08730",
+      "epochs.csv": "68f6ad7243016df4255a60e592583f73fcac832d01b4429c44952189c37046c5",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "91fcd94b530785c339f8ebc6fd2a2f140a392e215293609714106bdce46751c5"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    }
+  },
+  {
+    "run_id": "2026-10-30T042654321512+0000-c3797ddb",
+    "dataset": "Actor",
+    "split": 1,
+    "seed": 44,
+    "group": "G3",
+    "empty_policy": "mask",
+    "git": {
+      "commit": "298719418e9f5d11e4115ae24b69ae2f278d6785",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "1043adf080f1ff70bbe1263b9b41c4a4fe8323d8d0bce3a71731a67a4630e15d",
+    "fingerprint": "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T04:26:54.321512+00:00",
+    "ended_utc": "2026-10-30T04:26:57.533898+00:00",
+    "init_sha256": "44cc059cd660c98ad8046063a6491e7a9cabd60c852a5cb97862e4e01f8e696d",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+    "split_sha256": "265484322bea8b32785508122536afd608442841c734dad1d185107db2faac94",
+    "split_array_sha256": "0acc1c27cfbb29e72be01251a5dfff092057232178e014f5fa5939c67f3ddebf",
+    "trained_state_sha256": "dcd30b89bc20ed1ced7a5affbbe775bb53d6b0d9e0f6aaa7958a1acb8697d95f",
+    "artifacts": {
+      "model.pt": "a177834a77fdcd13bbc1dbf6bca2a6a9c01e7fd95de2921cede998b5f99eb70a",
+      "epochs.csv": "c47dc0f133055768a439bdc9e5e2828a3cce644c68ad757f602f9d1bf604fca4",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "a495879e9ea6f0a15ec962ac0e41730616a05f12984c26b0cb8b8eb7e1d4dd73"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  }
+]

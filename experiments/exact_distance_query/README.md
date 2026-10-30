@@ -29,3 +29,7 @@ Private inputs are external `<PRIVATE_DATA_ROOT>`; logs/checkpoints are external
 published. Reuse checks artifact hashes and identical scientific fingerprints;
 failed attempts are retained. Existing external Git metadata is optional and
 recorded in the audit; ordinary clones use normal Git metadata.
+
+If the training environment lacks matplotlib, set `GAMMA_PLOT_PYTHON` to the
+executable of an existing NumPy/matplotlib environment before `analyze`.
+Plots use that interpreter; scientific training is unchanged.
