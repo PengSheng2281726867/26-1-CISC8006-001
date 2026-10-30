@@ -1,0 +1,11 @@
+{
+  "recorded_utc": "2026-10-30T04:54:05.926774+00:00",
+  "physical_memory_bytes": 68349997056,
+  "gpu": "NVIDIA GeForce RTX 5090, 610.88, 32607 MiB",
+  "training_cpu_threads": 1,
+  "determinism": true,
+  "tf32": false,
+  "shared_environment_modified": false,
+  "monetary_cost": "UNKNOWN",
+  "fresh_installation": "NOT_VERIFIED"
+}

@@ -19,3 +19,13 @@ run, including one-shot gradient alignment and reload checks.
 
 Environment:Python3.12.14,torch2.8.0+cu128,PyG2.7.0,RTX5090,CUDA12.8,threads1,
 deterministic algorithms,TF32 disabled. Shared environment unchanged.
+
+Final verification adds3 pure analysis tests, for16 study methods plus13 legacy
+methods (29 total), with20 author-alignment subcases. All180 real G0 checkpoints
+showed exactly zero forward/alpha/parameter-gradient difference. All180 G1
+primary checkpoints passed one-shot parity at atol2e-6/rtol2e-5; maximum output
+absolute difference7.63e-6 is allowed by the combined relative tolerance on log
+probabilities, alpha4.47e-7, gradient1.19e-7. Three legacy-empty G1 checkpoints
+also passed. Every729 checkpoint reloaded;720 independently profiled checkpoints
+preserved exact test-correct counts and graph/split alignment. Supplementary
+figures were visually inspected. No code or test altered protected source.

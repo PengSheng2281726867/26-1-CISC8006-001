@@ -1,0 +1,49 @@
+{
+  "version": "reverse-bfs-csr-v1",
+  "edge_order_sha256": "768277b254390b79cf72e4b8a7995240cd94496d143e19505abae945d815bcc0",
+  "nodes": 251,
+  "K": 4,
+  "topology_sha256": "fc1436da1891bb7de46a056a8ce71e9ce3b9a5bd9f185a743fbd80625c102619",
+  "construction_seconds": 0.0019714999943971634,
+  "shells": [
+    {
+      "p": 0,
+      "nnz": 251,
+      "mean_neighbors": 1.0,
+      "max_neighbors": 1,
+      "empty_fraction": 0.0
+    },
+    {
+      "p": 1,
+      "nnz": 499,
+      "mean_neighbors": 1.9880478087649402,
+      "max_neighbors": 11,
+      "empty_fraction": 0.17131474103585656
+    },
+    {
+      "p": 2,
+      "nnz": 515,
+      "mean_neighbors": 2.051792828685259,
+      "max_neighbors": 19,
+      "empty_fraction": 0.47410358565737054
+    },
+    {
+      "p": 3,
+      "nnz": 411,
+      "mean_neighbors": 1.6374501992031874,
+      "max_neighbors": 19,
+      "empty_fraction": 0.6374501992031872
+    },
+    {
+      "p": 4,
+      "nnz": 292,
+      "mean_neighbors": 1.1633466135458168,
+      "max_neighbors": 9,
+      "empty_fraction": 0.7211155378486056
+    }
+  ],
+  "csr_storage_bytes": 33696,
+  "shell_content_sha256": "7acc07bfc3348d01d337ed0d6ad04e5ba728aefda050a2c17503830994114330",
+  "cache_sha256": "50aee26e38034f031d3e5f6d0f32a62c44252b964e078aa2fad5e0c6e264ce63",
+  "cache_bytes": 28246
+}

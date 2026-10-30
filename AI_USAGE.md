@@ -91,3 +91,11 @@ inferred. The actual merge outcome and parents are identified by Git history.
 ## Exact-distance / Query-gating study (2026-10-30)
 
 User authorized autonomous audit, implementation, real training, analysis, branch publication and PR. Codex proposed topology-only reverse BFS, masked empty-hop policy, matched three-seed initialization and a bounded legacy-empty control; adopted to implement the specified study. Tests and scientific outcomes are recorded in the isolated experiment. No teacher approval or human review is inferred; both remain NOT_VERIFIED. No sub-agents were used.
+
+Exact-distance follow-through: Codex implemented and tested all four specified
+groups, trained720 matched primary cells (including48 Pilot and4 Smoke reused),
+trained9 bounded empty-policy controls, and reprofiled720 saved checkpoints.
+All negatives and deviations are retained. Query scale and0-hop concentration
+were identified as interpretation limits; models/temperature were not changed.
+Historical hashes passed. Automated29 unittest methods (13 legacy,16 new) and20
+author-alignment cases are reported; human review/teacher approval NOT_VERIFIED.

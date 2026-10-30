@@ -1,0 +1,2139 @@
+{
+  "status": {
+    "utc": "2026-10-30T05:01:53.510389+00:00",
+    "status": "FULL",
+    "complete": 720,
+    "expected": 720,
+    "missing": 0,
+    "failed_attempts": 0,
+    "stale_attempts": [],
+    "teacher_approval": "NOT_VERIFIED",
+    "pairing": "passed",
+    "empty_controls": 9,
+    "trained_from_random_initialization": true,
+    "smoke_reused": 4,
+    "pilot_reused": 48,
+    "checkpoint_reload": "all passed",
+    "real_G0_G1_equivalence": "all completed G0/G1 forward/used_alpha/parameter gradients passed"
+  },
+  "accuracy": [
+    {
+      "dataset": "Texas",
+      "group": "G0",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 81.9298245614035,
+      "sample_sd_percent": 6.395426018475934
+    },
+    {
+      "dataset": "Texas",
+      "group": "G1",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 82.28070175438596,
+      "sample_sd_percent": 7.486750605533656
+    },
+    {
+      "dataset": "Texas",
+      "group": "G2",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 83.50877192982455,
+      "sample_sd_percent": 3.250746692324514
+    },
+    {
+      "dataset": "Texas",
+      "group": "G3",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 78.07017543859648,
+      "sample_sd_percent": 7.802142727559258
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G0",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 84.37908496732025,
+      "sample_sd_percent": 2.1884311989277028
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G1",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 82.74509803921569,
+      "sample_sd_percent": 3.2343953917029427
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G2",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 85.03267973856211,
+      "sample_sd_percent": 3.5055271875063836
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G3",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 79.2156862745098,
+      "sample_sd_percent": 6.936184159853212
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G0",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 72.45614035087719,
+      "sample_sd_percent": 5.732784062293553
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G1",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 75.52631578947368,
+      "sample_sd_percent": 5.869113762558509
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G2",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 77.54385964912282,
+      "sample_sd_percent": 6.009465533878422
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G3",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 73.94736842105263,
+      "sample_sd_percent": 8.993783215123585
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 49.34210526315789,
+      "sample_sd_percent": 1.1639932663251644
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 49.744152046783626,
+      "sample_sd_percent": 1.5701728673341775
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 49.02046783625731,
+      "sample_sd_percent": 1.879285359303349
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 48.815789473684205,
+      "sample_sd_percent": 1.3473579298920109
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G0",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 33.999359590137686,
+      "sample_sd_percent": 1.2042430251469114
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G1",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 33.893691962856224,
+      "sample_sd_percent": 1.0279027165721764
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G2",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 33.05155299391611,
+      "sample_sd_percent": 1.1434898228361632
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G3",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 34.979186679474864,
+      "sample_sd_percent": 1.412390522148214
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 35.392543859649116,
+      "sample_sd_percent": 1.12480262851479
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 35.36622807017544,
+      "sample_sd_percent": 0.8358974862813965
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 36.60307017543859,
+      "sample_sd_percent": 1.0543789306411544
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "cells": 30,
+      "splits": 10,
+      "mean_percent": 35.10964912280702,
+      "sample_sd_percent": 0.940968655264968
+    }
+  ],
+  "paired": [
+    {
+      "dataset": "Texas",
+      "contrast": "G1-G0",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": 0.35087719298245607,
+      "sample_sd_pp": 3.6567247253481834,
+      "ci95_low": -1.6666666666666679,
+      "ci95_high": 2.5438596491228074,
+      "signflip_p": 0.828125,
+      "holm3_p": 1.0,
+      "role": "primary",
+      "split_means": [
+        0.8771929824561394,
+        7.894736842105265,
+        -0.8771929824561394,
+        2.631578947368418,
+        -1.7543859649122788,
+        -2.6315789473684217,
+        0.0,
+        -5.263157894736843,
+        -0.8771929824561394,
+        3.5087719298245617
+      ]
+    },
+    {
+      "dataset": "Texas",
+      "contrast": "G2-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": 1.2280701754385956,
+      "sample_sd_pp": 5.937904687880239,
+      "ci95_low": -1.7543859649122813,
+      "ci95_high": 5.087719298245611,
+      "signflip_p": 0.67578125,
+      "holm3_p": 1.0,
+      "role": "primary",
+      "split_means": [
+        0.0,
+        2.6315789473684257,
+        0.8771929824561394,
+        -3.508771929824561,
+        5.26315789473684,
+        -4.385964912280705,
+        -3.5087719298245577,
+        15.78947368421052,
+        0.8771929824561394,
+        -1.7543859649122826
+      ]
+    },
+    {
+      "dataset": "Texas",
+      "contrast": "G3-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -4.2105263157894735,
+      "sample_sd_pp": 3.22433888937783,
+      "ci95_low": -6.140350877192981,
+      "ci95_high": -2.3684210526315783,
+      "signflip_p": 0.0078125,
+      "holm3_p": 0.0234375,
+      "role": "primary",
+      "split_means": [
+        -8.771929824561406,
+        -5.263157894736843,
+        -6.140350877192979,
+        -8.771929824561402,
+        0.0,
+        -4.3859649122807,
+        -0.8771929824561394,
+        -3.508771929824565,
+        0.0,
+        -4.385964912280701
+      ]
+    },
+    {
+      "dataset": "Texas",
+      "contrast": "G3-G2",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -5.438596491228069,
+      "sample_sd_pp": 6.102641098570557,
+      "ci95_low": -9.298245614035086,
+      "ci95_high": -2.19298245614035,
+      "signflip_p": 0.015625,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": [
+        -8.771929824561406,
+        -7.89473684210527,
+        -7.017543859649119,
+        -5.26315789473684,
+        -5.26315789473684,
+        3.552713678800501e-15,
+        2.631578947368418,
+        -19.298245614035086,
+        -0.8771929824561394,
+        -2.631578947368418
+      ]
+    },
+    {
+      "dataset": "Wisconsin",
+      "contrast": "G1-G0",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -1.6339869281045747,
+      "sample_sd_pp": 2.5639656418169534,
+      "ci95_low": -3.1372549019607843,
+      "ci95_high": -0.13071895424836544,
+      "signflip_p": 0.0859375,
+      "holm3_p": 0.24609375,
+      "role": "primary",
+      "split_means": [
+        -3.26797385620915,
+        -1.9607843137254946,
+        -5.882352941176468,
+        -1.3071895424836593,
+        -1.9607843137254906,
+        2.6143790849673185,
+        -1.3071895424836553,
+        1.3071895424836593,
+        -4.575163398692809,
+        3.700743415417189e-15
+      ]
+    },
+    {
+      "dataset": "Wisconsin",
+      "contrast": "G2-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": 2.2875816993464055,
+      "sample_sd_pp": 4.467559183967294,
+      "ci95_low": -0.4575163398692809,
+      "ci95_high": 4.836601307189544,
+      "signflip_p": 0.150390625,
+      "holm3_p": 0.24609375,
+      "role": "primary",
+      "split_means": [
+        6.5359477124183,
+        1.9607843137254946,
+        6.535947712418303,
+        2.614379084967322,
+        1.3071895424836593,
+        -4.575163398692809,
+        2.6143790849673185,
+        2.614379084967322,
+        8.49673202614379,
+        -5.228758169934644
+      ]
+    },
+    {
+      "dataset": "Wisconsin",
+      "contrast": "G3-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -3.529411764705882,
+      "sample_sd_pp": 5.4874288423289475,
+      "ci95_low": -6.862745098039217,
+      "ci95_high": -0.5228758169934625,
+      "signflip_p": 0.08203125,
+      "holm3_p": 0.24609375,
+      "role": "primary",
+      "split_means": [
+        -9.150326797385626,
+        0.6535947712418352,
+        -3.9215686274509776,
+        -7.843137254901959,
+        -2.6143790849673185,
+        -2.614379084967322,
+        -0.6535947712418314,
+        2.6143790849673185,
+        2.614379084967322,
+        -14.379084967320262
+      ]
+    },
+    {
+      "dataset": "Wisconsin",
+      "contrast": "G3-G2",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -5.816993464052288,
+      "sample_sd_pp": 5.541226340993136,
+      "ci95_low": -9.08496732026144,
+      "ci95_high": -2.6797385620915035,
+      "signflip_p": 0.01171875,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": [
+        -15.686274509803924,
+        -1.3071895424836593,
+        -10.457516339869281,
+        -10.457516339869281,
+        -3.921568627450977,
+        1.9607843137254868,
+        -3.26797385620915,
+        -3.848773152033876e-15,
+        -5.882352941176468,
+        -9.150326797385619
+      ]
+    },
+    {
+      "dataset": "Cornell",
+      "contrast": "G1-G0",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": 3.0701754385964914,
+      "sample_sd_pp": 4.242286002499097,
+      "ci95_low": 0.6140350877192986,
+      "ci95_high": 5.614035087719298,
+      "signflip_p": 0.064453125,
+      "holm3_p": 0.193359375,
+      "role": "primary",
+      "split_means": [
+        -2.631578947368422,
+        4.385964912280705,
+        7.017543859649126,
+        8.771929824561404,
+        0.8771929824561392,
+        1.754385964912279,
+        9.649122807017541,
+        -1.7543859649122826,
+        1.7543859649122826,
+        0.8771929824561394
+      ]
+    },
+    {
+      "dataset": "Cornell",
+      "contrast": "G2-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": 2.0175438596491233,
+      "sample_sd_pp": 4.99734890901804,
+      "ci95_low": -0.7017543859649117,
+      "ci95_high": 5.175438596491229,
+      "signflip_p": 0.296875,
+      "holm3_p": 0.59375,
+      "role": "primary",
+      "split_means": [
+        10.526315789473685,
+        4.385964912280701,
+        10.526315789473685,
+        1.7543859649122788,
+        -0.8771929824561392,
+        0.0,
+        0.877192982456143,
+        -3.5087719298245577,
+        -0.8771929824561394,
+        -2.6315789473684217
+      ]
+    },
+    {
+      "dataset": "Cornell",
+      "contrast": "G3-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -1.5789473684210524,
+      "sample_sd_pp": 4.854153443145527,
+      "ci95_low": -4.3859649122807,
+      "ci95_high": 1.3157894736842084,
+      "signflip_p": 0.3671875,
+      "holm3_p": 0.59375,
+      "role": "primary",
+      "split_means": [
+        2.631578947368418,
+        5.26315789473684,
+        -6.140350877192979,
+        0.0,
+        0.0,
+        -5.26315789473684,
+        -4.385964912280698,
+        -7.8947368421052575,
+        -5.263157894736847,
+        5.26315789473684
+      ]
+    },
+    {
+      "dataset": "Cornell",
+      "contrast": "G3-G2",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -3.5964912280701746,
+      "sample_sd_pp": 6.425434438388902,
+      "ci95_low": -7.456140350877192,
+      "ci95_high": 0.08771929824561334,
+      "signflip_p": 0.111328125,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": [
+        -7.894736842105265,
+        0.8771929824561394,
+        -16.66666666666666,
+        -1.7543859649122788,
+        0.8771929824561394,
+        -5.26315789473684,
+        -5.26315789473684,
+        -4.385964912280701,
+        -4.385964912280708,
+        7.894736842105261
+      ]
+    },
+    {
+      "dataset": "Chameleon",
+      "contrast": "G1-G0",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": 0.4020467836257309,
+      "sample_sd_pp": 0.9826971164754271,
+      "ci95_low": -0.12426900584795306,
+      "ci95_high": 1.008954678362557,
+      "signflip_p": 0.2734375,
+      "holm3_p": 0.2734375,
+      "role": "primary",
+      "split_means": [
+        0.730994152046784,
+        2.4853801169590626,
+        0.5847953216374269,
+        -0.5116959064327483,
+        -0.0730994152046786,
+        0.2192982456140339,
+        1.5350877192982448,
+        -1.8503717077085944e-15,
+        -0.21929824561403213,
+        -0.7309941520467822
+      ]
+    },
+    {
+      "dataset": "Chameleon",
+      "contrast": "G2-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -0.7236842105263143,
+      "sample_sd_pp": 1.370362225081786,
+      "ci95_low": -1.5058479532163744,
+      "ci95_high": 0.09502923976608245,
+      "signflip_p": 0.1328125,
+      "holm3_p": 0.265625,
+      "role": "primary",
+      "split_means": [
+        -2.7046783625730986,
+        -2.11988304093567,
+        0.5116959064327539,
+        1.5350877192982468,
+        -2.3391812865497092,
+        -0.584795321637425,
+        0.584795321637427,
+        -0.804093567251457,
+        -0.8040935672514645,
+        -0.5116959064327465
+      ]
+    },
+    {
+      "dataset": "Chameleon",
+      "contrast": "G3-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -0.9283625730994143,
+      "sample_sd_pp": 0.9981632280750381,
+      "ci95_low": -1.5350877192982444,
+      "ci95_high": -0.36549707602339077,
+      "signflip_p": 0.01171875,
+      "holm3_p": 0.03515625,
+      "role": "primary",
+      "split_means": [
+        0.0,
+        -3.0701754385964914,
+        -0.7309941520467804,
+        -0.5847953216374252,
+        -1.3157894736842108,
+        -0.1461988304093572,
+        -1.535087719298243,
+        0.511695906432752,
+        -1.1695906432748555,
+        -1.2426900584795322
+      ]
+    },
+    {
+      "dataset": "Chameleon",
+      "contrast": "G3-G2",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -0.20467836257310013,
+      "sample_sd_pp": 1.5624210325868673,
+      "ci95_low": -1.0818713450292408,
+      "ci95_high": 0.7309941520467833,
+      "signflip_p": 0.69140625,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": [
+        2.704678362573098,
+        -0.9502923976608216,
+        -1.2426900584795342,
+        -2.119883040935672,
+        1.0233918128654982,
+        0.4385964912280678,
+        -2.1198830409356697,
+        1.315789473684209,
+        -0.3654970760233911,
+        -0.7309941520467859
+      ]
+    },
+    {
+      "dataset": "Squirrel",
+      "contrast": "G1-G0",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -0.10566762728146015,
+      "sample_sd_pp": 0.5138931686826076,
+      "ci95_low": -0.41626641050272123,
+      "ci95_high": 0.19212295869356372,
+      "signflip_p": 0.541015625,
+      "holm3_p": 0.541015625,
+      "role": "primary",
+      "split_means": [
+        0.22414345180915748,
+        -0.22414345180915748,
+        -1.0246557796990057,
+        0.03202049311559393,
+        0.03202049311559393,
+        -0.22414345180915748,
+        0.8645533141210379,
+        0.12808197246237385,
+        -0.7044508485430664,
+        -0.16010246557797156
+      ]
+    },
+    {
+      "dataset": "Squirrel",
+      "contrast": "G2-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -0.842138968940122,
+      "sample_sd_pp": 1.017408864371515,
+      "ci95_low": -1.4345180915786109,
+      "ci95_high": -0.24015369836695483,
+      "signflip_p": 0.03515625,
+      "holm3_p": 0.087890625,
+      "role": "primary",
+      "split_means": [
+        -0.03202049311559393,
+        -0.22414345180915748,
+        -1.8892090938200472,
+        0.03202049311559393,
+        -2.049311559398015,
+        -0.6724303554274762,
+        -1.4409221902017286,
+        0.8965738072366337,
+        -0.9606147934678196,
+        -2.0813320525136088
+      ]
+    },
+    {
+      "dataset": "Squirrel",
+      "contrast": "G3-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": 1.0854947166186357,
+      "sample_sd_pp": 1.2370625281790582,
+      "ci95_low": 0.3362151777137363,
+      "ci95_high": 1.7675312199807873,
+      "signflip_p": 0.029296875,
+      "holm3_p": 0.087890625,
+      "role": "primary",
+      "split_means": [
+        -0.8645533141210361,
+        2.305475504322766,
+        1.7931476144732617,
+        0.416266410502721,
+        1.6650656420108862,
+        0.6724303554274723,
+        -0.9285943003522257,
+        1.953250080051235,
+        2.5616394492475174,
+        1.2808197246237587
+      ]
+    },
+    {
+      "dataset": "Squirrel",
+      "contrast": "G3-G2",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": 1.9276336855587577,
+      "sample_sd_pp": 1.6443977289044465,
+      "ci95_low": 0.9510086455331415,
+      "ci95_high": 2.8786423310918985,
+      "signflip_p": 0.0078125,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": [
+        -0.832532821005442,
+        2.5296189561319236,
+        3.6823567082933084,
+        0.3842459173871271,
+        3.714377201408901,
+        1.3448607108549486,
+        0.5123278898495028,
+        1.0566762728146013,
+        3.5222542427153374,
+        3.362151777137368
+      ]
+    },
+    {
+      "dataset": "Actor",
+      "contrast": "G1-G0",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -0.02631578947368392,
+      "sample_sd_pp": 0.5757524520873597,
+      "ci95_low": -0.36184210526315763,
+      "ci95_high": 0.31140350877193,
+      "signflip_p": 0.890625,
+      "holm3_p": 0.890625,
+      "role": "primary",
+      "split_means": [
+        0.06578947368421166,
+        0.46052631578947234,
+        -0.0219298245614008,
+        0.8552631578947367,
+        -0.8771929824561413,
+        -0.6578947368421054,
+        -0.48245614035087686,
+        0.5482456140350885,
+        0.3070175438596501,
+        -0.46052631578947417
+      ]
+    },
+    {
+      "dataset": "Actor",
+      "contrast": "G2-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": 1.236842105263158,
+      "sample_sd_pp": 0.7014649744347489,
+      "ci95_low": 0.8354714912280697,
+      "ci95_high": 1.649122807017544,
+      "signflip_p": 0.001953125,
+      "holm3_p": 0.005859375,
+      "role": "primary",
+      "split_means": [
+        1.1184210526315779,
+        0.3289473684210527,
+        0.4385964912280697,
+        0.942982456140351,
+        2.0175438596491237,
+        0.8333333333333321,
+        1.9078947368421046,
+        2.2807017543859645,
+        0.7236842105263172,
+        1.776315789473685
+      ]
+    },
+    {
+      "dataset": "Actor",
+      "contrast": "G3-G1",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -0.2565789473684212,
+      "sample_sd_pp": 0.4822401164426675,
+      "ci95_low": -0.5219298245614035,
+      "ci95_high": 0.0438596491228066,
+      "signflip_p": 0.1328125,
+      "holm3_p": 0.265625,
+      "role": "primary",
+      "split_means": [
+        -0.3947368421052644,
+        -0.10964912280701695,
+        -0.39473684210526433,
+        0.30701754385964825,
+        -0.46052631578947234,
+        -0.942982456140351,
+        0.745614035087718,
+        -0.19736842105263128,
+        -0.48245614035087686,
+        -0.635964912280701
+      ]
+    },
+    {
+      "dataset": "Actor",
+      "contrast": "G3-G2",
+      "paired_cells": 30,
+      "splits": 10,
+      "mean_pp": -1.4934210526315792,
+      "sample_sd_pp": 0.7702507267592259,
+      "ci95_low": -1.9517543859649116,
+      "ci95_high": -1.0525767543859696,
+      "signflip_p": 0.001953125,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": [
+        -1.5131578947368425,
+        -0.4385964912280697,
+        -0.8333333333333343,
+        -0.6359649122807028,
+        -2.478070175438596,
+        -1.7763157894736832,
+        -1.1622807017543868,
+        -2.478070175438596,
+        -1.2061403508771937,
+        -2.4122807017543857
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "dataset": "Texas",
+      "group": "G0",
+      "cells": 30,
+      "training_seconds_mean": 3.5565917533337292,
+      "inference_ms_mean": 6.872628999311321,
+      "peak_gpu_mb_mean": 69.01419270833334,
+      "epoch_training_ms_mean": 16.362538804322885,
+      "epoch_wall_ms_mean": 24.21320470312406,
+      "stopped_epoch_mean": 145.76666666666668,
+      "parameter_count": 55013,
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    },
+    {
+      "dataset": "Texas",
+      "group": "G1",
+      "cells": 30,
+      "training_seconds_mean": 1.7286764899947835,
+      "inference_ms_mean": 1.8637126669636928,
+      "peak_gpu_mb_mean": 69.01419270833334,
+      "epoch_training_ms_mean": 10.35493265509643,
+      "epoch_wall_ms_mean": 13.029224509706777,
+      "stopped_epoch_mean": 131.23333333333332,
+      "parameter_count": 55013,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Texas",
+      "group": "G2",
+      "cells": 30,
+      "training_seconds_mean": 1.3361968933342723,
+      "inference_ms_mean": 1.5138188336762444,
+      "peak_gpu_mb_mean": 68.978759765625,
+      "epoch_training_ms_mean": 10.088838672156639,
+      "epoch_wall_ms_mean": 12.5084944077732,
+      "stopped_epoch_mean": 105.36666666666666,
+      "parameter_count": 55013,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Texas",
+      "group": "G3",
+      "cells": 30,
+      "training_seconds_mean": 2.3328265233324297,
+      "inference_ms_mean": 3.869206666519555,
+      "peak_gpu_mb_mean": 69.00270182291666,
+      "epoch_training_ms_mean": 13.96883404764016,
+      "epoch_wall_ms_mean": 18.792906568564266,
+      "stopped_epoch_mean": 123.36666666666666,
+      "parameter_count": 55013,
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G0",
+      "cells": 30,
+      "training_seconds_mean": 3.671374469998409,
+      "inference_ms_mean": 6.954371666991695,
+      "peak_gpu_mb_mean": 70.85208333333334,
+      "epoch_training_ms_mean": 16.396054214773994,
+      "epoch_wall_ms_mean": 24.35392294349773,
+      "stopped_epoch_mean": 150.5,
+      "parameter_count": 55013,
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G1",
+      "cells": 30,
+      "training_seconds_mean": 1.8056079966656398,
+      "inference_ms_mean": 1.707282665835616,
+      "peak_gpu_mb_mean": 70.85208333333334,
+      "epoch_training_ms_mean": 10.371867867809916,
+      "epoch_wall_ms_mean": 13.06746872163895,
+      "stopped_epoch_mean": 137.43333333333334,
+      "parameter_count": 55013,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G2",
+      "cells": 30,
+      "training_seconds_mean": 1.3078853300006206,
+      "inference_ms_mean": 1.4675746672340513,
+      "peak_gpu_mb_mean": 70.814501953125,
+      "epoch_training_ms_mean": 9.836468226784719,
+      "epoch_wall_ms_mean": 12.273000441499043,
+      "stopped_epoch_mean": 105.86666666666666,
+      "parameter_count": 55013,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G3",
+      "cells": 30,
+      "training_seconds_mean": 2.500922866668164,
+      "inference_ms_mean": 3.863257499372897,
+      "peak_gpu_mb_mean": 70.847705078125,
+      "epoch_training_ms_mean": 13.577083676787364,
+      "epoch_wall_ms_mean": 18.3450744878349,
+      "stopped_epoch_mean": 135.53333333333333,
+      "parameter_count": 55013,
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G0",
+      "cells": 30,
+      "training_seconds_mean": 3.190010636668497,
+      "inference_ms_mean": 6.9685174999176525,
+      "peak_gpu_mb_mean": 69.01126302083334,
+      "epoch_training_ms_mean": 16.321877648742632,
+      "epoch_wall_ms_mean": 24.1850701173239,
+      "stopped_epoch_mean": 131.36666666666667,
+      "parameter_count": 55013,
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G1",
+      "cells": 30,
+      "training_seconds_mean": 1.7764231566688977,
+      "inference_ms_mean": 1.8075056658320439,
+      "peak_gpu_mb_mean": 69.01126302083334,
+      "epoch_training_ms_mean": 10.341291888306102,
+      "epoch_wall_ms_mean": 13.064231107009466,
+      "stopped_epoch_mean": 134.56666666666666,
+      "parameter_count": 55013,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G2",
+      "cells": 30,
+      "training_seconds_mean": 1.2119305733368189,
+      "inference_ms_mean": 1.5004281667158164,
+      "peak_gpu_mb_mean": 68.982958984375,
+      "epoch_training_ms_mean": 9.938669192534512,
+      "epoch_wall_ms_mean": 12.411965943195677,
+      "stopped_epoch_mean": 97.03333333333333,
+      "parameter_count": 55013,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G3",
+      "cells": 30,
+      "training_seconds_mean": 2.4783247099937094,
+      "inference_ms_mean": 3.8034408335321737,
+      "peak_gpu_mb_mean": 69.006884765625,
+      "epoch_training_ms_mean": 13.747925958199177,
+      "epoch_wall_ms_mean": 18.535157193864503,
+      "stopped_epoch_mean": 133.03333333333333,
+      "parameter_count": 55013,
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "cells": 30,
+      "training_seconds_mean": 2.747691889998775,
+      "inference_ms_mean": 8.43621033297192,
+      "peak_gpu_mb_mean": 206.78125,
+      "epoch_training_ms_mean": 19.0684310160122,
+      "epoch_wall_ms_mean": 28.785226110885453,
+      "stopped_epoch_mean": 94.86666666666666,
+      "parameter_count": 74917,
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "cells": 30,
+      "training_seconds_mean": 1.4511123866667428,
+      "inference_ms_mean": 1.8179248333520566,
+      "peak_gpu_mb_mean": 130.30143229166666,
+      "epoch_training_ms_mean": 11.623601975690553,
+      "epoch_wall_ms_mean": 14.491612379262333,
+      "stopped_epoch_mean": 99.66666666666667,
+      "parameter_count": 74917,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "cells": 30,
+      "training_seconds_mean": 1.2667301666670634,
+      "inference_ms_mean": 1.5464856668162004,
+      "peak_gpu_mb_mean": 130.29178059895833,
+      "epoch_training_ms_mean": 11.226920439341923,
+      "epoch_wall_ms_mean": 13.887927970884757,
+      "stopped_epoch_mean": 90.66666666666667,
+      "parameter_count": 74917,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "cells": 30,
+      "training_seconds_mean": 2.0861924633335245,
+      "inference_ms_mean": 4.551991332603696,
+      "peak_gpu_mb_mean": 205.948974609375,
+      "epoch_training_ms_mean": 15.847549680120498,
+      "epoch_wall_ms_mean": 21.379954240089546,
+      "stopped_epoch_mean": 96.7,
+      "parameter_count": 74917,
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G0",
+      "cells": 30,
+      "training_seconds_mean": 8.711639326665317,
+      "inference_ms_mean": 28.39538416621508,
+      "peak_gpu_mb_mean": 781.2542643229167,
+      "epoch_training_ms_mean": 41.249955595204234,
+      "epoch_wall_ms_mean": 70.517780080967,
+      "stopped_epoch_mean": 123.13333333333334,
+      "parameter_count": 67365,
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G1",
+      "cells": 30,
+      "training_seconds_mean": 1.8563054233323784,
+      "inference_ms_mean": 1.7607803339584887,
+      "peak_gpu_mb_mean": 436.11266276041664,
+      "epoch_training_ms_mean": 13.43245428738924,
+      "epoch_wall_ms_mean": 16.20668762788664,
+      "stopped_epoch_mean": 113.46666666666667,
+      "parameter_count": 67365,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G2",
+      "cells": 30,
+      "training_seconds_mean": 2.5484765199973483,
+      "inference_ms_mean": 1.5879793333200116,
+      "peak_gpu_mb_mean": 436.11370442708335,
+      "epoch_training_ms_mean": 13.011455188083987,
+      "epoch_wall_ms_mean": 15.579522609030283,
+      "stopped_epoch_mean": 163.1,
+      "parameter_count": 67365,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G3",
+      "cells": 30,
+      "training_seconds_mean": 4.959294276667061,
+      "inference_ms_mean": 12.175705500412732,
+      "peak_gpu_mb_mean": 779.348681640625,
+      "epoch_training_ms_mean": 26.7194505748162,
+      "epoch_wall_ms_mean": 40.03487267921157,
+      "stopped_epoch_mean": 123.6,
+      "parameter_count": 67365,
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "cells": 30,
+      "training_seconds_mean": 3.0679536066638926,
+      "inference_ms_mean": 7.758343832974788,
+      "peak_gpu_mb_mean": 267.8160807291667,
+      "epoch_training_ms_mean": 18.18348361680785,
+      "epoch_wall_ms_mean": 27.234502048850466,
+      "stopped_epoch_mean": 111.56666666666666,
+      "parameter_count": 30341,
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "cells": 30,
+      "training_seconds_mean": 2.022860803330938,
+      "inference_ms_mean": 1.7995896671103158,
+      "peak_gpu_mb_mean": 445.49521484375,
+      "epoch_training_ms_mean": 13.001851298906185,
+      "epoch_wall_ms_mean": 15.812815192080608,
+      "stopped_epoch_mean": 125.66666666666667,
+      "parameter_count": 30341,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "cells": 30,
+      "training_seconds_mean": 1.1355216533323982,
+      "inference_ms_mean": 1.5104605006733134,
+      "peak_gpu_mb_mean": 445.5009765625,
+      "epoch_training_ms_mean": 12.573166351805101,
+      "epoch_wall_ms_mean": 15.131112070660782,
+      "stopped_epoch_mean": 74.56666666666666,
+      "parameter_count": 30341,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "cells": 30,
+      "training_seconds_mean": 2.6736682666669367,
+      "inference_ms_mean": 4.295602333683443,
+      "peak_gpu_mb_mean": 445.495458984375,
+      "epoch_training_ms_mean": 17.379052771763153,
+      "epoch_wall_ms_mean": 22.730029136813666,
+      "stopped_epoch_mean": 117.46666666666667,
+      "parameter_count": 30341,
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  ],
+  "gate": [
+    {
+      "dataset": "Texas",
+      "group": "G0",
+      "p": 0,
+      "alpha_mean": 0.8203112244606018,
+      "gate_entropy": 0.6029287974039713,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Texas",
+      "group": "G0",
+      "p": 1,
+      "alpha_mean": 0.08314908407628537,
+      "gate_entropy": 0.6029287974039713,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Texas",
+      "group": "G0",
+      "p": 2,
+      "alpha_mean": 0.037164522397021456,
+      "gate_entropy": 0.6029287974039713,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Texas",
+      "group": "G0",
+      "p": 3,
+      "alpha_mean": 0.028854822708914676,
+      "gate_entropy": 0.6029287974039713,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Texas",
+      "group": "G0",
+      "p": 4,
+      "alpha_mean": 0.030520310439169408,
+      "gate_entropy": 0.6029287974039713,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Texas",
+      "group": "G1",
+      "p": 0,
+      "alpha_mean": 0.8971332093079885,
+      "gate_entropy": 0.2964329371849696,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Texas",
+      "group": "G1",
+      "p": 1,
+      "alpha_mean": 0.05989710719635089,
+      "gate_entropy": 0.2964329371849696,
+      "empty_fraction": 0.20218577980995178
+    },
+    {
+      "dataset": "Texas",
+      "group": "G1",
+      "p": 2,
+      "alpha_mean": 0.02083814926445484,
+      "gate_entropy": 0.2964329371849696,
+      "empty_fraction": 0.6393442153930664
+    },
+    {
+      "dataset": "Texas",
+      "group": "G1",
+      "p": 3,
+      "alpha_mean": 0.011990288823532562,
+      "gate_entropy": 0.2964329371849696,
+      "empty_fraction": 0.7595628499984741
+    },
+    {
+      "dataset": "Texas",
+      "group": "G1",
+      "p": 4,
+      "alpha_mean": 0.010141197211729984,
+      "gate_entropy": 0.2964329371849696,
+      "empty_fraction": 0.874316930770874
+    },
+    {
+      "dataset": "Texas",
+      "group": "G2",
+      "p": 0,
+      "alpha_mean": 0.9990357855955759,
+      "gate_entropy": 0.0047560792814995995,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Texas",
+      "group": "G2",
+      "p": 1,
+      "alpha_mean": 0.000257409896972464,
+      "gate_entropy": 0.0047560792814995995,
+      "empty_fraction": 0.20218577980995178
+    },
+    {
+      "dataset": "Texas",
+      "group": "G2",
+      "p": 2,
+      "alpha_mean": 0.00041119460236132,
+      "gate_entropy": 0.0047560792814995995,
+      "empty_fraction": 0.6393442153930664
+    },
+    {
+      "dataset": "Texas",
+      "group": "G2",
+      "p": 3,
+      "alpha_mean": 0.00017164587111041148,
+      "gate_entropy": 0.0047560792814995995,
+      "empty_fraction": 0.7595628499984741
+    },
+    {
+      "dataset": "Texas",
+      "group": "G2",
+      "p": 4,
+      "alpha_mean": 0.00012395368277611968,
+      "gate_entropy": 0.0047560792814995995,
+      "empty_fraction": 0.874316930770874
+    },
+    {
+      "dataset": "Texas",
+      "group": "G3",
+      "p": 0,
+      "alpha_mean": 0.8639108538627625,
+      "gate_entropy": 0.22061637689669927,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Texas",
+      "group": "G3",
+      "p": 1,
+      "alpha_mean": 0.10898494590073823,
+      "gate_entropy": 0.22061637689669927,
+      "empty_fraction": 0.20218577980995178
+    },
+    {
+      "dataset": "Texas",
+      "group": "G3",
+      "p": 2,
+      "alpha_mean": 0.004184340421731273,
+      "gate_entropy": 0.22061637689669927,
+      "empty_fraction": 0.6393442153930664
+    },
+    {
+      "dataset": "Texas",
+      "group": "G3",
+      "p": 3,
+      "alpha_mean": 0.00028510502202328724,
+      "gate_entropy": 0.22061637689669927,
+      "empty_fraction": 0.7595628499984741
+    },
+    {
+      "dataset": "Texas",
+      "group": "G3",
+      "p": 4,
+      "alpha_mean": 0.022634730951782936,
+      "gate_entropy": 0.22061637689669927,
+      "empty_fraction": 0.874316930770874
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G0",
+      "p": 0,
+      "alpha_mean": 0.8624966164429982,
+      "gate_entropy": 0.5490615089734395,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G0",
+      "p": 1,
+      "alpha_mean": 0.041066329243282476,
+      "gate_entropy": 0.5490615089734395,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G0",
+      "p": 2,
+      "alpha_mean": 0.03301842383419474,
+      "gate_entropy": 0.5490615089734395,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G0",
+      "p": 3,
+      "alpha_mean": 0.0304410961146156,
+      "gate_entropy": 0.5490615089734395,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G0",
+      "p": 4,
+      "alpha_mean": 0.03297754287098845,
+      "gate_entropy": 0.5490615089734395,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G1",
+      "p": 0,
+      "alpha_mean": 0.8730937302112579,
+      "gate_entropy": 0.4132978240648905,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G1",
+      "p": 1,
+      "alpha_mean": 0.05264946880439917,
+      "gate_entropy": 0.4132978240648905,
+      "empty_fraction": 0.17131474614143372
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G1",
+      "p": 2,
+      "alpha_mean": 0.032350396489103636,
+      "gate_entropy": 0.4132978240648905,
+      "empty_fraction": 0.4741035997867584
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G1",
+      "p": 3,
+      "alpha_mean": 0.029372336405018965,
+      "gate_entropy": 0.4132978240648905,
+      "empty_fraction": 0.6374502182006836
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G1",
+      "p": 4,
+      "alpha_mean": 0.012534091528505088,
+      "gate_entropy": 0.4132978240648905,
+      "empty_fraction": 0.7211155891418457
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G2",
+      "p": 0,
+      "alpha_mean": 0.9922817607720693,
+      "gate_entropy": 0.027389180802856572,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G2",
+      "p": 1,
+      "alpha_mean": 0.0036916227854817407,
+      "gate_entropy": 0.027389180802856572,
+      "empty_fraction": 0.17131474614143372
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G2",
+      "p": 2,
+      "alpha_mean": 0.002856712165278926,
+      "gate_entropy": 0.027389180802856572,
+      "empty_fraction": 0.4741035997867584
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G2",
+      "p": 3,
+      "alpha_mean": 0.0011170278344858767,
+      "gate_entropy": 0.027389180802856572,
+      "empty_fraction": 0.6374502182006836
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G2",
+      "p": 4,
+      "alpha_mean": 5.291700375783156e-05,
+      "gate_entropy": 0.027389180802856572,
+      "empty_fraction": 0.7211155891418457
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G3",
+      "p": 0,
+      "alpha_mean": 0.9185143649578095,
+      "gate_entropy": 0.15748592565457026,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G3",
+      "p": 1,
+      "alpha_mean": 0.04768039897705118,
+      "gate_entropy": 0.15748592565457026,
+      "empty_fraction": 0.17131474614143372
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G3",
+      "p": 2,
+      "alpha_mean": 0.009837913870190581,
+      "gate_entropy": 0.15748592565457026,
+      "empty_fraction": 0.4741035997867584
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G3",
+      "p": 3,
+      "alpha_mean": 0.006585311145742404,
+      "gate_entropy": 0.15748592565457026,
+      "empty_fraction": 0.6374502182006836
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G3",
+      "p": 4,
+      "alpha_mean": 0.017382034587596233,
+      "gate_entropy": 0.15748592565457026,
+      "empty_fraction": 0.7211155891418457
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G0",
+      "p": 0,
+      "alpha_mean": 0.7638003706932068,
+      "gate_entropy": 0.7520903458197912,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G0",
+      "p": 1,
+      "alpha_mean": 0.0755281837657094,
+      "gate_entropy": 0.7520903458197912,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G0",
+      "p": 2,
+      "alpha_mean": 0.07681956713398298,
+      "gate_entropy": 0.7520903458197912,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G0",
+      "p": 3,
+      "alpha_mean": 0.041789813743283354,
+      "gate_entropy": 0.7520903458197912,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G0",
+      "p": 4,
+      "alpha_mean": 0.04206203054636717,
+      "gate_entropy": 0.7520903458197912,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G1",
+      "p": 0,
+      "alpha_mean": 0.8549627701441447,
+      "gate_entropy": 0.4352110167344411,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G1",
+      "p": 1,
+      "alpha_mean": 0.054319946405788265,
+      "gate_entropy": 0.4352110167344411,
+      "empty_fraction": 0.18579234182834625
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G1",
+      "p": 2,
+      "alpha_mean": 0.05829965857168039,
+      "gate_entropy": 0.4352110167344411,
+      "empty_fraction": 0.26229506731033325
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G1",
+      "p": 3,
+      "alpha_mean": 0.018097433215007185,
+      "gate_entropy": 0.4352110167344411,
+      "empty_fraction": 0.7267759442329407
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G1",
+      "p": 4,
+      "alpha_mean": 0.0143201607822751,
+      "gate_entropy": 0.4352110167344411,
+      "empty_fraction": 0.8524590134620667
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G2",
+      "p": 0,
+      "alpha_mean": 0.9995235621929168,
+      "gate_entropy": 0.002274157805853368,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G2",
+      "p": 1,
+      "alpha_mean": 0.0003220916620800078,
+      "gate_entropy": 0.002274157805853368,
+      "empty_fraction": 0.18579234182834625
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G2",
+      "p": 2,
+      "alpha_mean": 4.831478759423173e-05,
+      "gate_entropy": 0.002274157805853368,
+      "empty_fraction": 0.26229506731033325
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G2",
+      "p": 3,
+      "alpha_mean": 5.315785581364215e-05,
+      "gate_entropy": 0.002274157805853368,
+      "empty_fraction": 0.7267759442329407
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G2",
+      "p": 4,
+      "alpha_mean": 5.286354512797596e-05,
+      "gate_entropy": 0.002274157805853368,
+      "empty_fraction": 0.8524590134620667
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G3",
+      "p": 0,
+      "alpha_mean": 0.8839506169160207,
+      "gate_entropy": 0.2448625105122725,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G3",
+      "p": 1,
+      "alpha_mean": 0.04663845902929704,
+      "gate_entropy": 0.2448625105122725,
+      "empty_fraction": 0.18579234182834625
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G3",
+      "p": 2,
+      "alpha_mean": 0.04204742930208643,
+      "gate_entropy": 0.2448625105122725,
+      "empty_fraction": 0.26229506731033325
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G3",
+      "p": 3,
+      "alpha_mean": 0.004015905349903429,
+      "gate_entropy": 0.2448625105122725,
+      "empty_fraction": 0.7267759442329407
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G3",
+      "p": 4,
+      "alpha_mean": 0.02334755667640517,
+      "gate_entropy": 0.2448625105122725,
+      "empty_fraction": 0.8524590134620667
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "p": 0,
+      "alpha_mean": 0.6271686792373657,
+      "gate_entropy": 0.9625616093476613,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "p": 1,
+      "alpha_mean": 0.0962773784995079,
+      "gate_entropy": 0.9625616093476613,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "p": 2,
+      "alpha_mean": 0.09727899308005969,
+      "gate_entropy": 0.9625616093476613,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "p": 3,
+      "alpha_mean": 0.08831213240822157,
+      "gate_entropy": 0.9625616093476613,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "p": 4,
+      "alpha_mean": 0.09096282174189886,
+      "gate_entropy": 0.9625616093476613,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "p": 0,
+      "alpha_mean": 0.7307275295257568,
+      "gate_entropy": 0.5399547229210536,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "p": 1,
+      "alpha_mean": 0.07963879021505514,
+      "gate_entropy": 0.5399547229210536,
+      "empty_fraction": 0.6205533742904663
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "p": 2,
+      "alpha_mean": 0.0748547624796629,
+      "gate_entropy": 0.5399547229210536,
+      "empty_fraction": 0.6275801658630371
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "p": 3,
+      "alpha_mean": 0.0561979033673803,
+      "gate_entropy": 0.5399547229210536,
+      "empty_fraction": 0.6372420191764832
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "p": 4,
+      "alpha_mean": 0.05858102533966303,
+      "gate_entropy": 0.5399547229210536,
+      "empty_fraction": 0.6389986872673035
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "p": 0,
+      "alpha_mean": 0.997114231189092,
+      "gate_entropy": 0.007006637930559615,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "p": 1,
+      "alpha_mean": 0.0010381602303823456,
+      "gate_entropy": 0.007006637930559615,
+      "empty_fraction": 0.6205533742904663
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "p": 2,
+      "alpha_mean": 0.0010648782961652614,
+      "gate_entropy": 0.007006637930559615,
+      "empty_fraction": 0.6275801658630371
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "p": 3,
+      "alpha_mean": 0.0006734374753780988,
+      "gate_entropy": 0.007006637930559615,
+      "empty_fraction": 0.6372420191764832
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "p": 4,
+      "alpha_mean": 0.00010931917183825135,
+      "gate_entropy": 0.007006637930559615,
+      "empty_fraction": 0.6389986872673035
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "p": 0,
+      "alpha_mean": 0.6549755016962687,
+      "gate_entropy": 0.27691138088703154,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "p": 1,
+      "alpha_mean": 0.12065025120973587,
+      "gate_entropy": 0.27691138088703154,
+      "empty_fraction": 0.6205533742904663
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "p": 2,
+      "alpha_mean": 0.13164338022470473,
+      "gate_entropy": 0.27691138088703154,
+      "empty_fraction": 0.6275801658630371
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "p": 3,
+      "alpha_mean": 0.027657903296252093,
+      "gate_entropy": 0.27691138088703154,
+      "empty_fraction": 0.6372420191764832
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "p": 4,
+      "alpha_mean": 0.0650729713961482,
+      "gate_entropy": 0.27691138088703154,
+      "empty_fraction": 0.6389986872673035
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G0",
+      "p": 0,
+      "alpha_mean": 0.5979656994342804,
+      "gate_entropy": 0.9605053484439849,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G0",
+      "p": 1,
+      "alpha_mean": 0.12987556234002112,
+      "gate_entropy": 0.9605053484439849,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G0",
+      "p": 2,
+      "alpha_mean": 0.09704317276676495,
+      "gate_entropy": 0.9605053484439849,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G0",
+      "p": 3,
+      "alpha_mean": 0.09068436374266943,
+      "gate_entropy": 0.9605053484439849,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G0",
+      "p": 4,
+      "alpha_mean": 0.084431192278862,
+      "gate_entropy": 0.9605053484439849,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G1",
+      "p": 0,
+      "alpha_mean": 0.6752277592817942,
+      "gate_entropy": 0.6258751273155212,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G1",
+      "p": 1,
+      "alpha_mean": 0.10772457321484884,
+      "gate_entropy": 0.6258751273155212,
+      "empty_fraction": 0.5760430693626404
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G1",
+      "p": 2,
+      "alpha_mean": 0.0655790467436115,
+      "gate_entropy": 0.6258751273155212,
+      "empty_fraction": 0.5779657959938049
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G1",
+      "p": 3,
+      "alpha_mean": 0.07671916000545025,
+      "gate_entropy": 0.6258751273155212,
+      "empty_fraction": 0.5806575417518616
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G1",
+      "p": 4,
+      "alpha_mean": 0.07474946106473605,
+      "gate_entropy": 0.6258751273155212,
+      "empty_fraction": 0.5816189050674438
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G2",
+      "p": 0,
+      "alpha_mean": 0.9849586884180704,
+      "gate_entropy": 0.022461005915344383,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G2",
+      "p": 1,
+      "alpha_mean": 0.005016483683963694,
+      "gate_entropy": 0.022461005915344383,
+      "empty_fraction": 0.5760430693626404
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G2",
+      "p": 2,
+      "alpha_mean": 0.0024378127681348783,
+      "gate_entropy": 0.022461005915344383,
+      "empty_fraction": 0.5779657959938049
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G2",
+      "p": 3,
+      "alpha_mean": 0.004685606554925907,
+      "gate_entropy": 0.022461005915344383,
+      "empty_fraction": 0.5806575417518616
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G2",
+      "p": 4,
+      "alpha_mean": 0.0029014079502575137,
+      "gate_entropy": 0.022461005915344383,
+      "empty_fraction": 0.5816189050674438
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G3",
+      "p": 0,
+      "alpha_mean": 0.6062489151954651,
+      "gate_entropy": 0.42210174997647604,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G3",
+      "p": 1,
+      "alpha_mean": 0.17998398939768473,
+      "gate_entropy": 0.42210174997647604,
+      "empty_fraction": 0.5760430693626404
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G3",
+      "p": 2,
+      "alpha_mean": 0.06684057970220844,
+      "gate_entropy": 0.42210174997647604,
+      "empty_fraction": 0.5779657959938049
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G3",
+      "p": 3,
+      "alpha_mean": 0.08763713029523691,
+      "gate_entropy": 0.42210174997647604,
+      "empty_fraction": 0.5806575417518616
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G3",
+      "p": 4,
+      "alpha_mean": 0.059289386542513964,
+      "gate_entropy": 0.42210174997647604,
+      "empty_fraction": 0.5816189050674438
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "p": 0,
+      "alpha_mean": 0.6903282622496287,
+      "gate_entropy": 0.8997848590215047,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "p": 1,
+      "alpha_mean": 0.10238057772318522,
+      "gate_entropy": 0.8997848590215047,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "p": 2,
+      "alpha_mean": 0.07469644770026207,
+      "gate_entropy": 0.8997848590215047,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "p": 3,
+      "alpha_mean": 0.06841258108615875,
+      "gate_entropy": 0.8997848590215047,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "p": 4,
+      "alpha_mean": 0.06418209200104077,
+      "gate_entropy": 0.8997848590215047,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "p": 0,
+      "alpha_mean": 0.7355214973290761,
+      "gate_entropy": 0.687452373902003,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "p": 1,
+      "alpha_mean": 0.09442865625023841,
+      "gate_entropy": 0.687452373902003,
+      "empty_fraction": 0.2967105209827423
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "p": 2,
+      "alpha_mean": 0.05892398760964473,
+      "gate_entropy": 0.687452373902003,
+      "empty_fraction": 0.38236841559410095
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "p": 3,
+      "alpha_mean": 0.06183123060812553,
+      "gate_entropy": 0.687452373902003,
+      "empty_fraction": 0.4074999690055847
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "p": 4,
+      "alpha_mean": 0.04929457157850266,
+      "gate_entropy": 0.687452373902003,
+      "empty_fraction": 0.41736841201782227
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "p": 0,
+      "alpha_mean": 0.9887725035349528,
+      "gate_entropy": 0.04533771003286044,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "p": 1,
+      "alpha_mean": 0.002858104770227025,
+      "gate_entropy": 0.04533771003286044,
+      "empty_fraction": 0.2967105209827423
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "p": 2,
+      "alpha_mean": 0.003303679129264007,
+      "gate_entropy": 0.04533771003286044,
+      "empty_fraction": 0.38236841559410095
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "p": 3,
+      "alpha_mean": 0.002460836839964031,
+      "gate_entropy": 0.04533771003286044,
+      "empty_fraction": 0.4074999690055847
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "p": 4,
+      "alpha_mean": 0.0026048355294430317,
+      "gate_entropy": 0.04533771003286044,
+      "empty_fraction": 0.41736841201782227
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "p": 0,
+      "alpha_mean": 0.8584417382876078,
+      "gate_entropy": 0.27677809496720635,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "p": 1,
+      "alpha_mean": 0.044948220097770296,
+      "gate_entropy": 0.27677809496720635,
+      "empty_fraction": 0.2967105209827423
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "p": 2,
+      "alpha_mean": 0.014029253813593339,
+      "gate_entropy": 0.27677809496720635,
+      "empty_fraction": 0.38236841559410095
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "p": 3,
+      "alpha_mean": 0.010815486034456019,
+      "gate_entropy": 0.27677809496720635,
+      "empty_fraction": 0.4074999690055847
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "p": 4,
+      "alpha_mean": 0.07176524872581164,
+      "gate_entropy": 0.27677809496720635,
+      "empty_fraction": 0.41736841201782227
+    }
+  ]
+}

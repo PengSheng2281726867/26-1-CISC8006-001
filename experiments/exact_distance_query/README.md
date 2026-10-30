@@ -33,3 +33,16 @@ recorded in the audit; ordinary clones use normal Git metadata.
 If the training environment lacks matplotlib, set `GAMMA_PLOT_PYTHON` to the
 executable of an existing NumPy/matplotlib environment before `analyze`.
 Plots use that interpreter; scientific training is unchanged.
+
+Technical matrix completed: **Pilot48/48; Full720/720**, with48 Pilot and4 Smoke
+cells reused exactly once. Nine bounded empty-policy controls and720 dedicated
+checkpoint inference profiles also completed. Teacher approval NOT_VERIFIED.
+[Full results](docs/03_FULL_RESULTS.md), [interpretation and negative cases](docs/04_INTERPRETATION.md),
+[failures/deviations](docs/05_FAILURES.md), [Git/provenance](docs/06_GIT_AND_PROVENANCE.md),
+[machine-readable coverage](results/full/coverage.json).
+
+Optional dedicated measurement (no training):
+`python -B -m experiments.exact_distance_query.src.profile --data-root ../private_data --runs-root ../private_runs`.
+Scientific code fingerprints exclude reporting/profiling code; those scripts and
+their actual Git commits/source hashes are separately recorded. Public index
+checks do not imply data access or external weight availability.

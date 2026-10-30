@@ -42,3 +42,14 @@ Nested .git ref creation is denied by workspace metadata protections. An indepen
 external Git metadata clone is used with GIT_DIR/GIT_WORK_TREE; original nested
 .git remains intact. No global Git security/TLS settings changed, no history reset.
 Teacher approval NOT_VERIFIED. User explicitly authorized actual training and PR.
+
+## Verified topology scalars after cache preparation
+
+All six actual edge tables are directed and contain original self-loops.
+Raw edge duplicates are absent in these caches; tests separately cover duplicates.
+Self-loop counts Texas16/Wisconsin16/Cornell3/Chameleon50/Squirrel140/Actor93.
+Reciprocal unique-edge fractions range0.131-0.261. Chameleon/Squirrel have
+no-incoming fractions0.621/0.576; these are directed upstream empty cases,
+not proof of graph-wide isolation. Source tables and edge-order hashes are in
+results/topology_audit.json, generated without labels/features in calculations.
+Original loops remain in A; B0 has self-distance0 and Bp>0 excludes self.

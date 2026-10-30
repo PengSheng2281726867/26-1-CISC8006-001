@@ -80,6 +80,7 @@ def analyze(root,phase='full'):
         if subset:
             resources.append(dict(dataset=d,group=g,cells=len(subset),training_seconds_mean=mean([r['training_seconds'] for r in subset]),
                 inference_ms_mean=mean([r['inference_ms_mean'] for r in subset]),peak_gpu_mb_mean=mean([r['peak_gpu_allocated_mb'] for r in subset]),
+                epoch_training_ms_mean=mean([r['epoch_training_ms_mean'] for r in subset]),epoch_wall_ms_mean=mean([r['epoch_wall_ms_mean'] for r in subset]),stopped_epoch_mean=mean([r['stopped_epoch'] for r in subset]),
                 parameter_count=subset[0]['parameter_count'],**subset[0]['operations']))
             for p in range(5):
                 diagrows.append(dict(dataset=d,group=g,p=p,alpha_mean=mean([r['hop_weights_mean'][p] for r in subset]),
