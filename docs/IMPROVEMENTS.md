@@ -74,3 +74,30 @@ hop experiment need separate, approved versions; do not pool their results with0
 
 No expensive follow-up was started during repository initialization. Negative results
 and all superseded resource records remain in the registry.
+
+
+## I4 - Fixed-propagation / variable-hop-gating study (2026-10-25)
+
+Status: **Full technical diagnostic evaluation**, user-authorized; teacher approval
+**NOT_VERIFIED**. This is not an implemented adaptive selector or an improvement
+claim. [Protocol and report](../experiments/hop_scope_study/README.md).
+
+Propagation stays powers0..5 (15 actual calls, max chain5); only active routing
+scope0..x changes, x1-5. One actual GAMMA layer, hidden32,R2, original Dot/LN/squash,
+constant parameter budget and identical full initialization within split/seed.
+300 primary trainings including12 verified Pilot cells;300 no-update diagnostics
+from60 new full-hop checkpoints. All saved primary checkpoints were reloaded.
+No scientific training failed. Engineering failures and the interim running-cell
+count correction remain documented separately.
+
+Mean test curves are nonmonotone in all six datasets. None of24 primary contrasts
+is below0.05 after within-dataset Holm4 correction. Descriptive validation-mean
+best x: Texas=2, Wisconsin=3, Cornell=3, Chameleon=5, Squirrel=1, Actor=1. Per-split selection and all test curves/negative cases are reported;
+no test-based best-x selection. Validation reuse and overlapping splits limit inference.
+Post-hoc and retrain curves are distinct interventions, not interchangeable models.
+No overall acceleration is claimed because full propagation remains present.
+
+A future sparse per-node budget with mandatory0-hop, nested validation and multiple
+optimization seeds is **PROPOSED ONLY**. No MLP scorer, attention, extra GNN layer
+or new loss was added in this study. Historical I1-I3 and frozen baselines remain
+unchanged; new K5/x5 is solely this experiment's matched full-hop control.

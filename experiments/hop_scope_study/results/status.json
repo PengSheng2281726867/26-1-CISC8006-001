@@ -1,0 +1,15 @@
+{
+  "generated_utc": "2026-10-25T11:21:48.711550+00:00",
+  "status": "FULL",
+  "primary_complete": 300,
+  "primary_expected": 300,
+  "primary_failed_cells": 0,
+  "primary_not_run": 0,
+  "primary_running": 0,
+  "attempts": 300,
+  "failed_attempts": 0,
+  "posthoc_checkpoints": 60,
+  "posthoc_evaluations": 300,
+  "pairing_checks_passed": true,
+  "current_fingerprints_match": true
+}

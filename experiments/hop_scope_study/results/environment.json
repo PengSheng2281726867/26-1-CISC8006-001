@@ -1,0 +1,29 @@
+{
+  "recorded_utc": "2026-10-25T10:50:10.191837+00:00",
+  "python": "3.12.14 | packaged by conda-forge | (main, Sep  2 2026, 23:18:20) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "packages": {
+    "torch": "2.8.0+cu128",
+    "torch-geometric": "2.7.0",
+    "torch-scatter": "2.1.2+pt28cu128",
+    "torch-sparse": "0.6.18+pt28cu128",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1"
+  },
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "gpu_properties": "_CudaDeviceProperties(name='NVIDIA GeForce RTX 5090', major=12, minor=0, total_memory=32606MB, multi_processor_count=170, uuid=b4204025-aba3-78e2-a3cb-3dad32daa9b3, pci_bus_id=2, pci_device_id=0, pci_domain_id=0, L2_cache_size=96MB)",
+  "driver_query": "610.88, NVIDIA GeForce RTX 5090, 32607 MiB",
+  "training_cpu_threads": 1,
+  "deterministic_algorithms": true,
+  "tf32": false,
+  "cublas_workspace_config": ":4096:8",
+  "plotting_environment": {
+    "python": "3.14.6",
+    "matplotlib": "3.11.0",
+    "numpy": "2.4.6"
+  },
+  "fresh_installation": "NOT_VERIFIED",
+  "teacher_approval": "NOT_VERIFIED",
+  "monetary_cost": "UNKNOWN"
+}

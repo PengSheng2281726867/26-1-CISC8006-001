@@ -1,0 +1,93 @@
+{
+  "utc": "2026-10-25T11:22:21.519481+00:00",
+  "primary_complete": 300,
+  "posthoc_evaluations": 300,
+  "h1_nonmonotone_mean_test_datasets": [
+    "Texas",
+    "Wisconsin",
+    "Cornell",
+    "Chameleon",
+    "Squirrel",
+    "Actor"
+  ],
+  "h2_validation_best_mean_x": {
+    "Texas": 2,
+    "Wisconsin": 3,
+    "Cornell": 3,
+    "Chameleon": 5,
+    "Squirrel": 1,
+    "Actor": 1
+  },
+  "validation_selected_x_counts": {
+    "Texas": {
+      "1": 1,
+      "2": 4,
+      "3": 1,
+      "4": 1,
+      "5": 3
+    },
+    "Wisconsin": {
+      "1": 2,
+      "2": 2,
+      "3": 3,
+      "4": 3
+    },
+    "Cornell": {
+      "1": 4,
+      "2": 4,
+      "4": 2
+    },
+    "Chameleon": {
+      "1": 1,
+      "2": 2,
+      "3": 1,
+      "4": 3,
+      "5": 3
+    },
+    "Squirrel": {
+      "1": 5,
+      "2": 4,
+      "3": 1
+    },
+    "Actor": {
+      "1": 9,
+      "3": 1
+    }
+  },
+  "holm_within_dataset_below_005": [],
+  "exploratory_largest_positive_delta": {
+    "dataset": "Texas",
+    "x": 2,
+    "unit": "pp",
+    "n": 10,
+    "mean": 2.894736842105263,
+    "sample_sd": 10.338231942867429,
+    "ci95_low": -3.1578947368421044,
+    "ci95_high": 9.210526315789473,
+    "p_sign_flip": 0.44140625,
+    "p_holm": 1
+  },
+  "exploratory_largest_negative_delta": {
+    "dataset": "Texas",
+    "x": 3,
+    "unit": "pp",
+    "n": 10,
+    "mean": -2.105263157894737,
+    "sample_sd": 8.395428851933612,
+    "ci95_low": -7.368421052631577,
+    "ci95_high": 2.6315789473684212,
+    "p_sign_flip": 0.5234375,
+    "p_holm": 1
+  },
+  "exploratory_largest_posthoc_retrain_gap": {
+    "dataset": "Squirrel",
+    "x": 1,
+    "unit": "pp",
+    "n": 10,
+    "mean": -4.476464937560039,
+    "sample_sd": 2.2268405549128936,
+    "ci95_low": -5.840537944284343,
+    "ci95_high": -3.2180595581171962,
+    "p_sign_flip": 0.001953125
+  }
+}

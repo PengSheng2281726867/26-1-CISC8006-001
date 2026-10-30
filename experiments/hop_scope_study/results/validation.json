@@ -1,0 +1,194 @@
+{
+  "status": "passed",
+  "utc": "2026-10-25T11:21:54.614815+00:00",
+  "checks": [
+    {
+      "check": "adapter",
+      "exit_code": 0,
+      "log_sha256": "1001729b1c9ce445cdb9741abba6cb7944b1a0f0aff27a8af98134d1d1bb0cad"
+    },
+    {
+      "check": "repository_smoke",
+      "exit_code": 0,
+      "log_sha256": "78d845b0bd4cd709b6379b84f4f61538546e4bb4b1754baaf21d9ecae45b0eba"
+    },
+    {
+      "check": "split_raw_verification",
+      "exit_code": 0,
+      "log_sha256": "f6a5ba574c9fee90a795d4eeb05b0d78e7d5d815b274d3c7815c00ff50c0d698"
+    },
+    {
+      "check": "analysis_known_answers",
+      "exit_code": 0,
+      "log_sha256": "35ce780bd0d9ba2dca9fb289386ea1f02461ded218ac6a4dae222756e4d3913f"
+    }
+  ],
+  "adapter_tests": {
+    "status": "passed",
+    "utc": "2026-10-25T11:21:41.202148+00:00",
+    "git": {
+      "commit": "935a4303ed0d1410e29d9374cc1ce91b82dc527c",
+      "branch": "main",
+      "dirty": true,
+      "status": [
+        "?? experiments/hop_scope_study/"
+      ]
+    },
+    "tests_run": 7,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      {
+        "test": "propagation",
+        "x": 1,
+        "calls": 15,
+        "max_power": 5,
+        "retained_hops": 6
+      },
+      {
+        "test": "propagation",
+        "x": 2,
+        "calls": 15,
+        "max_power": 5,
+        "retained_hops": 6
+      },
+      {
+        "test": "propagation",
+        "x": 3,
+        "calls": 15,
+        "max_power": 5,
+        "retained_hops": 6
+      },
+      {
+        "test": "propagation",
+        "x": 4,
+        "calls": 15,
+        "max_power": 5,
+        "retained_hops": 6
+      },
+      {
+        "test": "propagation",
+        "x": 5,
+        "calls": 15,
+        "max_power": 5,
+        "retained_hops": 6
+      },
+      {
+        "test": "fair_initialization",
+        "identical_full_hash": "0d675549ef968db79bc9173c81cf685a453ed888f2d90d486116b1996970fb5e",
+        "parameters": 643
+      },
+      {
+        "test": "official_parity",
+        "device": "cpu",
+        "dtype": "torch.float64",
+        "r": 1,
+        "training": false,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      },
+      {
+        "test": "official_parity",
+        "device": "cpu",
+        "dtype": "torch.float64",
+        "r": 1,
+        "training": true,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      },
+      {
+        "test": "official_parity",
+        "device": "cpu",
+        "dtype": "torch.float64",
+        "r": 2,
+        "training": false,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      },
+      {
+        "test": "official_parity",
+        "device": "cpu",
+        "dtype": "torch.float64",
+        "r": 2,
+        "training": true,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      },
+      {
+        "test": "official_parity",
+        "device": "cpu",
+        "dtype": "torch.float64",
+        "r": 3,
+        "training": false,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      },
+      {
+        "test": "official_parity",
+        "device": "cpu",
+        "dtype": "torch.float64",
+        "r": 3,
+        "training": true,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      },
+      {
+        "test": "official_parity",
+        "device": "cuda",
+        "dtype": "torch.float32",
+        "r": 1,
+        "training": false,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      },
+      {
+        "test": "official_parity",
+        "device": "cuda",
+        "dtype": "torch.float32",
+        "r": 1,
+        "training": true,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      },
+      {
+        "test": "official_parity",
+        "device": "cuda",
+        "dtype": "torch.float32",
+        "r": 2,
+        "training": false,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      },
+      {
+        "test": "official_parity",
+        "device": "cuda",
+        "dtype": "torch.float32",
+        "r": 2,
+        "training": true,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      },
+      {
+        "test": "official_parity",
+        "device": "cuda",
+        "dtype": "torch.float32",
+        "r": 3,
+        "training": false,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      },
+      {
+        "test": "official_parity",
+        "device": "cuda",
+        "dtype": "torch.float32",
+        "r": 3,
+        "training": true,
+        "forward_max_error": 0.0,
+        "gradient_max_error": 0.0
+      }
+    ],
+    "source_sha256": "d52dba2e31379dae02dd18a3be37f427a9fb58ac7c209cd78331f1893d28a84a"
+  },
+  "data_manifest_sha256": "cafdf8db680f65bb0778f71d9e5045f52d8537b9975fb4786425c77758161877",
+  "local_evidence": "checks/acceptance-b6214b9905eb"
+}

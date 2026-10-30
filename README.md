@@ -159,3 +159,6 @@ as Proposed, not completed pilots.
   are not complete. No Week12 final tag is created.
 
 - [Frozen-weight LOHO routing diagnostic](experiments/loho_diagnostic/README.md).
+
+
+- [Fixed-propagation / variable-hop-gating study (2026-10-25)](experiments/hop_scope_study/README.md):300 retrainings and300 inference-only mask evaluations; technical matrix complete, teacher approval NOT_VERIFIED.

@@ -1,0 +1,54 @@
+{
+  "utc": "2026-10-25T10:52:11.577495+00:00",
+  "status": "passed",
+  "datasets": [
+    {
+      "dataset": "Texas",
+      "normalized_features_edges_labels_identical": true,
+      "graph_tensor_sha256": "c10582737f700397cfc3dd38a787735f9c84af2893d97e20da948a19afe95419",
+      "reference_processed_sha256": "58a41c9cd7bb8a8384411ffefa44a30baf61a17eb359223cbe63551de6ab812f",
+      "local_processed_sha256": "58a41c9cd7bb8a8384411ffefa44a30baf61a17eb359223cbe63551de6ab812f",
+      "reference_bytes_unchanged": true
+    },
+    {
+      "dataset": "Wisconsin",
+      "normalized_features_edges_labels_identical": true,
+      "graph_tensor_sha256": "45f43d8edd622f7eea53296673f6fa911496f4f2ed823cb93e69692ad5a018c7",
+      "reference_processed_sha256": "43eccba2a5c4ccaa50069d6ac3ff365616c3e285cf18cab1d71047b5f91978e1",
+      "local_processed_sha256": "43eccba2a5c4ccaa50069d6ac3ff365616c3e285cf18cab1d71047b5f91978e1",
+      "reference_bytes_unchanged": true
+    },
+    {
+      "dataset": "Cornell",
+      "normalized_features_edges_labels_identical": true,
+      "graph_tensor_sha256": "9039c7a18f5973f4c20453ecb93a664aeb3e67dba801a489074c8570833ee1dc",
+      "reference_processed_sha256": "af75e3a1752baf7e4c8a3e1d6d5cbf001e6090bd3437eabdcd867861808abd17",
+      "local_processed_sha256": "af75e3a1752baf7e4c8a3e1d6d5cbf001e6090bd3437eabdcd867861808abd17",
+      "reference_bytes_unchanged": true
+    },
+    {
+      "dataset": "Chameleon",
+      "normalized_features_edges_labels_identical": true,
+      "graph_tensor_sha256": "15b17b55454a35cc85c26bffbd596507a0a3d82e0eadf874b1a79be073bb9a3b",
+      "reference_processed_sha256": "483030c5eb4776d04871f3e410ebbb7b38332ac2bf8e7a543196380364519bf2",
+      "local_processed_sha256": "483030c5eb4776d04871f3e410ebbb7b38332ac2bf8e7a543196380364519bf2",
+      "reference_bytes_unchanged": true
+    },
+    {
+      "dataset": "Squirrel",
+      "normalized_features_edges_labels_identical": true,
+      "graph_tensor_sha256": "7e22eb49175a983a3ae40df88d3c83b04736e7bda6ad1e4d9027a85b6a793460",
+      "reference_processed_sha256": "c58f552e61aa286a3d3de57c984f4218f442621377addcfbb8f7d03a57c126e1",
+      "local_processed_sha256": "c58f552e61aa286a3d3de57c984f4218f442621377addcfbb8f7d03a57c126e1",
+      "reference_bytes_unchanged": true
+    },
+    {
+      "dataset": "Actor",
+      "normalized_features_edges_labels_identical": true,
+      "graph_tensor_sha256": "36d7bff69b30267ccdf0030564e044b7398c799ab659b0114508f0aa66a5ebfe",
+      "reference_processed_sha256": "870a14e82331d9f8862fbacae12424009455dec088b865cdf842ba247ec62711",
+      "local_processed_sha256": "870a14e82331d9f8862fbacae12424009455dec088b865cdf842ba247ec62711",
+      "reference_bytes_unchanged": true
+    }
+  ]
+}
