@@ -1,0 +1,46 @@
+{
+  "version": "exact-distance-query-v1",
+  "teacher_approval": "NOT_VERIFIED",
+  "K": 4,
+  "powers": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "actual_gamma_layers": 1,
+  "hidden_dim": 32,
+  "R": 2,
+  "seeds": [
+    42
+  ],
+  "groups": [
+    "G0",
+    "G1",
+    "G2",
+    "G3"
+  ],
+  "training": {
+    "epochs": 500,
+    "early_stopping_patience": 50,
+    "learning_rate": 0.02,
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "scheduler": {
+      "factor": 0.5,
+      "patience": 50,
+      "min_lr": 1e-06
+    },
+    "infer_warmup": 5,
+    "infer_repeats": 20
+  },
+  "phase": "smoke",
+  "datasets": [
+    "Texas"
+  ],
+  "splits": [
+    0
+  ],
+  "empty_policy": "mask"
+}

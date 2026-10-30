@@ -162,3 +162,5 @@ as Proposed, not completed pilots.
 
 
 - [Fixed-propagation / variable-hop-gating study (2026-10-25)](experiments/hop_scope_study/README.md):300 retrainings and300 inference-only mask evaluations; technical matrix complete, teacher approval NOT_VERIFIED.
+
+- [Exact-distance and Query-gating study](experiments/exact_distance_query/README.md): four matched arms; teacher approval NOT_VERIFIED.

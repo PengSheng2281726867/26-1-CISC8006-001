@@ -87,3 +87,7 @@ Validation on the combined tree: 13 repository smoke tests, 7 hop adapter tests
 regression tests passed. The exact-index publication audit passed. This records
 engineering validation; teacher approval and human scientific review are not
 inferred. The actual merge outcome and parents are identified by Git history.
+
+## Exact-distance / Query-gating study (2026-10-30)
+
+User authorized autonomous audit, implementation, real training, analysis, branch publication and PR. Codex proposed topology-only reverse BFS, masked empty-hop policy, matched three-seed initialization and a bounded legacy-empty control; adopted to implement the specified study. Tests and scientific outcomes are recorded in the isolated experiment. No teacher approval or human review is inferred; both remain NOT_VERIFIED. No sub-agents were used.
