@@ -1,0 +1,995 @@
+{
+  "status": {
+    "utc": "2026-10-30T04:27:41.743808+00:00",
+    "status": "FULL",
+    "complete": 48,
+    "expected": 48,
+    "missing": 0,
+    "failed_attempts": 0,
+    "stale_attempts": [],
+    "teacher_approval": "NOT_VERIFIED",
+    "pairing": "passed",
+    "empty_controls": 0,
+    "trained_from_random_initialization": true,
+    "smoke_reused": 0,
+    "pilot_reused": 48,
+    "checkpoint_reload": "all passed",
+    "real_G0_G1_equivalence": "all completed G0/G1 forward/used_alpha/parameter gradients passed"
+  },
+  "accuracy": [
+    {
+      "dataset": "Texas",
+      "group": "G0",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Texas",
+      "group": "G1",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Texas",
+      "group": "G2",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Texas",
+      "group": "G3",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G0",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G1",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G2",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Wisconsin",
+      "group": "G3",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G0",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G1",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G2",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Cornell",
+      "group": "G3",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "cells": 6,
+      "splits": 2,
+      "mean_percent": 49.597953216374265,
+      "sample_sd_percent": 1.602361857951972
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "cells": 6,
+      "splits": 2,
+      "mean_percent": 51.20614035087719,
+      "sample_sd_percent": 2.8429000705599505
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "cells": 6,
+      "splits": 2,
+      "mean_percent": 48.793859649122815,
+      "sample_sd_percent": 3.2564128080959445
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "cells": 6,
+      "splits": 2,
+      "mean_percent": 49.671052631578945,
+      "sample_sd_percent": 0.6719581984959871
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G0",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G1",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G2",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Squirrel",
+      "group": "G3",
+      "cells": 0,
+      "splits": 0,
+      "mean_percent": null,
+      "sample_sd_percent": null
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "cells": 6,
+      "splits": 2,
+      "mean_percent": 34.59429824561404,
+      "sample_sd_percent": 0.0465201829728005
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "cells": 6,
+      "splits": 2,
+      "mean_percent": 34.85745614035088,
+      "sample_sd_percent": 0.23260091486399245
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "cells": 6,
+      "splits": 2,
+      "mean_percent": 35.58114035087719,
+      "sample_sd_percent": 0.32564128080958843
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "cells": 6,
+      "splits": 2,
+      "mean_percent": 34.60526315789474,
+      "sample_sd_percent": 0.4341883744127896
+    }
+  ],
+  "paired": [
+    {
+      "dataset": "Texas",
+      "contrast": "G1-G0",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Texas",
+      "contrast": "G2-G1",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Texas",
+      "contrast": "G3-G1",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Texas",
+      "contrast": "G3-G2",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": []
+    },
+    {
+      "dataset": "Wisconsin",
+      "contrast": "G1-G0",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Wisconsin",
+      "contrast": "G2-G1",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Wisconsin",
+      "contrast": "G3-G1",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Wisconsin",
+      "contrast": "G3-G2",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": []
+    },
+    {
+      "dataset": "Cornell",
+      "contrast": "G1-G0",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Cornell",
+      "contrast": "G2-G1",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Cornell",
+      "contrast": "G3-G1",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Cornell",
+      "contrast": "G3-G2",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": []
+    },
+    {
+      "dataset": "Chameleon",
+      "contrast": "G1-G0",
+      "paired_cells": 6,
+      "splits": 2,
+      "mean_pp": 1.6081871345029233,
+      "sample_sd_pp": 1.2405382126079767,
+      "ci95_low": 0.730994152046784,
+      "ci95_high": 2.4853801169590626,
+      "signflip_p": 0.5,
+      "holm3_p": 1.0,
+      "role": "primary",
+      "split_means": [
+        0.730994152046784,
+        2.4853801169590626
+      ]
+    },
+    {
+      "dataset": "Chameleon",
+      "contrast": "G2-G1",
+      "paired_cells": 6,
+      "splits": 2,
+      "mean_pp": -2.4122807017543844,
+      "sample_sd_pp": 0.41351273753599377,
+      "ci95_low": -2.7046783625730986,
+      "ci95_high": -2.11988304093567,
+      "signflip_p": 0.5,
+      "holm3_p": 1.0,
+      "role": "primary",
+      "split_means": [
+        -2.7046783625730986,
+        -2.11988304093567
+      ]
+    },
+    {
+      "dataset": "Chameleon",
+      "contrast": "G3-G1",
+      "paired_cells": 6,
+      "splits": 2,
+      "mean_pp": -1.5350877192982457,
+      "sample_sd_pp": 2.170941872063962,
+      "ci95_low": -3.0701754385964914,
+      "ci95_high": 0.0,
+      "signflip_p": 1.0,
+      "holm3_p": 1.0,
+      "role": "primary",
+      "split_means": [
+        0.0,
+        -3.0701754385964914
+      ]
+    },
+    {
+      "dataset": "Chameleon",
+      "contrast": "G3-G2",
+      "paired_cells": 6,
+      "splits": 2,
+      "mean_pp": 0.8771929824561382,
+      "sample_sd_pp": 2.5844546095999554,
+      "ci95_low": -0.9502923976608216,
+      "ci95_high": 2.704678362573098,
+      "signflip_p": 1.0,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": [
+        2.704678362573098,
+        -0.9502923976608216
+      ]
+    },
+    {
+      "dataset": "Squirrel",
+      "contrast": "G1-G0",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Squirrel",
+      "contrast": "G2-G1",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Squirrel",
+      "contrast": "G3-G1",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "primary",
+      "split_means": []
+    },
+    {
+      "dataset": "Squirrel",
+      "contrast": "G3-G2",
+      "paired_cells": 0,
+      "splits": 0,
+      "mean_pp": null,
+      "sample_sd_pp": null,
+      "ci95_low": null,
+      "ci95_high": null,
+      "signflip_p": null,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": []
+    },
+    {
+      "dataset": "Actor",
+      "contrast": "G1-G0",
+      "paired_cells": 6,
+      "splits": 2,
+      "mean_pp": 0.263157894736842,
+      "sample_sd_pp": 0.2791210978367933,
+      "ci95_low": 0.06578947368421166,
+      "ci95_high": 0.46052631578947234,
+      "signflip_p": 0.5,
+      "holm3_p": 1.0,
+      "role": "primary",
+      "split_means": [
+        0.06578947368421166,
+        0.46052631578947234
+      ]
+    },
+    {
+      "dataset": "Actor",
+      "contrast": "G2-G1",
+      "paired_cells": 6,
+      "splits": 2,
+      "mean_pp": 0.7236842105263153,
+      "sample_sd_pp": 0.5582421956735893,
+      "ci95_low": 0.3289473684210527,
+      "ci95_high": 1.1184210526315779,
+      "signflip_p": 0.5,
+      "holm3_p": 1.0,
+      "role": "primary",
+      "split_means": [
+        1.1184210526315779,
+        0.3289473684210527
+      ]
+    },
+    {
+      "dataset": "Actor",
+      "contrast": "G3-G1",
+      "paired_cells": 6,
+      "splits": 2,
+      "mean_pp": -0.2521929824561407,
+      "sample_sd_pp": 0.20158745954879773,
+      "ci95_low": -0.3947368421052644,
+      "ci95_high": -0.10964912280701695,
+      "signflip_p": 0.5,
+      "holm3_p": 1.0,
+      "role": "primary",
+      "split_means": [
+        -0.3947368421052644,
+        -0.10964912280701695
+      ]
+    },
+    {
+      "dataset": "Actor",
+      "contrast": "G3-G2",
+      "paired_cells": 6,
+      "splits": 2,
+      "mean_pp": -0.9758771929824561,
+      "sample_sd_pp": 0.7598296552223871,
+      "ci95_low": -1.5131578947368425,
+      "ci95_high": -0.4385964912280697,
+      "signflip_p": 0.5,
+      "holm3_p": null,
+      "role": "exploratory",
+      "split_means": [
+        -1.5131578947368425,
+        -0.4385964912280697
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "cells": 6,
+      "training_seconds_mean": 2.483703483332647,
+      "inference_ms_mean": 8.487207500972241,
+      "peak_gpu_mb_mean": 206.78369140625,
+      "parameter_count": 74917,
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "cells": 6,
+      "training_seconds_mean": 1.2150077666689565,
+      "inference_ms_mean": 2.039264167251531,
+      "peak_gpu_mb_mean": 130.30126953125,
+      "parameter_count": 74917,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "cells": 6,
+      "training_seconds_mean": 1.3202666166665342,
+      "inference_ms_mean": 1.6989916669748102,
+      "peak_gpu_mb_mean": 130.25301106770834,
+      "parameter_count": 74917,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "cells": 6,
+      "training_seconds_mean": 2.207163250001031,
+      "inference_ms_mean": 4.6455325005808845,
+      "peak_gpu_mb_mean": 205.94913736979166,
+      "parameter_count": 74917,
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "cells": 6,
+      "training_seconds_mean": 3.2000734499937002,
+      "inference_ms_mean": 7.774117499017545,
+      "peak_gpu_mb_mean": 268.923828125,
+      "parameter_count": 30341,
+      "projections": 5,
+      "walk_propagations": 10,
+      "shell_sparse_mm": 0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "cells": 6,
+      "training_seconds_mean": 2.389422566673602,
+      "inference_ms_mean": 1.9936166681873146,
+      "peak_gpu_mb_mean": 447.4248046875,
+      "parameter_count": 30341,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "cells": 6,
+      "training_seconds_mean": 1.0451943500035366,
+      "inference_ms_mean": 1.562069999636151,
+      "peak_gpu_mb_mean": 447.45361328125,
+      "parameter_count": 30341,
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "cells": 6,
+      "training_seconds_mean": 2.6345761666598264,
+      "inference_ms_mean": 4.709523335623089,
+      "peak_gpu_mb_mean": 447.426025390625,
+      "parameter_count": 30341,
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    }
+  ],
+  "gate": [
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "p": 0,
+      "alpha_mean": 0.6108643313248953,
+      "gate_entropy": 0.9751025835673014,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "p": 1,
+      "alpha_mean": 0.10085044056177139,
+      "gate_entropy": 0.9751025835673014,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "p": 2,
+      "alpha_mean": 0.099892383441329,
+      "gate_entropy": 0.9751025835673014,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "p": 3,
+      "alpha_mean": 0.09192975672582786,
+      "gate_entropy": 0.9751025835673014,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G0",
+      "p": 4,
+      "alpha_mean": 0.09646310036381085,
+      "gate_entropy": 0.9751025835673014,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "p": 0,
+      "alpha_mean": 0.70600559314092,
+      "gate_entropy": 0.5738427440325419,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "p": 1,
+      "alpha_mean": 0.0856299822529157,
+      "gate_entropy": 0.5738427440325419,
+      "empty_fraction": 0.6205533742904663
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "p": 2,
+      "alpha_mean": 0.07855241745710373,
+      "gate_entropy": 0.5738427440325419,
+      "empty_fraction": 0.6275801658630371
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "p": 3,
+      "alpha_mean": 0.06364243663847446,
+      "gate_entropy": 0.5738427440325419,
+      "empty_fraction": 0.6372420191764832
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G1",
+      "p": 4,
+      "alpha_mean": 0.06616957609852155,
+      "gate_entropy": 0.5738427440325419,
+      "empty_fraction": 0.6389986872673035
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "p": 0,
+      "alpha_mean": 0.9991540610790253,
+      "gate_entropy": 0.0039050345270273588,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "p": 1,
+      "alpha_mean": 0.0004496073258148196,
+      "gate_entropy": 0.0039050345270273588,
+      "empty_fraction": 0.6205533742904663
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "p": 2,
+      "alpha_mean": 0.00021816119988216087,
+      "gate_entropy": 0.0039050345270273588,
+      "empty_fraction": 0.6275801658630371
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "p": 3,
+      "alpha_mean": 0.00013888715708768964,
+      "gate_entropy": 0.0039050345270273588,
+      "empty_fraction": 0.6372420191764832
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G2",
+      "p": 4,
+      "alpha_mean": 3.929594974276066e-05,
+      "gate_entropy": 0.0039050345270273588,
+      "empty_fraction": 0.6389986872673035
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "p": 0,
+      "alpha_mean": 0.6532747248808543,
+      "gate_entropy": 0.26292110482851666,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "p": 1,
+      "alpha_mean": 0.12688669686516127,
+      "gate_entropy": 0.26292110482851666,
+      "empty_fraction": 0.6205533742904663
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "p": 2,
+      "alpha_mean": 0.13337001328667006,
+      "gate_entropy": 0.26292110482851666,
+      "empty_fraction": 0.6275801658630371
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "p": 3,
+      "alpha_mean": 0.021124943858012557,
+      "gate_entropy": 0.26292110482851666,
+      "empty_fraction": 0.6372420191764832
+    },
+    {
+      "dataset": "Chameleon",
+      "group": "G3",
+      "p": 4,
+      "alpha_mean": 0.06534361808250348,
+      "gate_entropy": 0.26292110482851666,
+      "empty_fraction": 0.6389986872673035
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "p": 0,
+      "alpha_mean": 0.6831827412048975,
+      "gate_entropy": 0.9082159598668417,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "p": 1,
+      "alpha_mean": 0.10199738169709842,
+      "gate_entropy": 0.9082159598668417,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "p": 2,
+      "alpha_mean": 0.07654250785708427,
+      "gate_entropy": 0.9082159598668417,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "p": 3,
+      "alpha_mean": 0.07357966527342796,
+      "gate_entropy": 0.9082159598668417,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G0",
+      "p": 4,
+      "alpha_mean": 0.06469764932990074,
+      "gate_entropy": 0.9082159598668417,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "p": 0,
+      "alpha_mean": 0.7886219322681427,
+      "gate_entropy": 0.5784694651762644,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "p": 1,
+      "alpha_mean": 0.08555647109945615,
+      "gate_entropy": 0.5784694651762644,
+      "empty_fraction": 0.2967105209827423
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "p": 2,
+      "alpha_mean": 0.04671153239905834,
+      "gate_entropy": 0.5784694651762644,
+      "empty_fraction": 0.38236841559410095
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "p": 3,
+      "alpha_mean": 0.04670810016493002,
+      "gate_entropy": 0.5784694651762644,
+      "empty_fraction": 0.4074999690055847
+    },
+    {
+      "dataset": "Actor",
+      "group": "G1",
+      "p": 4,
+      "alpha_mean": 0.03240189949671427,
+      "gate_entropy": 0.5784694651762644,
+      "empty_fraction": 0.41736841201782227
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "p": 0,
+      "alpha_mean": 0.9891234636306763,
+      "gate_entropy": 0.04978708767642578,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "p": 1,
+      "alpha_mean": 0.0027428455650806427,
+      "gate_entropy": 0.04978708767642578,
+      "empty_fraction": 0.2967105209827423
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "p": 2,
+      "alpha_mean": 0.0028653184902699045,
+      "gate_entropy": 0.04978708767642578,
+      "empty_fraction": 0.38236841559410095
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "p": 3,
+      "alpha_mean": 0.002655692740518134,
+      "gate_entropy": 0.04978708767642578,
+      "empty_fraction": 0.4074999690055847
+    },
+    {
+      "dataset": "Actor",
+      "group": "G2",
+      "p": 4,
+      "alpha_mean": 0.002612644360245516,
+      "gate_entropy": 0.04978708767642578,
+      "empty_fraction": 0.41736841201782227
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "p": 0,
+      "alpha_mean": 0.8579055964946747,
+      "gate_entropy": 0.2874414225419362,
+      "empty_fraction": 0.0
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "p": 1,
+      "alpha_mean": 0.04928721829007069,
+      "gate_entropy": 0.2874414225419362,
+      "empty_fraction": 0.2967105209827423
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "p": 2,
+      "alpha_mean": 0.00968373054638505,
+      "gate_entropy": 0.2874414225419362,
+      "empty_fraction": 0.38236841559410095
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "p": 3,
+      "alpha_mean": 0.015002785250544548,
+      "gate_entropy": 0.2874414225419362,
+      "empty_fraction": 0.4074999690055847
+    },
+    {
+      "dataset": "Actor",
+      "group": "G3",
+      "p": 4,
+      "alpha_mean": 0.06812060003479321,
+      "gate_entropy": 0.2874414225419362,
+      "empty_fraction": 0.41736841201782227
+    }
+  ]
+}

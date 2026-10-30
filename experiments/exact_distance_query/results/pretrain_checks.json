@@ -1,0 +1,12 @@
+[
+  {
+    "command": "python -B -m unittest discover -s experiments/exact_distance_query/tests -v",
+    "exit_code": 0,
+    "utc": "2026-10-30T04:24:00.079896+00:00"
+  },
+  {
+    "command": "python -B scripts/smoke_test.py",
+    "exit_code": 0,
+    "utc": "2026-10-30T04:24:05.271725+00:00"
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "utc": "2026-10-30T05:05:44.621589+00:00",
+  "primary_complete": 720,
+  "pilot_complete": 48,
+  "empty_controls": 9,
+  "dedicated_profiles": 720,
+  "checkpoint_reload": 729,
+  "parity": {
+    "G0": {
+      "checkpoints": 180,
+      "status": "passed",
+      "output_max_abs": 0.0,
+      "alpha_max_abs": 0.0,
+      "gradient_max_abs": 0.0
+    },
+    "G1": {
+      "checkpoints": 180,
+      "status": "passed",
+      "output_max_abs": 7.62939453125e-06,
+      "alpha_max_abs": 4.470348358154297e-07,
+      "gradient_max_abs": 1.1920928955078125e-07
+    }
+  },
+  "missing_cells": [],
+  "failed_scientific_attempts": 0,
+  "source_fingerprints_primary": [
+    "93f9b82bde073323fcd7dd7f70bf8963e78318378251e8fea0bcd4eb200a9056"
+  ],
+  "protected_files_unchanged": true,
+  "training_commits": [
+    "298719418e9f5d11e4115ae24b69ae2f278d6785",
+    "bd605e2d5269290d5c7f22474300e7c5a5cf594d"
+  ],
+  "training_dirty_count": 695
+}
