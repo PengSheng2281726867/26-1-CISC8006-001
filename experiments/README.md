@@ -1,36 +1,33 @@
 # 实验索引 / Experiment index
 
-按研究问题选择实验，再进入其目录查看代码、配置、报告、结果、图表和测试。
-[机器可读文件归属](catalog.json)使用仓库根目录相对路径；目录链接在 GitHub 与本地克隆中均可浏览。
+项目按四条研究主线组织，八个实验目录实际位于对应组目录内。
+[机器可读目录与文件归属](catalog.json)使用仓库根目录相对路径。
 
-## 历史复现与消融 / Recovered experiments
-
-这些是 `pre-git experiment`，执行 commit 为 UNKNOWN；不要将导入提交当作实验执行版本。
-
-| 实验目录 | 研究问题 | 已有证据 |
+| 分组 | 内容 | 子实验 |
 | --- | --- | --- |
-| [historical_readme](historical_readme/README.md) | 最初 README 基线复现 | Recovered: 100 executions |
-| [early_gate](early_gate/README.md) | 早期 K2 门控与均匀融合对照 | Recovered: 120 executions |
-| [gate_sweep](gate_sweep/README.md) | K2–4 的 Dot / Uniform 对照 | Recovered: 360 executions |
-| [dot_mlp](dot_mlp/README.md) | MLP scorer 是否优于 Dot agreement | Recovered: 480 main + 24 superseded Pilot + 2 anchors |
-| [mlp_components](mlp_components/README.md) | 分别加入 LayerNorm、替换 GELU 的影响 | Recovered: 480 new LN/GELU executions |
+| [01_reproduction](01_reproduction/README.md) | 原版复现与门控验证 | [historical_readme](01_reproduction/historical_readme/README.md) · [early_gate](01_reproduction/early_gate/README.md) · [gate_sweep](01_reproduction/gate_sweep/README.md) |
+| [02_scorer_ablation](02_scorer_ablation/README.md) | 门控评分函数与组件消融 | [dot_mlp](02_scorer_ablation/dot_mlp/README.md) · [mlp_components](02_scorer_ablation/mlp_components/README.md) |
+| [03_hop_diagnostics](03_hop_diagnostics/README.md) | Hop 范围与贡献诊断 | [hop_scope_study](03_hop_diagnostics/hop_scope_study/README.md) · [loho_diagnostic](03_hop_diagnostics/loho_diagnostic/README.md) |
+| [04_distance_query](04_distance_query/README.md) | 严格距离聚合与 Query 对照 | [exact_distance_query](04_distance_query/exact_distance_query/README.md) |
 
-## 新实验 / Dedicated studies
+## 使用方式
 
-| 实验目录 | 研究问题 | 已完成范围 |
-| --- | --- | --- |
-| [hop_scope_study](hop_scope_study/README.md) | 固定传播到 5-hop，只改变门控范围 | Complete: 300 trainings + 300 inference-only masks |
-| [loho_diagnostic](loho_diagnostic/README.md) | Hop 权重是否对应删除该 Hop 的损失变化 | Complete: 180 checkpoints, validation + test; no new training |
-| [exact_distance_query](exact_distance_query/README.md) | 严格距离聚合与固定 H0 / Walk H4 Query | Complete: 720 primary trainings + 9 controls + 720 inference profiles |
+先进入组目录，再进入具体实验目录；各实验 README 列出代码、配置、协议、报告、结果、图表和测试。
+共享科学实现、公共工具、环境以及历史 registry/analysis/protocol 文件继续共用，避免复制与改写证据。
 
-## 文件组织规则 / File organization
+编号目录用于浏览，Python 模块名保持稳定，例如：
 
-- 每项实验目录的 `README.md` 是入口，`File map / 文件归属`列出其代码、配置、协议、结果、图表与测试。
-- 新实验各自使用 `src/`、`configs/`、`results/`、`tests/`，报告位于 `docs/` 或 `reports/`；图表沿用各实验的实际存放位置。
-- 历史实验目录提供归属索引，原文件保留在 `analysis/`、`protocols/`、根 `configs/`、`reports/` 等规范路径。共享源码与证据只维护一份，保证旧脚本、源码哈希和历史记录仍然有效。
-- `registry.csv` 的 1,566 条记录属于历史恢复批次，不包含后来三个新实验；新实验使用各自的覆盖文件和运行清单。Pilot 复用、共享对照、推理评估与独立训练不能相加当作新模型数量。
-- `configs/future*.json` 等是待执行方案，不能当作已完成结果；各实验的教师批准仍为 `NOT_VERIFIED`。
-- 私有数据、模型权重和逐节点产物存放在 Git 仓库之外；公开目录保存代码与汇总证据。
+```powershell
+python -B -m experiments.exact_distance_query.src.run full --plan
+python -B -m unittest discover -s experiments/03_hop_diagnostics/loho_diagnostic/tests -v
+```
+
+脚本和配置的文件路径采用新的分组路径。原 Python 模块入口由 `experiments/__init__.py` 的包搜索路径兼容，无需保留旧目录或复制源码。
+旧运行记录中的路径、哈希、日期和指标保持原样；其历史位置可通过[迁移映射](layout_migration.json)和原 Git 提交追溯。
+目录迁移和路径适配会改变当前源码指纹，旧私有运行不会被当作当前版本结果自动复用。教师批准状态仍为 `NOT_VERIFIED`。
+
+`registry.csv` 的 1,566 条记录属于历史恢复批次。新实验使用各自覆盖文件和运行清单；Pilot 复用、共享对照、推理评估与独立训练需分别计数。
+`configs/future*.json` 等仍是待执行方案；私有数据、权重与逐节点产物保存在仓库之外。
 
 ## 共享文件 / Shared files
 
@@ -41,4 +38,4 @@
 | Historical run and artifact evidence | [`experiments/registry.csv`](registry.csv)<br>[`experiments/recovered_runs.jsonl`](recovered_runs.jsonl)<br>[`experiments/artifacts_manifest.jsonl`](artifacts_manifest.jsonl)<br>[`experiments/recovery_manifest.json`](recovery_manifest.json)<br>[`experiments/source_mapping.json`](source_mapping.json)<br>[`experiments/data_manifest.json`](data_manifest.json)<br>[`experiments/paper_reference_values.json`](paper_reference_values.json)<br>[`experiments/sample_logs`](sample_logs) |
 | Course audits and historical report | [`docs`](../docs)<br>[`reports`](../reports)<br>[`archives`](../archives)<br>[`AI_USAGE.md`](../AI_USAGE.md)<br>[`CONTRIBUTIONS.md`](../CONTRIBUTIONS.md) |
 
-[Repository home / 返回项目首页](../README.md) · [本次整合与验证](../docs/REPOSITORY_ORGANIZATION.md)
+[Repository home / 返回项目首页](../README.md) · [目录迁移说明](../docs/EXPERIMENT_DIRECTORY_MIGRATION.md)

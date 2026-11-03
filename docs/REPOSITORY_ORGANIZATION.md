@@ -1,5 +1,8 @@
 # Experiment organization and integration record
 
+Current physical layout: [four-group migration](EXPERIMENT_DIRECTORY_MIGRATION.md).
+The record below describes the earlier flat navigation organization.
+
 ## Integration on 2026-11-03
 
 The user requested merging published experiment work and organizing files by
@@ -61,10 +64,10 @@ Scientific checks ran in the existing documented GAMMA environment
 | Check | Result |
 | --- | --- |
 | `python -B scripts/smoke_test.py` | 13 passed, including20 author-alignment subcases |
-| `python -B -m unittest discover -s experiments/hop_scope_study/tests -p validate.py -v` | 7 passed; discovery avoids overwriting historical acceptance JSON |
-| `python -B experiments/hop_scope_study/tests/test_analysis.py` | 4 passed |
-| `python -B -m unittest discover -s experiments/loho_diagnostic/tests -v` | 9 passed |
-| `python -B -m unittest discover -s experiments/exact_distance_query/tests -v` | 16 passed |
+| `python -B -m unittest discover -s experiments/03_hop_diagnostics/hop_scope_study/tests -p validate.py -v` | 7 passed; discovery avoids overwriting historical acceptance JSON |
+| `python -B experiments/03_hop_diagnostics/hop_scope_study/tests/test_analysis.py` | 4 passed |
+| `python -B -m unittest discover -s experiments/03_hop_diagnostics/loho_diagnostic/tests -v` | 9 passed |
+| `python -B -m unittest discover -s experiments/04_distance_query/exact_distance_query/tests -v` | 16 passed |
 | Exact-index publication audit before PR3 merge | Passed:410 files,0 findings |
 | Comparison with pre-merge main | Frozen source, adapters, historical records and both earlier studies unchanged |
 

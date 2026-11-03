@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "base_commit": "101b13406673fba50a9dd001bc1faa83f04a99da",
+  "directory_map": {
+    "experiments/historical_readme": "experiments/01_reproduction/historical_readme",
+    "experiments/early_gate": "experiments/01_reproduction/early_gate",
+    "experiments/gate_sweep": "experiments/01_reproduction/gate_sweep",
+    "experiments/dot_mlp": "experiments/02_scorer_ablation/dot_mlp",
+    "experiments/mlp_components": "experiments/02_scorer_ablation/mlp_components",
+    "experiments/hop_scope_study": "experiments/03_hop_diagnostics/hop_scope_study",
+    "experiments/loho_diagnostic": "experiments/03_hop_diagnostics/loho_diagnostic",
+    "experiments/exact_distance_query": "experiments/04_distance_query/exact_distance_query"
+  },
+  "groups": [
+    "01_reproduction",
+    "02_scorer_ablation",
+    "03_hop_diagnostics",
+    "04_distance_query"
+  ],
+  "stable_module_names": [
+    "experiments.hop_scope_study",
+    "experiments.loho_diagnostic",
+    "experiments.exact_distance_query"
+  ],
+  "evidence_policy": "Scientific result/config/protocol bytes and historical registry records retain original content. Paths in original receipts are historical; current paths are mapped by directory_map.",
+  "resume_policy": "Moved paths and updated adapter hashes produce new source fingerprints; do not rewrite historical fingerprints or bypass verification for old private runs."
+}

@@ -39,7 +39,7 @@ protected scientific source were preserved. No expensive new training authorized
 or started. Initial overstrict alpha-difference test assertion was corrected;
 frozen source changes and test-driven threshold selection for scientific effects
 were rejected. Human verification of scientific interpretation, attribution and
-teacher approval remains PENDING / NOT_VERIFIED. Evidence: experiments/loho_diagnostic/
+teacher approval remains PENDING / NOT_VERIFIED. Evidence: experiments/03_hop_diagnostics/loho_diagnostic/
 PROTOCOL.md, reports/IMPLEMENTATION_AUDIT.md and subsequent reports/evidence.
 
 LOHO completion: audited180 primary checkpoints plus60 historical weights;
@@ -48,7 +48,7 @@ statistics and68 figures, retained negative/undefined outcomes and real failure
 records. Test analysis followed committed validation/source freeze.9 LOHO unit
 tests and13 root smoke tests passed; no benchmark retraining. Agent implementation
 and reports are complete; human review remains PENDING, teacher NOT_VERIFIED.
-Public evidence: experiments/loho_diagnostic/reports/FINAL_REPORT.md and
+Public evidence: experiments/03_hop_diagnostics/loho_diagnostic/reports/FINAL_REPORT.md and
 EVIDENCE_MANIFEST.md. Publication is authorized by the user; PR merge is not.
 
 
@@ -119,3 +119,24 @@ separate clone. Historical publication receipts are retained as dated evidence.
 See docs/REPOSITORY_ORGANIZATION.md for scope and validation. User authorization
 to merge is not teacher approval or human scientific review; both remain
 NOT_VERIFIED. The organization commit and merge outcome are recorded in Git.
+
+## 2026-11-03: physically group experiment directories
+
+The user explicitly requested applying the four-group folder structure to the
+GitHub project. Codex moved all eight study directories beneath reproduction,
+scorer ablation, Hop diagnostics and distance/query groups. Group READMEs,
+catalog and live command/link paths now match the actual tree. Shared frozen
+research, historical registry and common tooling remain canonical.
+
+Three path/provenance adapters discover the repository root after nesting, and
+the experiments package search path preserves published Python module names.
+The package adapter is included in current training source fingerprints. No
+model/training algorithm changes or benchmark training were introduced. Published
+run evidence, configurations, protocol freezes and figures retain original bytes;
+historical paths/hashes are not rewritten. Current source fingerprints change
+and do not authorize silent reuse of old private runs. Migration regression,
+scientific suites, CLI plans and exact-index checks are the engineering evidence;
+see docs/EXPERIMENT_DIRECTORY_MIGRATION.md. User merge authorization is separate
+from teacher approval or human scientific review, which remain NOT_VERIFIED.
+
+Migration verification completed:52 tests passed; CLI plan counts720/300/180, external-working-directory imports,72 study catalog paths and258 Markdown targets passed. All273 frozen/evidence artifacts checked remain byte-identical. One incorrectly relocated missing-data test fixture was corrected back to external storage; no scientific behavior was changed to satisfy it.
