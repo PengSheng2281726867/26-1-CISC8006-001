@@ -1,0 +1,137 @@
+[
+  {
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 42,
+    "group": "G2",
+    "legacy_test_percent": 81.57894736842105,
+    "masked_test_percent": 81.57894736842105,
+    "legacy_minus_masked_pp": 0.0,
+    "run_id": "2026-10-30T050113159804+0000-8bd39423",
+    "model_sha256": "026b797544b211badd330ca57aef0b5bf458e57d19f74269a9598b3fae3d87f8",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    }
+  },
+  {
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 42,
+    "group": "G3",
+    "legacy_test_percent": 76.31578947368422,
+    "masked_test_percent": 71.05263157894737,
+    "legacy_minus_masked_pp": 5.263157894736848,
+    "run_id": "2026-10-30T050115911923+0000-0e473fde",
+    "model_sha256": "3268e2d6064786194dc4a6ad265889308c7382e0fb36821c482be7bde617bf04",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    }
+  },
+  {
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 42,
+    "group": "G1",
+    "legacy_test_percent": 76.31578947368422,
+    "masked_test_percent": 76.31578947368422,
+    "legacy_minus_masked_pp": 0.0,
+    "run_id": "2026-10-30T050119480989+0000-9a78426a",
+    "model_sha256": "93e8d8e738c086754a8b8a46b56ce9f0202bf617c8c0e7043f38d0e2d14e95a8",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 3.814697265625e-06,
+      "alpha_max_abs": 2.384185791015625e-07,
+      "gradient_max_abs": 3.637978807091713e-11
+    }
+  },
+  {
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 43,
+    "group": "G3",
+    "legacy_test_percent": 68.42105263157895,
+    "masked_test_percent": 73.68421052631578,
+    "legacy_minus_masked_pp": -5.263157894736836,
+    "run_id": "2026-10-30T050122028872+0000-31b2f5d2",
+    "model_sha256": "915ce5a8c6562d25fff681cb7ec4396ab0b79b975285b1fd3d4849e47fd79154",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    }
+  },
+  {
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 43,
+    "group": "G1",
+    "legacy_test_percent": 73.68421052631578,
+    "masked_test_percent": 81.57894736842105,
+    "legacy_minus_masked_pp": -7.8947368421052655,
+    "run_id": "2026-10-30T050124130807+0000-5a6b9df0",
+    "model_sha256": "7274f06445160fbe5ff4c32d253fbcf6b21cb2d12ecd9bf44ec53f388b976969",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 1.9073486328125e-06,
+      "alpha_max_abs": 2.384185791015625e-07,
+      "gradient_max_abs": 9.487848728895187e-09
+    }
+  },
+  {
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 43,
+    "group": "G2",
+    "legacy_test_percent": 76.31578947368422,
+    "masked_test_percent": 76.31578947368422,
+    "legacy_minus_masked_pp": 0.0,
+    "run_id": "2026-10-30T050126163150+0000-bfd76425",
+    "model_sha256": "589d8d89a2a34734b69e4df7b88f9aed467ef8777bede681456f7e4b06a02b0c",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    }
+  },
+  {
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 44,
+    "group": "G1",
+    "legacy_test_percent": 84.21052631578947,
+    "masked_test_percent": 81.57894736842105,
+    "legacy_minus_masked_pp": 2.631578947368418,
+    "run_id": "2026-10-30T050128107446+0000-e5075300",
+    "model_sha256": "0026c8fba90ab5e180b7088f080845f0172f38c8c56be836d24d8f1248121790",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 1.9073486328125e-06,
+      "alpha_max_abs": 2.980232238769531e-07,
+      "gradient_max_abs": 2.3283064365386963e-10
+    }
+  },
+  {
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 44,
+    "group": "G2",
+    "legacy_test_percent": 81.57894736842105,
+    "masked_test_percent": 81.57894736842105,
+    "legacy_minus_masked_pp": 0.0,
+    "run_id": "2026-10-30T050130428982+0000-a0d14c9f",
+    "model_sha256": "45411cdd1829912d06909954dcbbf7174a65790342d74b889d60d58aa580c596",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    }
+  },
+  {
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 44,
+    "group": "G3",
+    "legacy_test_percent": 65.78947368421053,
+    "masked_test_percent": 68.42105263157895,
+    "legacy_minus_masked_pp": -2.631578947368418,
+    "run_id": "2026-10-30T050132920106+0000-4aecc4b4",
+    "model_sha256": "710c7f9d44d9540a69874a98f16b8dc49278af21dce71a59635f07b54985f205",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    }
+  }
+]

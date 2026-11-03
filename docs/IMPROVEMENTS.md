@@ -101,3 +101,11 @@ A future sparse per-node budget with mandatory0-hop, nested validation and multi
 optimization seeds is **PROPOSED ONLY**. No MLP scorer, attention, extra GNN layer
 or new loss was added in this study. Historical I1-I3 and frozen baselines remain
 unchanged; new K5/x5 is solely this experiment's matched full-hop control.
+
+## I5 - Exact-distance and Query-gating (2026-10-30)
+
+User-authorized technical matrix complete:720 primary retrainings including48
+Pilot/4 Smoke cells reused without duplication;9 bounded empty-policy controls.
+Four matched-parameter arms preserve frozen source; no universal benefit claimed.
+Query scale,0-hop preference, shell size and empty-hop policy limit interpretation.
+Teacher approval NOT_VERIFIED. [Protocol, all signs and results](../experiments/exact_distance_query/README.md).

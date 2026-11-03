@@ -1,0 +1,84 @@
+{
+  "utc": "2026-10-30T04:48:21.687446+00:00",
+  "label_usage": false,
+  "topologies": [
+    {
+      "dataset": "Texas",
+      "nodes": 183,
+      "raw_edges": 325,
+      "unique_directed_edges": 325,
+      "duplicate_edges": 0,
+      "self_loop_edges": 16,
+      "reciprocal_unique_edge_fraction": 0.23384615384615384,
+      "no_incoming_fraction": 0.19672131147540983,
+      "no_outgoing_fraction": 0.3989071038251366,
+      "edge_order_sha256": "7ddc36b093a58975ffde22b9028a2a8591d5fa5c58e93dd3c0544157aebb266c",
+      "operator": "source_to_target add; no symmetrization"
+    },
+    {
+      "dataset": "Wisconsin",
+      "nodes": 251,
+      "raw_edges": 515,
+      "unique_directed_edges": 515,
+      "duplicate_edges": 0,
+      "self_loop_edges": 16,
+      "reciprocal_unique_edge_fraction": 0.22135922330097088,
+      "no_incoming_fraction": 0.16733067729083664,
+      "no_outgoing_fraction": 0.32270916334661354,
+      "edge_order_sha256": "768277b254390b79cf72e4b8a7995240cd94496d143e19505abae945d815bcc0",
+      "operator": "source_to_target add; no symmetrization"
+    },
+    {
+      "dataset": "Cornell",
+      "nodes": 183,
+      "raw_edges": 298,
+      "unique_directed_edges": 298,
+      "duplicate_edges": 0,
+      "self_loop_edges": 3,
+      "reciprocal_unique_edge_fraction": 0.13087248322147652,
+      "no_incoming_fraction": 0.17486338797814208,
+      "no_outgoing_fraction": 0.47540983606557374,
+      "edge_order_sha256": "396b1c04b2c346dfe1bc82c2aed840b38d57abf73ffd3b9fca33ea6b04229676",
+      "operator": "source_to_target add; no symmetrization"
+    },
+    {
+      "dataset": "Chameleon",
+      "nodes": 2277,
+      "raw_edges": 36101,
+      "unique_directed_edges": 36101,
+      "duplicate_edges": 0,
+      "self_loop_edges": 50,
+      "reciprocal_unique_edge_fraction": 0.26065759951247885,
+      "no_incoming_fraction": 0.6205533596837944,
+      "no_outgoing_fraction": 0.0,
+      "edge_order_sha256": "c68ee286cfc0abfbe31eef06e1a695e9480c02b5c92d537f7eb2fddb6d335dee",
+      "operator": "source_to_target add; no symmetrization"
+    },
+    {
+      "dataset": "Squirrel",
+      "nodes": 5201,
+      "raw_edges": 217073,
+      "unique_directed_edges": 217073,
+      "duplicate_edges": 0,
+      "self_loop_edges": 140,
+      "reciprocal_unique_edge_fraction": 0.17183159582260346,
+      "no_incoming_fraction": 0.576043068640646,
+      "no_outgoing_fraction": 0.0,
+      "edge_order_sha256": "48f533f67a85ce98b962cdabd192cafcac08151e86bc3b6a46b3a249a37570e5",
+      "operator": "source_to_target add; no symmetrization"
+    },
+    {
+      "dataset": "Actor",
+      "nodes": 7600,
+      "raw_edges": 30019,
+      "unique_directed_edges": 30019,
+      "duplicate_edges": 0,
+      "self_loop_edges": 93,
+      "reciprocal_unique_edge_fraction": 0.22076018521602986,
+      "no_incoming_fraction": 0.2942105263157895,
+      "no_outgoing_fraction": 0.08368421052631579,
+      "edge_order_sha256": "bf1aae322666e60a740c88aec8d072d46679b100fc1a0843497ca56694914147",
+      "operator": "source_to_target add; no symmetrization"
+    }
+  ]
+}

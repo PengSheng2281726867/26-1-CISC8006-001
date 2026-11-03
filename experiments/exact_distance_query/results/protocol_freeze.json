@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-30T04:19:18.239118+00:00",
+  "before_real_training": true,
+  "teacher_approval": "NOT_VERIFIED",
+  "base_sha": "5e7eb902d32bda4665b5235582dc59eebf556178",
+  "files": {
+    "PROTOCOL.md": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "configs/empty_control.json": "5ad733a6e26907e1bf6a13acaedfceb04a2221745de784f2edbe036bc5c99ea8",
+    "configs/full.json": "e0c851321720183a83bc320744781b173373ca754a00addbf70b4577d15c1d19",
+    "configs/pilot.json": "0eea8cd791c151d98ce6b0d791de009089aeb57a391d9992491dc5060a1380fe",
+    "configs/smoke.json": "67f8bcf41ae1d0edf43736bd977223e0f715344eb92c3dbe2d88e871d5cdd840"
+  }
+}

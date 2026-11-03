@@ -1,0 +1,342 @@
+{
+  "phase": "pilot",
+  "count": 48,
+  "units": [
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 42,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 42,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 42,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 42,
+      "group": "G3",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 43,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 43,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 43,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 43,
+      "group": "G3",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 44,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 44,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 44,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 0,
+      "seed": 44,
+      "group": "G3",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 42,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 42,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 42,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 42,
+      "group": "G3",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 43,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 43,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 43,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 43,
+      "group": "G3",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 44,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 44,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 44,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Chameleon",
+      "split": 1,
+      "seed": 44,
+      "group": "G3",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 42,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 42,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 42,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 42,
+      "group": "G3",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 43,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 43,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 43,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 43,
+      "group": "G3",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 44,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 44,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 44,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 0,
+      "seed": 44,
+      "group": "G3",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 42,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 42,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 42,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 42,
+      "group": "G3",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 43,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 43,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 43,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 43,
+      "group": "G3",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 44,
+      "group": "G0",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 44,
+      "group": "G1",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 44,
+      "group": "G2",
+      "empty_policy": "mask"
+    },
+    {
+      "dataset": "Actor",
+      "split": 1,
+      "seed": 44,
+      "group": "G3",
+      "empty_policy": "mask"
+    }
+  ]
+}

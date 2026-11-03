@@ -1,0 +1,695 @@
+[
+  {
+    "run_id": "2026-10-30T050113159804+0000-8bd39423",
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 42,
+    "group": "G2",
+    "empty_policy": "legacy",
+    "git": {
+      "commit": "bd605e2d5269290d5c7f22474300e7c5a5cf594d",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "85ecfb838d1f955a45b75c916be8bdca80d0cd0d2984e9ee8e076a2427abb4e0",
+    "fingerprint": "fabea6352d7557ed6375fca0ed2f75f907731e8000601b35eace37fa78248445",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T05:01:13.159804+00:00",
+    "ended_utc": "2026-10-30T05:01:15.891651+00:00",
+    "init_sha256": "b4bb75e0614773db27627023b12e12ae22ca648d00c370f6864a2a22a772ccc5",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "c10582737f700397cfc3dd38a787735f9c84af2893d97e20da948a19afe95419",
+    "split_sha256": "84666aa386299afa5826394b058a3dacad15f75c47bb63da0a44fbb9d52deefb",
+    "split_array_sha256": "a4c1a1140c86215fa63b68fc3a71131b2f0d5154cc22c31a486164b91a91fa03",
+    "trained_state_sha256": "f9b91425aeb112b32030e8d6850ac10da768d0d4517c03b7b7e45b29bc6b64d5",
+    "artifacts": {
+      "model.pt": "026b797544b211badd330ca57aef0b5bf458e57d19f74269a9598b3fae3d87f8",
+      "epochs.csv": "bcc28679e761ef83bbfc3caca6cf92225deaf1db6c2378359422f6c6a3736a76",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "91dea7fcd6a02d91e5071b5f0d5f9bad297016b9b54d8cab0c568afd376edc0a"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    "test_accuracy": 0.8157894736842105,
+    "val_accuracy": 0.9444444444444444,
+    "hop_weights_mean": [
+      0.9985153079032898,
+      3.4321463317610323e-05,
+      0.0010065488750115037,
+      0.0004409269313327968,
+      2.8977747206226923e-06
+    ],
+    "gate_entropy_mean": 0.0064134178683161736
+  },
+  {
+    "run_id": "2026-10-30T050115911923+0000-0e473fde",
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 42,
+    "group": "G3",
+    "empty_policy": "legacy",
+    "git": {
+      "commit": "bd605e2d5269290d5c7f22474300e7c5a5cf594d",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "85ecfb838d1f955a45b75c916be8bdca80d0cd0d2984e9ee8e076a2427abb4e0",
+    "fingerprint": "fabea6352d7557ed6375fca0ed2f75f907731e8000601b35eace37fa78248445",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T05:01:15.911923+00:00",
+    "ended_utc": "2026-10-30T05:01:19.471364+00:00",
+    "init_sha256": "b4bb75e0614773db27627023b12e12ae22ca648d00c370f6864a2a22a772ccc5",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "c10582737f700397cfc3dd38a787735f9c84af2893d97e20da948a19afe95419",
+    "split_sha256": "84666aa386299afa5826394b058a3dacad15f75c47bb63da0a44fbb9d52deefb",
+    "split_array_sha256": "a4c1a1140c86215fa63b68fc3a71131b2f0d5154cc22c31a486164b91a91fa03",
+    "trained_state_sha256": "96adec89894ee1a43ac036e53dedf8dcff054a4c106c7b0d0e2a2c02124b437d",
+    "artifacts": {
+      "model.pt": "3268e2d6064786194dc4a6ad265889308c7382e0fb36821c482be7bde617bf04",
+      "epochs.csv": "c8efe83908cbc4066c4c69d529cf38af0e4ddc0360fbb26386e593bc30e96f1f",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "6ddc63601e86323be325f8c527629e8e8a3c2c3375edf285edf9477d9975a4ca"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    },
+    "test_accuracy": 0.7631578947368421,
+    "val_accuracy": 0.9444444444444444,
+    "hop_weights_mean": [
+      0.7743746042251587,
+      0.06228426843881607,
+      0.05302443727850914,
+      0.04698774218559265,
+      0.06332886219024658
+    ],
+    "gate_entropy_mean": 0.6208316087722778
+  },
+  {
+    "run_id": "2026-10-30T050119480989+0000-9a78426a",
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 42,
+    "group": "G1",
+    "empty_policy": "legacy",
+    "git": {
+      "commit": "bd605e2d5269290d5c7f22474300e7c5a5cf594d",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "85ecfb838d1f955a45b75c916be8bdca80d0cd0d2984e9ee8e076a2427abb4e0",
+    "fingerprint": "fabea6352d7557ed6375fca0ed2f75f907731e8000601b35eace37fa78248445",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T05:01:19.480989+00:00",
+    "ended_utc": "2026-10-30T05:01:22.014846+00:00",
+    "init_sha256": "b4bb75e0614773db27627023b12e12ae22ca648d00c370f6864a2a22a772ccc5",
+    "cpu_rng_sha256": "cbacbbb076df5494091f448604e1b82cb80017c045a8cf84ad2f76fabf4f4575",
+    "cuda_rng_sha256": "b8f8e87fce06e64f4da9e56bc38e10a14b8cc601620a41bdc8a85030c3bbe3d4",
+    "graph_tensor_sha256": "c10582737f700397cfc3dd38a787735f9c84af2893d97e20da948a19afe95419",
+    "split_sha256": "84666aa386299afa5826394b058a3dacad15f75c47bb63da0a44fbb9d52deefb",
+    "split_array_sha256": "a4c1a1140c86215fa63b68fc3a71131b2f0d5154cc22c31a486164b91a91fa03",
+    "trained_state_sha256": "50ebda5258c94bc8bac2d712b5b2200deb88069aac0221dbcda9b617c9f7aabe",
+    "artifacts": {
+      "model.pt": "93e8d8e738c086754a8b8a46b56ce9f0202bf617c8c0e7043f38d0e2d14e95a8",
+      "epochs.csv": "08f4cc5a9b3a7ecabbf184a557cfa870035bdc18f54f1584a72a3dfe097d9f5f",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "caa66933062f054525f0e0c9e697dc97870c032cae272e1f2b98ba357f76884d"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 3.814697265625e-06,
+      "alpha_max_abs": 2.384185791015625e-07,
+      "gradient_max_abs": 3.637978807091713e-11
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    "test_accuracy": 0.7631578947368421,
+    "val_accuracy": 0.9444444444444444,
+    "hop_weights_mean": [
+      0.8722077012062073,
+      0.06708471477031708,
+      0.022321466356515884,
+      0.019384099170565605,
+      0.019001983106136322
+    ],
+    "gate_entropy_mean": 0.5018839240074158
+  },
+  {
+    "run_id": "2026-10-30T050122028872+0000-31b2f5d2",
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 43,
+    "group": "G3",
+    "empty_policy": "legacy",
+    "git": {
+      "commit": "bd605e2d5269290d5c7f22474300e7c5a5cf594d",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "85ecfb838d1f955a45b75c916be8bdca80d0cd0d2984e9ee8e076a2427abb4e0",
+    "fingerprint": "fabea6352d7557ed6375fca0ed2f75f907731e8000601b35eace37fa78248445",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T05:01:22.028872+00:00",
+    "ended_utc": "2026-10-30T05:01:24.122141+00:00",
+    "init_sha256": "713dda82c2a89a2b129c7698b4fb1f1e96164ba21ff3d44c4fba055f59cbd901",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "c10582737f700397cfc3dd38a787735f9c84af2893d97e20da948a19afe95419",
+    "split_sha256": "84666aa386299afa5826394b058a3dacad15f75c47bb63da0a44fbb9d52deefb",
+    "split_array_sha256": "a4c1a1140c86215fa63b68fc3a71131b2f0d5154cc22c31a486164b91a91fa03",
+    "trained_state_sha256": "3158654675375c22a34a65eb5147d37545f7d66ca77e4a852cd0f2f77ed6ab46",
+    "artifacts": {
+      "model.pt": "915ce5a8c6562d25fff681cb7ec4396ab0b79b975285b1fd3d4849e47fd79154",
+      "epochs.csv": "771826927a127e76bfb1228973e42bbb8d4ebc14bea2f3ca83871d291fb02fab",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "98ce55762f4741aeb3f4122872fc7e7d65097c8bd6d5c5811a711cf4da7e3169"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    },
+    "test_accuracy": 0.6842105263157895,
+    "val_accuracy": 0.8888888888888888,
+    "hop_weights_mean": [
+      0.6397899389266968,
+      0.0739751085639,
+      0.08595746010541916,
+      0.0871829092502594,
+      0.11309454590082169
+    ],
+    "gate_entropy_mean": 0.8614970445632935
+  },
+  {
+    "run_id": "2026-10-30T050124130807+0000-5a6b9df0",
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 43,
+    "group": "G1",
+    "empty_policy": "legacy",
+    "git": {
+      "commit": "bd605e2d5269290d5c7f22474300e7c5a5cf594d",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "85ecfb838d1f955a45b75c916be8bdca80d0cd0d2984e9ee8e076a2427abb4e0",
+    "fingerprint": "fabea6352d7557ed6375fca0ed2f75f907731e8000601b35eace37fa78248445",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T05:01:24.130807+00:00",
+    "ended_utc": "2026-10-30T05:01:26.149518+00:00",
+    "init_sha256": "713dda82c2a89a2b129c7698b4fb1f1e96164ba21ff3d44c4fba055f59cbd901",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "c10582737f700397cfc3dd38a787735f9c84af2893d97e20da948a19afe95419",
+    "split_sha256": "84666aa386299afa5826394b058a3dacad15f75c47bb63da0a44fbb9d52deefb",
+    "split_array_sha256": "a4c1a1140c86215fa63b68fc3a71131b2f0d5154cc22c31a486164b91a91fa03",
+    "trained_state_sha256": "7f04487da52253b4907b1ab9b2863e79b6aa9baa7d4a422d0d100726a84b34ce",
+    "artifacts": {
+      "model.pt": "7274f06445160fbe5ff4c32d253fbcf6b21cb2d12ecd9bf44ec53f388b976969",
+      "epochs.csv": "0363f05527e6994144270d5f60702bb7785e5837515bf33c8dce0eff75a565d7",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "9e34583226882cb3fc0e4f785049c6c3d783cdd894d985f41cba98fcfcd59582"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 1.9073486328125e-06,
+      "alpha_max_abs": 2.384185791015625e-07,
+      "gradient_max_abs": 9.487848728895187e-09
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    "test_accuracy": 0.7368421052631579,
+    "val_accuracy": 0.9166666666666666,
+    "hop_weights_mean": [
+      0.8390951156616211,
+      0.07064370065927505,
+      0.03222724050283432,
+      0.02988559938967228,
+      0.028148265555500984
+    ],
+    "gate_entropy_mean": 0.6148343086242676
+  },
+  {
+    "run_id": "2026-10-30T050126163150+0000-bfd76425",
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 43,
+    "group": "G2",
+    "empty_policy": "legacy",
+    "git": {
+      "commit": "bd605e2d5269290d5c7f22474300e7c5a5cf594d",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "85ecfb838d1f955a45b75c916be8bdca80d0cd0d2984e9ee8e076a2427abb4e0",
+    "fingerprint": "fabea6352d7557ed6375fca0ed2f75f907731e8000601b35eace37fa78248445",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T05:01:26.163150+00:00",
+    "ended_utc": "2026-10-30T05:01:28.087740+00:00",
+    "init_sha256": "713dda82c2a89a2b129c7698b4fb1f1e96164ba21ff3d44c4fba055f59cbd901",
+    "cpu_rng_sha256": "85f94bc55919652c296c17bcbc31a4349515da77bbd0d44a9037b8c30e758640",
+    "cuda_rng_sha256": "d767bcd53a8aedcd6941d7fdd1acb2f7803157c783174f69f23010d765444a00",
+    "graph_tensor_sha256": "c10582737f700397cfc3dd38a787735f9c84af2893d97e20da948a19afe95419",
+    "split_sha256": "84666aa386299afa5826394b058a3dacad15f75c47bb63da0a44fbb9d52deefb",
+    "split_array_sha256": "a4c1a1140c86215fa63b68fc3a71131b2f0d5154cc22c31a486164b91a91fa03",
+    "trained_state_sha256": "ead4891a4be0308956108a19310a9c788cb5a38f8e582c86d735c7edf26ed426",
+    "artifacts": {
+      "model.pt": "589d8d89a2a34734b69e4df7b88f9aed467ef8777bede681456f7e4b06a02b0c",
+      "epochs.csv": "2c621a89ef556751cc409fd7e501972e9c8c4eb60d4952df93893610c7b416d9",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "7c2dffc001cef2ba38383d7e9d659d3bbdb03bbeac16ffafef687968477cbd19"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    "test_accuracy": 0.7631578947368421,
+    "val_accuracy": 0.9444444444444444,
+    "hop_weights_mean": [
+      0.9998694062232971,
+      8.557388468943827e-07,
+      2.4001312340260483e-05,
+      3.4364991279289825e-06,
+      0.000102327270724345
+    ],
+    "gate_entropy_mean": 0.0008581715519540012
+  },
+  {
+    "run_id": "2026-10-30T050128107446+0000-e5075300",
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 44,
+    "group": "G1",
+    "empty_policy": "legacy",
+    "git": {
+      "commit": "bd605e2d5269290d5c7f22474300e7c5a5cf594d",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "85ecfb838d1f955a45b75c916be8bdca80d0cd0d2984e9ee8e076a2427abb4e0",
+    "fingerprint": "fabea6352d7557ed6375fca0ed2f75f907731e8000601b35eace37fa78248445",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T05:01:28.107446+00:00",
+    "ended_utc": "2026-10-30T05:01:30.414937+00:00",
+    "init_sha256": "2740fa56f7d8ccf55835842c6ed9582e659ed499b232750a211b562eabe403c4",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "c10582737f700397cfc3dd38a787735f9c84af2893d97e20da948a19afe95419",
+    "split_sha256": "84666aa386299afa5826394b058a3dacad15f75c47bb63da0a44fbb9d52deefb",
+    "split_array_sha256": "a4c1a1140c86215fa63b68fc3a71131b2f0d5154cc22c31a486164b91a91fa03",
+    "trained_state_sha256": "d7dcd5ed7dabc86fdd163aeb371579a12ef327e19c98a932e6e3f83eeeec4233",
+    "artifacts": {
+      "model.pt": "0026c8fba90ab5e180b7088f080845f0172f38c8c56be836d24d8f1248121790",
+      "epochs.csv": "3694ce440e768a4990e93516af223df62b5047f738d47f3929c0faad94539987",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "288a39d33bbbbfc0efef08dff8f1aa2815c0f8d9b7a2e7247f8199e6fdfd6350"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "passed",
+      "output_max_abs": 1.9073486328125e-06,
+      "alpha_max_abs": 2.980232238769531e-07,
+      "gradient_max_abs": 2.3283064365386963e-10
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    "test_accuracy": 0.8421052631578947,
+    "val_accuracy": 0.9444444444444444,
+    "hop_weights_mean": [
+      0.9000349044799805,
+      0.03218135982751846,
+      0.02460017427802086,
+      0.02179008536040783,
+      0.02139337733387947
+    ],
+    "gate_entropy_mean": 0.45132777094841003
+  },
+  {
+    "run_id": "2026-10-30T050130428982+0000-a0d14c9f",
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 44,
+    "group": "G2",
+    "empty_policy": "legacy",
+    "git": {
+      "commit": "bd605e2d5269290d5c7f22474300e7c5a5cf594d",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "85ecfb838d1f955a45b75c916be8bdca80d0cd0d2984e9ee8e076a2427abb4e0",
+    "fingerprint": "fabea6352d7557ed6375fca0ed2f75f907731e8000601b35eace37fa78248445",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T05:01:30.428982+00:00",
+    "ended_utc": "2026-10-30T05:01:32.907261+00:00",
+    "init_sha256": "2740fa56f7d8ccf55835842c6ed9582e659ed499b232750a211b562eabe403c4",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "c10582737f700397cfc3dd38a787735f9c84af2893d97e20da948a19afe95419",
+    "split_sha256": "84666aa386299afa5826394b058a3dacad15f75c47bb63da0a44fbb9d52deefb",
+    "split_array_sha256": "a4c1a1140c86215fa63b68fc3a71131b2f0d5154cc22c31a486164b91a91fa03",
+    "trained_state_sha256": "044167540d24e69da2eea94b73f862e1f9bbc34f0d17f71ca7d6656b1a04db55",
+    "artifacts": {
+      "model.pt": "45411cdd1829912d06909954dcbbf7174a65790342d74b889d60d58aa580c596",
+      "epochs.csv": "1b0b145f583671c7e961ede694b7b020b2f6ce70672dff1aa15bb70856e1f7dc",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "9defa06889ca8282f5da9566fc2616b00e5b25c034a227412547ebc0eb4c96c1"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 0,
+      "shell_sparse_mm": 4
+    },
+    "test_accuracy": 0.8157894736842105,
+    "val_accuracy": 0.9444444444444444,
+    "hop_weights_mean": [
+      0.9999784827232361,
+      2.4645191842864733e-06,
+      1.9002414774149656e-05,
+      2.762736528438836e-08,
+      3.147937466252415e-10
+    ],
+    "gate_entropy_mean": 0.00018511929374653846
+  },
+  {
+    "run_id": "2026-10-30T050132920106+0000-4aecc4b4",
+    "dataset": "Texas",
+    "split": 0,
+    "seed": 44,
+    "group": "G3",
+    "empty_policy": "legacy",
+    "git": {
+      "commit": "bd605e2d5269290d5c7f22474300e7c5a5cf594d",
+      "branch": "exp/exact-distance-query",
+      "dirty": true
+    },
+    "sources": {
+      "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+      "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+      "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+      "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+      "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+      "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+      "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+      "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+      "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+      "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+      "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+      "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+    },
+    "protocol_sha256": "7302605e4b0466909f6ae2496e2d2b1672b93551762147c20eadc4e7f3c0cf56",
+    "config_sha256": "85ecfb838d1f955a45b75c916be8bdca80d0cd0d2984e9ee8e076a2427abb4e0",
+    "fingerprint": "fabea6352d7557ed6375fca0ed2f75f907731e8000601b35eace37fa78248445",
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "torch": "2.8.0+cu128",
+      "pyg": "2.7.0",
+      "numpy": "2.5.2",
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "threads": 1,
+      "deterministic": true,
+      "tf32": false
+    },
+    "started_utc": "2026-10-30T05:01:32.920106+00:00",
+    "ended_utc": "2026-10-30T05:01:34.895390+00:00",
+    "init_sha256": "2740fa56f7d8ccf55835842c6ed9582e659ed499b232750a211b562eabe403c4",
+    "cpu_rng_sha256": "1ae26a38782fd97da643f064a56c308aa9f5fa2f7651abee6c4eb634bfd19e32",
+    "cuda_rng_sha256": "c110c8f02caad6985464b189a00f6d985c53f742764aced5790f02c4bf6c033f",
+    "graph_tensor_sha256": "c10582737f700397cfc3dd38a787735f9c84af2893d97e20da948a19afe95419",
+    "split_sha256": "84666aa386299afa5826394b058a3dacad15f75c47bb63da0a44fbb9d52deefb",
+    "split_array_sha256": "a4c1a1140c86215fa63b68fc3a71131b2f0d5154cc22c31a486164b91a91fa03",
+    "trained_state_sha256": "3d6e533a46888f8f66b49d0e27f6c4a165405307efd07f97123e6d06ca205112",
+    "artifacts": {
+      "model.pt": "710c7f9d44d9540a69874a98f16b8dc49278af21dce71a59635f07b54985f205",
+      "epochs.csv": "be2f2cebbb5d8fd0229696ca80fe4eb9cbe019cc87fba4b03b53bad806378bd7",
+      "terminal.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metadata.json": "8f3967d5e2f2e9db1a1130e7741af814623c457957f77bccc5a90aab2d353b79"
+    },
+    "checkpoint_reload": "passed",
+    "checkpoint_equivalence": {
+      "status": "not_applicable"
+    },
+    "operations": {
+      "projections": 1,
+      "walk_propagations": 4,
+      "shell_sparse_mm": 4
+    },
+    "test_accuracy": 0.6578947368421053,
+    "val_accuracy": 0.8888888888888888,
+    "hop_weights_mean": [
+      0.649921715259552,
+      0.09713694453239441,
+      0.08105791360139847,
+      0.07416309416294098,
+      0.09772036969661713
+    ],
+    "gate_entropy_mean": 0.8265577554702759
+  }
+]

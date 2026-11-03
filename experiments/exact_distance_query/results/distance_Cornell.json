@@ -1,0 +1,49 @@
+{
+  "version": "reverse-bfs-csr-v1",
+  "edge_order_sha256": "396b1c04b2c346dfe1bc82c2aed840b38d57abf73ffd3b9fca33ea6b04229676",
+  "nodes": 183,
+  "K": 4,
+  "topology_sha256": "913fe8c178e1e893d4d864c64fa91c43965439f979b401c5fd9fc639e9923c6e",
+  "construction_seconds": 0.001132400007918477,
+  "shells": [
+    {
+      "p": 0,
+      "nnz": 183,
+      "mean_neighbors": 1.0,
+      "max_neighbors": 1,
+      "empty_fraction": 0.0
+    },
+    {
+      "p": 1,
+      "nnz": 295,
+      "mean_neighbors": 1.6120218579234973,
+      "max_neighbors": 8,
+      "empty_fraction": 0.18579234972677597
+    },
+    {
+      "p": 2,
+      "nnz": 232,
+      "mean_neighbors": 1.2677595628415301,
+      "max_neighbors": 7,
+      "empty_fraction": 0.26229508196721313
+    },
+    {
+      "p": 3,
+      "nnz": 110,
+      "mean_neighbors": 0.6010928961748634,
+      "max_neighbors": 7,
+      "empty_fraction": 0.726775956284153
+    },
+    {
+      "p": 4,
+      "nnz": 53,
+      "mean_neighbors": 0.2896174863387978,
+      "max_neighbors": 5,
+      "empty_fraction": 0.8524590163934426
+    }
+  ],
+  "csr_storage_bytes": 17836,
+  "shell_content_sha256": "da78f8cfecc1fb66f9b8ce983e2e4271c90a04984a8160ef11cfb9b8bb5aaf71",
+  "cache_sha256": "8259f94f8e920c5d42a626acb453c9fb76ac7b8dfb17d504b76bf16dbaba5f98",
+  "cache_bytes": 16766
+}

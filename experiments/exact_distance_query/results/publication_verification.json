@@ -1,0 +1,38 @@
+{
+  "verified_utc": "2026-10-30T07:45:42.823295+00:00",
+  "status": "PUBLISHED",
+  "scientific_commit_sha": "be66778841fa2596dda3f9503df1ef82d973e12f",
+  "base_main_sha": "5e7eb902d32bda4665b5235582dc59eebf556178",
+  "branch": "exp/exact-distance-query",
+  "branch_url": "https://github.com/PengSheng2281726867/26-1-CISC8006-001/tree/exp/exact-distance-query",
+  "pr_url": "https://github.com/PengSheng2281726867/26-1-CISC8006-001/pull/3",
+  "pr_number": 3,
+  "pr_state": "open",
+  "merged": false,
+  "remote_head_matches_local": true,
+  "main_unchanged": true,
+  "force_push": false,
+  "teacher_approval": "NOT_VERIFIED",
+  "human_review": "NOT_VERIFIED",
+  "checks_before_scientific_commit_and_push": {
+    "checks": [
+      {
+        "command": "python -B scripts/smoke_test.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python -B -m unittest discover -s experiments/exact_distance_query/tests -v",
+        "exit_code": 0
+      }
+    ],
+    "publication": {
+      "status": "passed",
+      "files": 409,
+      "bytes": 32672127,
+      "findings": [],
+      "check": "Git index content, not just working tree",
+      "credentials_printed": false
+    }
+  },
+  "verification_scope": "Scientific commit and PR verified; subsequent provenance-only commit records this evidence without claiming a self-referential head SHA."
+}

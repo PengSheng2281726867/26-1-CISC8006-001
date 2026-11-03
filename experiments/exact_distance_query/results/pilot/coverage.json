@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-30T04:27:41.743808+00:00",
+  "status": "FULL",
+  "complete": 48,
+  "expected": 48,
+  "missing": 0,
+  "failed_attempts": 0,
+  "stale_attempts": [],
+  "teacher_approval": "NOT_VERIFIED",
+  "pairing": "passed",
+  "empty_controls": 0,
+  "trained_from_random_initialization": true,
+  "smoke_reused": 0,
+  "pilot_reused": 48,
+  "checkpoint_reload": "all passed",
+  "real_G0_G1_equivalence": "all completed G0/G1 forward/used_alpha/parameter gradients passed"
+}

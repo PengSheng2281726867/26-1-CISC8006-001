@@ -1,0 +1,41 @@
+{
+  "started_utc": "2026-10-30T05:01:53.344786+00:00",
+  "ended_utc": "2026-10-30T05:03:44.985126+00:00",
+  "count": 720,
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "torch": "2.8.0+cu128",
+    "pyg": "2.7.0",
+    "numpy": "2.5.2",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "threads": 1,
+    "deterministic": true,
+    "tf32": false
+  },
+  "git": {
+    "commit": "bd605e2d5269290d5c7f22474300e7c5a5cf594d",
+    "branch": "exp/exact-distance-query",
+    "dirty": true
+  },
+  "sources": {
+    "experiments/exact_distance_query/src/common.py": "35becc461b2adfad3308f0ba462b7e7ca6d55012ca170674440cffee41dc8b61",
+    "experiments/exact_distance_query/src/distance.py": "826d1e43aadd5944056f02714e1e5b949914461eb3575f31825148d411c34614",
+    "experiments/exact_distance_query/src/model.py": "4b131cc8ed53d1f5d09787268aa9e078953fab4254f75c536e7f38857815d831",
+    "experiments/exact_distance_query/src/run.py": "84351d2aa406d212bdba2fb7dba10f346d4ba907e6fb2b0ac612b46ed7b9567f",
+    "experiments/hop_scope_study/src/common.py": "86f8aaec727d46f5e30587285d6a9980e2e0a14c1f4407aaa3af71539250d072",
+    "experiments/hop_scope_study/src/data.py": "d566311e60818b413c02d33ec2a2e189b1d6fd6c30f9a7c2648bc4c512769579",
+    "research/src/__init__.py": "4941f13d1d22bb80b01e48c8a17b006297dc51485c4e777bbf2037b39dc729f7",
+    "research/src/data.py": "894cd1bdfb7ab901f2ea129ea0ef914eb2af97796affe73941dc340c16864e49",
+    "research/src/factory.py": "a4ae0c45d9adef206b84cfff3a8a864f9f30ade72e0c0a4f90d964290c1cbd94",
+    "research/src/model.py": "5b462417ad99e2c28b6088722158e57527852b6a268c2a1e01e830537cbaa360",
+    "research/src/paths.py": "2b672c7c5ff885266e1b96322f77d8e99f3cb6490c5ffa9779270bd915b19e7f",
+    "research/src/train.py": "38276094b4dfd5d5d2260a9310a37148da962a20f685b0b2ba43318ee22394d1"
+  },
+  "profile_source_sha256": "44a68233866f003e324ac3d60da5d380c5aa5e5d6e8cfb70055b1714ef79e5c9",
+  "labels_used": "only verify unchanged selected-checkpoint accuracy; no training or model selection",
+  "training_started": false,
+  "optimizer_steps": 0,
+  "hardware_load": "serial task; unrelated system load not controlled"
+}
