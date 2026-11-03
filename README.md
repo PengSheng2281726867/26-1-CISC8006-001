@@ -8,23 +8,22 @@ Passing for Homophily-Agnostic Node Representation in GNNs*, NeurIPS 2025.
 [Paper](https://amir-ghz.github.io/PDFs/GAMMA.pdf); [official code](https://github.com/amir-ghz/GAMMA),
 MIT, upstream `36d054b4ae53c0c8e360d85d056f5207d61c8281`. See [NOTICE](NOTICE.md).
 
-## Experiments / 按实验浏览
+## Experiments / 按组浏览
 
-Start with the **[experiment index](experiments/README.md)**. Each directory maps
-its code, configs, protocol, results, figures and tests; the
-[catalog](experiments/catalog.json) provides repository-relative file paths.
+The **[experiment index](experiments/README.md)** links four actual group folders:
 
-| Study | Entry point | Evidence |
-| --- | --- | --- |
-| Historical reproduction and scorer ablations | [Five recovered experiment groups](experiments/README.md#历史复现与消融--recovered-experiments) | 1,566 recovered registry entries, including superseded Pilot/anchor records |
-| Fixed K5 / variable gating range | [hop_scope_study](experiments/hop_scope_study/README.md) | 300 primary trainings + 300 inference-only masks |
-| Frozen-weight LOHO | [loho_diagnostic](experiments/loho_diagnostic/README.md) | 180 frozen checkpoints evaluated on validation and test |
-| Exact-distance / H0 and Walk-H4 query | [exact_distance_query](experiments/exact_distance_query/README.md) | 720 primary trainings + 9 controls; 720 inference profiles |
+| Group | Studies |
+| --- | --- |
+| [01_reproduction](experiments/01_reproduction/README.md) | Historical README reproduction, early K2 gating, K2–4 Dot/Uniform |
+| [02_scorer_ablation](experiments/02_scorer_ablation/README.md) | Dot/MLP scorer comparison; separate LN and GELU ablations |
+| [03_hop_diagnostics](experiments/03_hop_diagnostics/README.md) | Fixed-K5 variable routing scope; frozen-weight LOHO |
+| [04_distance_query](experiments/04_distance_query/README.md) | G0–G3 aggregation/query comparison and controls |
 
-The three published study branches are integrated into `main`. Historical
-publication receipts retain their original point-in-time state; see the
-[integration record](docs/REPOSITORY_ORGANIZATION.md). Counts describe different
-units and should not be pooled. Teacher approval remains **NOT_VERIFIED**.
+Each study contains its code, configs, reports, results and tests, or maps its
+shared historical evidence. See the [catalog](experiments/catalog.json) and
+[migration notes](docs/EXPERIMENT_DIRECTORY_MIGRATION.md). Python module commands
+retain their public names, while script/config file paths use the grouped layout.
+Teacher approval remains **NOT_VERIFIED**.
 
 ## Historical reproduction claim and findings
 
@@ -43,25 +42,18 @@ p=0.03516; this does not establish a significant fixed-K improvement.
 ## Layout and historical status
 
 ```text
-experiments/README.md          experiment index, with one entry directory per study
-experiments/catalog.json       machine-readable experiment-to-file mapping
-experiments/hop_scope_study/    fixed-K5 propagation / variable routing scope
-experiments/loho_diagnostic/    frozen-weight hop deletion diagnostic
-experiments/exact_distance_query/ shortest-distance aggregation and query comparison
-research/src/                  frozen Dot/MLP implementation, training and data helpers
-research/ablation_mlp/         frozen LN/GELU scorer variants
-research/upstream_snapshot/    author code + MIT license at the cited commit
-course/                       new provenance, config and evaluation adapters
-configs/                      historical configs + proposed future seed matrices
-experiments/registry.csv       1,566 uniquely identified recovered executions
-experiments/recovered_runs.jsonl  normalized per-run metrics and provenance
-experiments/artifacts_manifest.jsonl  4,398 external artifact hashes
-archives/                     historical source audit copies with explicit redaction metadata
-environment/                  recovered installed versions, installation limitations
-scripts/                      run, prepare, evaluate, smoke and publication checks
-tests/                        synthetic evaluation, fairness and provenance tests
-reports/                      results, figures and actual system-test evidence
-docs/                         audits, claim, recovery and course compliance
+experiments/
+  01_reproduction/             historical_readme, early_gate, gate_sweep
+  02_scorer_ablation/          dot_mlp, mlp_components
+  03_hop_diagnostics/          hop_scope_study, loho_diagnostic
+  04_distance_query/           exact_distance_query
+  README.md, catalog.json      grouped index and file mapping
+  registry.csv                1,566 recovered historical execution records
+  analysis/, protocols/       shared immutable historical evidence
+research/                     frozen scientific implementations and upstream snapshot
+course/, scripts/, tests/     shared adapters, entry points and checks
+configs/, environment/        shared configurations and recovered runtime versions
+reports/, docs/, archives/    historical report, audits and source recovery records
 ```
 
 All recovered execution commits are UNKNOWN (`pre-git experiment`). The import
@@ -181,9 +173,9 @@ as Proposed, not completed pilots.
   externally accessible artifact archive, final course slides and Week12 freeze
   are not complete. No Week12 final tag is created.
 
-- [Frozen-weight LOHO routing diagnostic](experiments/loho_diagnostic/README.md).
+- [Frozen-weight LOHO routing diagnostic](experiments/03_hop_diagnostics/loho_diagnostic/README.md).
 
 
-- [Fixed-propagation / variable-hop-gating study (2026-10-25)](experiments/hop_scope_study/README.md):300 retrainings and300 inference-only mask evaluations; technical matrix complete, teacher approval NOT_VERIFIED.
+- [Fixed-propagation / variable-hop-gating study (2026-10-25)](experiments/03_hop_diagnostics/hop_scope_study/README.md):300 retrainings and300 inference-only mask evaluations; technical matrix complete, teacher approval NOT_VERIFIED.
 
-- [Exact-distance and Query-gating study](experiments/exact_distance_query/README.md): four matched arms; teacher approval NOT_VERIFIED.
+- [Exact-distance and Query-gating study](experiments/04_distance_query/exact_distance_query/README.md): four matched arms; teacher approval NOT_VERIFIED.

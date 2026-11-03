@@ -1,7 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "path_base": "repository_root",
-  "policy": "Navigation maps refer to canonical evidence; no scientific source, result, registry or protocol is relocated or duplicated.",
+  "policy": "Eight study directories are physically grouped by topic; shared frozen code and historical evidence remain canonical. Original run records retain their original paths and hashes.",
   "experiments": [
     {
       "id": "historical_readme",
@@ -27,8 +27,9 @@
           "experiments/HISTORICAL_FAILURES.md"
         ]
       },
-      "entrypoint": "experiments/historical_readme/README.md",
-      "teacher_approval": "NOT_VERIFIED"
+      "entrypoint": "experiments/01_reproduction/historical_readme/README.md",
+      "teacher_approval": "NOT_VERIFIED",
+      "group_id": "01_reproduction"
     },
     {
       "id": "early_gate",
@@ -54,8 +55,9 @@
           "experiments/HISTORICAL_FAILURES.md"
         ]
       },
-      "entrypoint": "experiments/early_gate/README.md",
-      "teacher_approval": "NOT_VERIFIED"
+      "entrypoint": "experiments/01_reproduction/early_gate/README.md",
+      "teacher_approval": "NOT_VERIFIED",
+      "group_id": "01_reproduction"
     },
     {
       "id": "gate_sweep",
@@ -82,8 +84,9 @@
           "experiments/verification/historical_alignment.json"
         ]
       },
-      "entrypoint": "experiments/gate_sweep/README.md",
-      "teacher_approval": "NOT_VERIFIED"
+      "entrypoint": "experiments/01_reproduction/gate_sweep/README.md",
+      "teacher_approval": "NOT_VERIFIED",
+      "group_id": "01_reproduction"
     },
     {
       "id": "dot_mlp",
@@ -125,8 +128,9 @@
           "experiments/verification/historical_mlp_tests.json"
         ]
       },
-      "entrypoint": "experiments/dot_mlp/README.md",
-      "teacher_approval": "NOT_VERIFIED"
+      "entrypoint": "experiments/02_scorer_ablation/dot_mlp/README.md",
+      "teacher_approval": "NOT_VERIFIED",
+      "group_id": "02_scorer_ablation"
     },
     {
       "id": "mlp_components",
@@ -164,8 +168,9 @@
           "experiments/verification/historical_component_tests.json"
         ]
       },
-      "entrypoint": "experiments/mlp_components/README.md",
-      "teacher_approval": "NOT_VERIFIED"
+      "entrypoint": "experiments/02_scorer_ablation/mlp_components/README.md",
+      "teacher_approval": "NOT_VERIFIED",
+      "group_id": "02_scorer_ablation"
     },
     {
       "id": "hop_scope_study",
@@ -176,34 +181,35 @@
       "note": "The 12 Pilot cells are included in the 300 primary trainings. Inference-only masks use 60 full-hop checkpoints and are a distinct diagnostic from retraining. They are not another 300 trained models.",
       "files": {
         "Code": [
-          "experiments/hop_scope_study/src",
-          "experiments/hop_scope_study/scripts"
+          "experiments/03_hop_diagnostics/hop_scope_study/src",
+          "experiments/03_hop_diagnostics/hop_scope_study/scripts"
         ],
         "Configs": [
-          "experiments/hop_scope_study/configs"
+          "experiments/03_hop_diagnostics/hop_scope_study/configs"
         ],
         "Protocol": [
-          "experiments/hop_scope_study/docs/00_AUDIT_AND_PROTOCOL.md"
+          "experiments/03_hop_diagnostics/hop_scope_study/docs/00_AUDIT_AND_PROTOCOL.md"
         ],
         "Report": [
-          "experiments/hop_scope_study/docs/03_RESULTS.md",
-          "experiments/hop_scope_study/docs/04_INTERPRETATION_AND_LIMITATIONS.md"
+          "experiments/03_hop_diagnostics/hop_scope_study/docs/03_RESULTS.md",
+          "experiments/03_hop_diagnostics/hop_scope_study/docs/04_INTERPRETATION_AND_LIMITATIONS.md"
         ],
         "Results": [
-          "experiments/hop_scope_study/results"
+          "experiments/03_hop_diagnostics/hop_scope_study/results"
         ],
         "Figures": [
-          "experiments/hop_scope_study/figures"
+          "experiments/03_hop_diagnostics/hop_scope_study/figures"
         ],
         "Tests": [
-          "experiments/hop_scope_study/tests"
+          "experiments/03_hop_diagnostics/hop_scope_study/tests"
         ],
         "Coverage": [
-          "experiments/hop_scope_study/results/status.json"
+          "experiments/03_hop_diagnostics/hop_scope_study/results/status.json"
         ]
       },
-      "entrypoint": "experiments/hop_scope_study/README.md",
-      "teacher_approval": "NOT_VERIFIED"
+      "entrypoint": "experiments/03_hop_diagnostics/hop_scope_study/README.md",
+      "teacher_approval": "NOT_VERIFIED",
+      "group_id": "03_hop_diagnostics"
     },
     {
       "id": "loho_diagnostic",
@@ -214,33 +220,34 @@
       "note": "The same 180 frozen models are evaluated on validation and test, giving 360 checkpoint evaluations and 3,240 full/deletion conditions. These are evaluations, not new training runs. High routing weight is not a causal contribution estimate.",
       "files": {
         "Code": [
-          "experiments/loho_diagnostic/src"
+          "experiments/03_hop_diagnostics/loho_diagnostic/src"
         ],
         "Configs": [
-          "experiments/loho_diagnostic/configs"
+          "experiments/03_hop_diagnostics/loho_diagnostic/configs"
         ],
         "Protocol": [
-          "experiments/loho_diagnostic/PROTOCOL.md"
+          "experiments/03_hop_diagnostics/loho_diagnostic/PROTOCOL.md"
         ],
         "Report": [
-          "experiments/loho_diagnostic/reports/FINAL_REPORT.md"
+          "experiments/03_hop_diagnostics/loho_diagnostic/reports/FINAL_REPORT.md"
         ],
         "Results and figures": [
-          "experiments/loho_diagnostic/results"
+          "experiments/03_hop_diagnostics/loho_diagnostic/results"
         ],
         "Tests": [
-          "experiments/loho_diagnostic/tests"
+          "experiments/03_hop_diagnostics/loho_diagnostic/tests"
         ],
         "Coverage": [
-          "experiments/loho_diagnostic/results/full_test/coverage.json"
+          "experiments/03_hop_diagnostics/loho_diagnostic/results/full_test/coverage.json"
         ],
         "Checkpoint evidence": [
-          "experiments/loho_diagnostic/CHECKPOINT_INVENTORY.md",
-          "experiments/loho_diagnostic/reports/EVIDENCE_MANIFEST.md"
+          "experiments/03_hop_diagnostics/loho_diagnostic/CHECKPOINT_INVENTORY.md",
+          "experiments/03_hop_diagnostics/loho_diagnostic/reports/EVIDENCE_MANIFEST.md"
         ]
       },
-      "entrypoint": "experiments/loho_diagnostic/README.md",
-      "teacher_approval": "NOT_VERIFIED"
+      "entrypoint": "experiments/03_hop_diagnostics/loho_diagnostic/README.md",
+      "teacher_approval": "NOT_VERIFIED",
+      "group_id": "03_hop_diagnostics"
     },
     {
       "id": "exact_distance_query",
@@ -251,31 +258,32 @@
       "note": "Four arms compare Walk+Consensus, Exact+Consensus, Exact+H0 and Exact+Walk-H4. The 48 Pilot and four Smoke cells are included in the 720 primary cells. The nine empty-policy controls are additional training; the 720 dedicated profiles are inference measurements.",
       "files": {
         "Code": [
-          "experiments/exact_distance_query/src"
+          "experiments/04_distance_query/exact_distance_query/src"
         ],
         "Configs": [
-          "experiments/exact_distance_query/configs"
+          "experiments/04_distance_query/exact_distance_query/configs"
         ],
         "Protocol": [
-          "experiments/exact_distance_query/PROTOCOL.md"
+          "experiments/04_distance_query/exact_distance_query/PROTOCOL.md"
         ],
         "Report": [
-          "experiments/exact_distance_query/docs/03_FULL_RESULTS.md",
-          "experiments/exact_distance_query/docs/04_INTERPRETATION.md"
+          "experiments/04_distance_query/exact_distance_query/docs/03_FULL_RESULTS.md",
+          "experiments/04_distance_query/exact_distance_query/docs/04_INTERPRETATION.md"
         ],
         "Results and figures": [
-          "experiments/exact_distance_query/results/full",
-          "experiments/exact_distance_query/results/pilot"
+          "experiments/04_distance_query/exact_distance_query/results/full",
+          "experiments/04_distance_query/exact_distance_query/results/pilot"
         ],
         "Tests": [
-          "experiments/exact_distance_query/tests"
+          "experiments/04_distance_query/exact_distance_query/tests"
         ],
         "Coverage": [
-          "experiments/exact_distance_query/results/full/coverage.json"
+          "experiments/04_distance_query/exact_distance_query/results/full/coverage.json"
         ]
       },
-      "entrypoint": "experiments/exact_distance_query/README.md",
-      "teacher_approval": "NOT_VERIFIED"
+      "entrypoint": "experiments/04_distance_query/exact_distance_query/README.md",
+      "teacher_approval": "NOT_VERIFIED",
+      "group_id": "04_distance_query"
     }
   ],
   "shared_files": {
@@ -309,5 +317,47 @@
       "AI_USAGE.md",
       "CONTRIBUTIONS.md"
     ]
-  }
+  },
+  "groups": [
+    {
+      "id": "01_reproduction",
+      "title": "原版复现与门控验证",
+      "directory": "experiments/01_reproduction",
+      "entrypoint": "experiments/01_reproduction/README.md",
+      "experiments": [
+        "historical_readme",
+        "early_gate",
+        "gate_sweep"
+      ]
+    },
+    {
+      "id": "02_scorer_ablation",
+      "title": "门控评分函数与组件消融",
+      "directory": "experiments/02_scorer_ablation",
+      "entrypoint": "experiments/02_scorer_ablation/README.md",
+      "experiments": [
+        "dot_mlp",
+        "mlp_components"
+      ]
+    },
+    {
+      "id": "03_hop_diagnostics",
+      "title": "Hop 范围与贡献诊断",
+      "directory": "experiments/03_hop_diagnostics",
+      "entrypoint": "experiments/03_hop_diagnostics/README.md",
+      "experiments": [
+        "hop_scope_study",
+        "loho_diagnostic"
+      ]
+    },
+    {
+      "id": "04_distance_query",
+      "title": "严格距离聚合与 Query 对照",
+      "directory": "experiments/04_distance_query",
+      "entrypoint": "experiments/04_distance_query/README.md",
+      "experiments": [
+        "exact_distance_query"
+      ]
+    }
+  ]
 }

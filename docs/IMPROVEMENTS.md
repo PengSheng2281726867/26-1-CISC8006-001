@@ -80,7 +80,7 @@ and all superseded resource records remain in the registry.
 
 Status: **Full technical diagnostic evaluation**, user-authorized; teacher approval
 **NOT_VERIFIED**. This is not an implemented adaptive selector or an improvement
-claim. [Protocol and report](../experiments/hop_scope_study/README.md).
+claim. [Protocol and report](../experiments/03_hop_diagnostics/hop_scope_study/README.md).
 
 Propagation stays powers0..5 (15 actual calls, max chain5); only active routing
 scope0..x changes, x1-5. One actual GAMMA layer, hidden32,R2, original Dot/LN/squash,
@@ -108,4 +108,4 @@ User-authorized technical matrix complete:720 primary retrainings including48
 Pilot/4 Smoke cells reused without duplication;9 bounded empty-policy controls.
 Four matched-parameter arms preserve frozen source; no universal benefit claimed.
 Query scale,0-hop preference, shell size and empty-hop policy limit interpretation.
-Teacher approval NOT_VERIFIED. [Protocol, all signs and results](../experiments/exact_distance_query/README.md).
+Teacher approval NOT_VERIFIED. [Protocol, all signs and results](../experiments/04_distance_query/exact_distance_query/README.md).
