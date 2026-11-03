@@ -1,4 +1,4 @@
-# CISC8006 — GAMMA reproduction and MLP routing
+# CISC8006 — GAMMA experiments
 
 Research evidence recovery and a prospective reproducibility harness. **This is
 a component-level reproduction, not an exact reproduction of the paper tables.**
@@ -8,7 +8,25 @@ Passing for Homophily-Agnostic Node Representation in GNNs*, NeurIPS 2025.
 [Paper](https://amir-ghz.github.io/PDFs/GAMMA.pdf); [official code](https://github.com/amir-ghz/GAMMA),
 MIT, upstream `36d054b4ae53c0c8e360d85d056f5207d61c8281`. See [NOTICE](NOTICE.md).
 
-## Claim and findings
+## Experiments / 按实验浏览
+
+Start with the **[experiment index](experiments/README.md)**. Each directory maps
+its code, configs, protocol, results, figures and tests; the
+[catalog](experiments/catalog.json) provides repository-relative file paths.
+
+| Study | Entry point | Evidence |
+| --- | --- | --- |
+| Historical reproduction and scorer ablations | [Five recovered experiment groups](experiments/README.md#历史复现与消融--recovered-experiments) | 1,566 recovered registry entries, including superseded Pilot/anchor records |
+| Fixed K5 / variable gating range | [hop_scope_study](experiments/hop_scope_study/README.md) | 300 primary trainings + 300 inference-only masks |
+| Frozen-weight LOHO | [loho_diagnostic](experiments/loho_diagnostic/README.md) | 180 frozen checkpoints evaluated on validation and test |
+| Exact-distance / H0 and Walk-H4 query | [exact_distance_query](experiments/exact_distance_query/README.md) | 720 primary trainings + 9 controls; 720 inference profiles |
+
+The three published study branches are integrated into `main`. Historical
+publication receipts retain their original point-in-time state; see the
+[integration record](docs/REPOSITORY_ORGANIZATION.md). Counts describe different
+units and should not be pooled. Teacher approval remains **NOT_VERIFIED**.
+
+## Historical reproduction claim and findings
 
 Candidate course claim: node-specific iterative gating improves node classification
 over uniform hop fusion while retaining shared projection and global channel scaling.
@@ -25,6 +43,11 @@ p=0.03516; this does not establish a significant fixed-K improvement.
 ## Layout and historical status
 
 ```text
+experiments/README.md          experiment index, with one entry directory per study
+experiments/catalog.json       machine-readable experiment-to-file mapping
+experiments/hop_scope_study/    fixed-K5 propagation / variable routing scope
+experiments/loho_diagnostic/    frozen-weight hop deletion diagnostic
+experiments/exact_distance_query/ shortest-distance aggregation and query comparison
 research/src/                  frozen Dot/MLP implementation, training and data helpers
 research/ablation_mlp/         frozen LN/GELU scorer variants
 research/upstream_snapshot/    author code + MIT license at the cited commit

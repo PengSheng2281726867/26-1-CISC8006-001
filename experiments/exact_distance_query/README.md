@@ -46,3 +46,17 @@ Optional dedicated measurement (no training):
 Scientific code fingerprints exclude reporting/profiling code; those scripts and
 their actual Git commits/source hashes are separately recorded. Public index
 checks do not imply data access or external weight availability.
+
+## File map / 文件归属
+
+[All experiments / 全部实验](../README.md) · [Repository home](../../README.md)
+
+| Purpose | Canonical files |
+| --- | --- |
+| Code | [`experiments/exact_distance_query/src`](src) |
+| Configs | [`experiments/exact_distance_query/configs`](configs) |
+| Protocol | [`experiments/exact_distance_query/PROTOCOL.md`](PROTOCOL.md) |
+| Report | [`experiments/exact_distance_query/docs/03_FULL_RESULTS.md`](docs/03_FULL_RESULTS.md)<br>[`experiments/exact_distance_query/docs/04_INTERPRETATION.md`](docs/04_INTERPRETATION.md) |
+| Results and figures | [`experiments/exact_distance_query/results/full`](results/full)<br>[`experiments/exact_distance_query/results/pilot`](results/pilot) |
+| Tests | [`experiments/exact_distance_query/tests`](tests) |
+| Coverage | [`experiments/exact_distance_query/results/full/coverage.json`](results/full/coverage.json) |

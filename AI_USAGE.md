@@ -99,3 +99,23 @@ All negatives and deviations are retained. Query scale and0-hop concentration
 were identified as interpretation limits; models/temperature were not changed.
 Historical hashes passed. Automated29 unittest methods (13 legacy,16 new) and20
 author-alignment cases are reported; human review/teacher approval NOT_VERIFIED.
+
+## 2026-11-03: merge and organize the published experiments
+
+The user explicitly requested merging the GitHub pushes and organizing files by
+experiment. Codex verified PR1/PR2 were already merged, validated the combined
+PR3 tree, then merged PR3 with its expected head SHA (merge commit673a475).
+The 49 executed checks passed:13 repository smoke,7 fixed-K adapter,4 fixed-K
+analysis,9 LOHO and16 Exact-distance tests. The publication scan passed on410
+indexed files with0 findings before the scientific merge. CI had no published
+workflow runs/statuses; these are local checks in the existing GAMMA environment.
+
+The organization adds eight experiment entry points and a machine-readable file
+map, linking existing scientific files at their canonical paths. No new benchmark
+training, result recalculation, source edits, historical registry edits or artifact
+relocation was performed. Synthetic tests include their existing tiny training
+fixtures. Local uncommitted experiment workspaces were preserved by working in a
+separate clone. Historical publication receipts are retained as dated evidence.
+See docs/REPOSITORY_ORGANIZATION.md for scope and validation. User authorization
+to merge is not teacher approval or human scientific review; both remain
+NOT_VERIFIED. The organization commit and merge outcome are recorded in Git.

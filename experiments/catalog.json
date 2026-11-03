@@ -1,0 +1,313 @@
+{
+  "schema_version": 1,
+  "path_base": "repository_root",
+  "policy": "Navigation maps refer to canonical evidence; no scientific source, result, registry or protocol is relocated or duplicated.",
+  "experiments": [
+    {
+      "id": "historical_readme",
+      "title": "Historical README reproduction",
+      "question": "最初 README 基线复现",
+      "status": "Recovered: 100 executions",
+      "stages": {
+        "historical_readme": 100
+      },
+      "note": "These early records retain shallow best-checkpoint copying and non-strict GPU determinism. They are historical context and must not be pooled with the later matched controls. The imported implementation is related code, not proof of the historical execution version; execution commits remain UNKNOWN / pre-git experiment.",
+      "files": {
+        "Related imported code": [
+          "research/src"
+        ],
+        "Recovered configuration": [
+          "experiments/historical_configs.json#readme"
+        ],
+        "Results": [
+          "experiments/analysis/readme.json"
+        ],
+        "Audit": [
+          "docs/EXPERIMENT_RECOVERY.md",
+          "experiments/HISTORICAL_FAILURES.md"
+        ]
+      },
+      "entrypoint": "experiments/historical_readme/README.md",
+      "teacher_approval": "NOT_VERIFIED"
+    },
+    {
+      "id": "early_gate",
+      "title": "Early K2 Dot vs Uniform diagnostic",
+      "question": "早期 K2 门控与均匀融合对照",
+      "status": "Recovered: 120 executions",
+      "stages": {
+        "early_gate": 120
+      },
+      "note": "The early K2 experiment has a different initialization construction from the later gate sweep and Dot/MLP comparisons. Keep its 60 Dot and 60 Uniform records separate. The imported implementation is related code; historical execution commits remain UNKNOWN / pre-git experiment.",
+      "files": {
+        "Related imported code": [
+          "research/src"
+        ],
+        "Recovered configuration": [
+          "experiments/historical_configs.json#early_gate"
+        ],
+        "Results": [
+          "experiments/analysis/early_gate.json"
+        ],
+        "Audit": [
+          "docs/CLAIM_AND_REPRODUCTION.md",
+          "experiments/HISTORICAL_FAILURES.md"
+        ]
+      },
+      "entrypoint": "experiments/early_gate/README.md",
+      "teacher_approval": "NOT_VERIFIED"
+    },
+    {
+      "id": "gate_sweep",
+      "title": "Dot vs Uniform across propagation ranges",
+      "question": "K2–4 的 Dot / Uniform 对照",
+      "status": "Recovered: 360 executions",
+      "stages": {
+        "gate_sweep": 360
+      },
+      "note": "Six graphs, K2–4, ten splits, Dot and Uniform: 360 recovered executions. Changing K changes propagation and routing scope together. This differs from the fixed-K5 study, which holds propagation fixed. Uniform K1 was not run. Historical execution commits remain UNKNOWN / pre-git experiment.",
+      "files": {
+        "Related imported code": [
+          "research/src"
+        ],
+        "Recovered configuration": [
+          "experiments/historical_configs.json#gate_sweep"
+        ],
+        "Results": [
+          "experiments/analysis/gate_sweep.json",
+          "reports/RESULTS_SUMMARY.md"
+        ],
+        "Audit": [
+          "docs/CLAIM_AND_REPRODUCTION.md",
+          "experiments/verification/historical_alignment.json"
+        ]
+      },
+      "entrypoint": "experiments/gate_sweep/README.md",
+      "teacher_approval": "NOT_VERIFIED"
+    },
+    {
+      "id": "dot_mlp",
+      "title": "Dot vs MLP routing scorer",
+      "question": "MLP scorer 是否优于 Dot agreement",
+      "status": "Recovered: 480 main + 24 superseded Pilot + 2 anchors",
+      "stages": {
+        "dot_mlp": 480,
+        "v1_pilot": 24,
+        "anchor": 2
+      },
+      "note": "The main comparison has 480 Dot/MLP executions across six graphs, K1–4 and ten splits. The 24 superseded Pilot entries and two anchors are retained as separate registry stages, not extra main cells. Execution commits remain UNKNOWN / pre-git experiment. Proposed three-seed configs are future work, not evidence that those matrices ran.",
+      "files": {
+        "Code": [
+          "research/src",
+          "course"
+        ],
+        "Historical protocol and configs": [
+          "experiments/protocols/dot_mlp.json",
+          "configs/historical_main.json",
+          "configs/historical_pilot.json"
+        ],
+        "Prospective configs": [
+          "configs/baseline_texas.json",
+          "configs/mlp_texas.json",
+          "configs/paired_texas_three_seeds.json",
+          "configs/future_three_seeds.json"
+        ],
+        "Results": [
+          "experiments/analysis/dot_mlp.json",
+          "reports/RESULTS_SUMMARY.md"
+        ],
+        "Figures": [
+          "reports/figures/accuracy_overview.png",
+          "reports/figures/delta_accuracy.png"
+        ],
+        "Verification": [
+          "experiments/verification/dot_mlp.json",
+          "experiments/verification/historical_mlp_tests.json"
+        ]
+      },
+      "entrypoint": "experiments/dot_mlp/README.md",
+      "teacher_approval": "NOT_VERIFIED"
+    },
+    {
+      "id": "mlp_components",
+      "title": "MLP normalization and activation ablations",
+      "question": "分别加入 LayerNorm、替换 GELU 的影响",
+      "status": "Recovered: 480 new LN/GELU executions",
+      "stages": {
+        "components": 480
+      },
+      "note": "There are 240 LN-only and 240 GELU-only executions. MLP/Dot controls are reused from the Dot/MLP study and must not be counted as new executions here. No combined LN+GELU experiment was executed. Historical execution commits remain UNKNOWN / pre-git experiment. The prospective three-seed component Pilot remains unlaunched.",
+      "files": {
+        "Code": [
+          "research/ablation_mlp",
+          "research/src",
+          "course"
+        ],
+        "Protocol": [
+          "experiments/protocols/components.json"
+        ],
+        "Prospective config": [
+          "configs/future_component_pilot.json"
+        ],
+        "Results": [
+          "experiments/analysis/mlp_components.json",
+          "reports/RESULTS_SUMMARY.md"
+        ],
+        "Figures": [
+          "reports/figures/components_accuracy_overview.png",
+          "reports/figures/components_delta_accuracy.png",
+          "reports/figures/components_hop_weights.png",
+          "reports/figures/components_inference_time.png"
+        ],
+        "Verification": [
+          "experiments/verification/components_delivery.json",
+          "experiments/verification/historical_component_tests.json"
+        ]
+      },
+      "entrypoint": "experiments/mlp_components/README.md",
+      "teacher_approval": "NOT_VERIFIED"
+    },
+    {
+      "id": "hop_scope_study",
+      "title": "Fixed K5, variable routing scope",
+      "question": "固定传播到 5-hop，只改变门控范围",
+      "status": "Complete: 300 trainings + 300 inference-only masks",
+      "stages": {},
+      "note": "The 12 Pilot cells are included in the 300 primary trainings. Inference-only masks use 60 full-hop checkpoints and are a distinct diagnostic from retraining. They are not another 300 trained models.",
+      "files": {
+        "Code": [
+          "experiments/hop_scope_study/src",
+          "experiments/hop_scope_study/scripts"
+        ],
+        "Configs": [
+          "experiments/hop_scope_study/configs"
+        ],
+        "Protocol": [
+          "experiments/hop_scope_study/docs/00_AUDIT_AND_PROTOCOL.md"
+        ],
+        "Report": [
+          "experiments/hop_scope_study/docs/03_RESULTS.md",
+          "experiments/hop_scope_study/docs/04_INTERPRETATION_AND_LIMITATIONS.md"
+        ],
+        "Results": [
+          "experiments/hop_scope_study/results"
+        ],
+        "Figures": [
+          "experiments/hop_scope_study/figures"
+        ],
+        "Tests": [
+          "experiments/hop_scope_study/tests"
+        ],
+        "Coverage": [
+          "experiments/hop_scope_study/results/status.json"
+        ]
+      },
+      "entrypoint": "experiments/hop_scope_study/README.md",
+      "teacher_approval": "NOT_VERIFIED"
+    },
+    {
+      "id": "loho_diagnostic",
+      "title": "Frozen-weight leave-one-hop-out diagnostic",
+      "question": "Hop 权重是否对应删除该 Hop 的损失变化",
+      "status": "Complete: 180 checkpoints, validation + test; no new training",
+      "stages": {},
+      "note": "The same 180 frozen models are evaluated on validation and test, giving 360 checkpoint evaluations and 3,240 full/deletion conditions. These are evaluations, not new training runs. High routing weight is not a causal contribution estimate.",
+      "files": {
+        "Code": [
+          "experiments/loho_diagnostic/src"
+        ],
+        "Configs": [
+          "experiments/loho_diagnostic/configs"
+        ],
+        "Protocol": [
+          "experiments/loho_diagnostic/PROTOCOL.md"
+        ],
+        "Report": [
+          "experiments/loho_diagnostic/reports/FINAL_REPORT.md"
+        ],
+        "Results and figures": [
+          "experiments/loho_diagnostic/results"
+        ],
+        "Tests": [
+          "experiments/loho_diagnostic/tests"
+        ],
+        "Coverage": [
+          "experiments/loho_diagnostic/results/full_test/coverage.json"
+        ],
+        "Checkpoint evidence": [
+          "experiments/loho_diagnostic/CHECKPOINT_INVENTORY.md",
+          "experiments/loho_diagnostic/reports/EVIDENCE_MANIFEST.md"
+        ]
+      },
+      "entrypoint": "experiments/loho_diagnostic/README.md",
+      "teacher_approval": "NOT_VERIFIED"
+    },
+    {
+      "id": "exact_distance_query",
+      "title": "Exact-distance aggregation and H0/H4 queries",
+      "question": "严格距离聚合与固定 H0 / Walk H4 Query",
+      "status": "Complete: 720 primary trainings + 9 controls + 720 inference profiles",
+      "stages": {},
+      "note": "Four arms compare Walk+Consensus, Exact+Consensus, Exact+H0 and Exact+Walk-H4. The 48 Pilot and four Smoke cells are included in the 720 primary cells. The nine empty-policy controls are additional training; the 720 dedicated profiles are inference measurements.",
+      "files": {
+        "Code": [
+          "experiments/exact_distance_query/src"
+        ],
+        "Configs": [
+          "experiments/exact_distance_query/configs"
+        ],
+        "Protocol": [
+          "experiments/exact_distance_query/PROTOCOL.md"
+        ],
+        "Report": [
+          "experiments/exact_distance_query/docs/03_FULL_RESULTS.md",
+          "experiments/exact_distance_query/docs/04_INTERPRETATION.md"
+        ],
+        "Results and figures": [
+          "experiments/exact_distance_query/results/full",
+          "experiments/exact_distance_query/results/pilot"
+        ],
+        "Tests": [
+          "experiments/exact_distance_query/tests"
+        ],
+        "Coverage": [
+          "experiments/exact_distance_query/results/full/coverage.json"
+        ]
+      },
+      "entrypoint": "experiments/exact_distance_query/README.md",
+      "teacher_approval": "NOT_VERIFIED"
+    }
+  ],
+  "shared_files": {
+    "Frozen implementations and attribution": [
+      "research/src",
+      "research/ablation_mlp",
+      "research/upstream_snapshot",
+      "NOTICE.md",
+      "LICENSE"
+    ],
+    "Shared adapters and entry points": [
+      "course",
+      "scripts",
+      "tests",
+      "environment"
+    ],
+    "Historical run and artifact evidence": [
+      "experiments/registry.csv",
+      "experiments/recovered_runs.jsonl",
+      "experiments/artifacts_manifest.jsonl",
+      "experiments/recovery_manifest.json",
+      "experiments/source_mapping.json",
+      "experiments/data_manifest.json",
+      "experiments/paper_reference_values.json",
+      "experiments/sample_logs"
+    ],
+    "Course audits and historical report": [
+      "docs",
+      "reports",
+      "archives",
+      "AI_USAGE.md",
+      "CONTRIBUTIONS.md"
+    ]
+  }
+}
