@@ -103,3 +103,18 @@ after the audit; the evidence receipt stays local.
 ```powershell
 python -B experiments/hop_scope_study/scripts/publication_snapshot.py --run-root ../local_runs
 ```
+
+## File map / 文件归属
+
+[All experiments / 全部实验](../README.md) · [Repository home](../../README.md)
+
+| Purpose | Canonical files |
+| --- | --- |
+| Code | [`experiments/hop_scope_study/src`](src)<br>[`experiments/hop_scope_study/scripts`](scripts) |
+| Configs | [`experiments/hop_scope_study/configs`](configs) |
+| Protocol | [`experiments/hop_scope_study/docs/00_AUDIT_AND_PROTOCOL.md`](docs/00_AUDIT_AND_PROTOCOL.md) |
+| Report | [`experiments/hop_scope_study/docs/03_RESULTS.md`](docs/03_RESULTS.md)<br>[`experiments/hop_scope_study/docs/04_INTERPRETATION_AND_LIMITATIONS.md`](docs/04_INTERPRETATION_AND_LIMITATIONS.md) |
+| Results | [`experiments/hop_scope_study/results`](results) |
+| Figures | [`experiments/hop_scope_study/figures`](figures) |
+| Tests | [`experiments/hop_scope_study/tests`](tests) |
+| Coverage | [`experiments/hop_scope_study/results/status.json`](results/status.json) |

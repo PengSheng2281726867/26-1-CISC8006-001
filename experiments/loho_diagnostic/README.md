@@ -59,3 +59,18 @@ Actual outputs: [final report](reports/FINAL_REPORT.md),
 The executed extension command additionally used `--reuse-batch` with the actual
 pilot batch path; pass both pilot and extension paths to summary/plots.
 See results/private_artifact_checksums.csv for relative executed batch IDs.
+
+## File map / 文件归属
+
+[All experiments / 全部实验](../README.md) · [Repository home](../../README.md)
+
+| Purpose | Canonical files |
+| --- | --- |
+| Code | [`experiments/loho_diagnostic/src`](src) |
+| Configs | [`experiments/loho_diagnostic/configs`](configs) |
+| Protocol | [`experiments/loho_diagnostic/PROTOCOL.md`](PROTOCOL.md) |
+| Report | [`experiments/loho_diagnostic/reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md) |
+| Results and figures | [`experiments/loho_diagnostic/results`](results) |
+| Tests | [`experiments/loho_diagnostic/tests`](tests) |
+| Coverage | [`experiments/loho_diagnostic/results/full_test/coverage.json`](results/full_test/coverage.json) |
+| Checkpoint evidence | [`experiments/loho_diagnostic/CHECKPOINT_INVENTORY.md`](CHECKPOINT_INVENTORY.md)<br>[`experiments/loho_diagnostic/reports/EVIDENCE_MANIFEST.md`](reports/EVIDENCE_MANIFEST.md) |
