@@ -1,33 +1,31 @@
-# 实验索引 / Experiment index
+# 课程实验索引：Baseline + 三个实验
 
-项目按四条研究主线组织，八个实验目录实际位于对应组目录内。
-[机器可读目录与文件归属](catalog.json)使用仓库根目录相对路径。
+[完整 Story line](../STORYLINE.md) · [项目首页](../README.md) · [三个想法与评分要求](../docs/IMPROVEMENTS.md)
 
-| 分组 | 内容 | 子实验 |
+| 顺序 | 问题 | 主要证据 |
 | --- | --- | --- |
-| [01_reproduction](01_reproduction/README.md) | 原版复现与门控验证 | [historical_readme](01_reproduction/historical_readme/README.md) · [early_gate](01_reproduction/early_gate/README.md) · [gate_sweep](01_reproduction/gate_sweep/README.md) |
-| [02_scorer_ablation](02_scorer_ablation/README.md) | 门控评分函数与组件消融 | [dot_mlp](02_scorer_ablation/dot_mlp/README.md) · [mlp_components](02_scorer_ablation/mlp_components/README.md) |
-| [03_hop_diagnostics](03_hop_diagnostics/README.md) | Hop 范围与贡献诊断 | [hop_scope_study](03_hop_diagnostics/hop_scope_study/README.md) · [loho_diagnostic](03_hop_diagnostics/loho_diagnostic/README.md) |
-| [04_distance_query](04_distance_query/README.md) | 严格距离聚合与 Query 对照 | [exact_distance_query](04_distance_query/exact_distance_query/README.md) |
+| [00_baseline](00_baseline/README.md) | GAMMA 准确率与门控收益复现到什么程度？ | 历史 README + 后期 Dot/Uniform 主对照 |
+| [01_scorer](01_scorer/README.md) | 学习更复杂的 agreement 是否有效？ | Dot/MLP、LN/GELU |
+| [02_hop_scope](02_hop_scope/README.md) | 限制可参与路由的范围是否有效？ | 固定 K5、x1–5 重训与推理掩码 |
+| [03_distance_query](03_distance_query/README.md) | 改变候选表示和 Query 是否有效？ | G0–G3、三 seeds、完整控制 |
 
-## 使用方式
+三个实验对应三个具体想法，不把每个消融变体重复算作独立课程实验。
+各主实验目录 README 写明想法、假设、基线、结果、限制和叙事连接。
+[补充 LOHO](supplementary/README.md) 独立保留，不进入主线。
 
-先进入组目录，再进入具体实验目录；各实验 README 列出代码、配置、协议、报告、结果、图表和测试。
-共享科学实现、公共工具、环境以及历史 registry/analysis/protocol 文件继续共用，避免复制与改写证据。
+## 运行与溯源
 
-编号目录用于浏览，Python 模块名保持稳定，例如：
+[安装与运行指南](../docs/REPRODUCIBILITY.md)。稳定的 Python 模块名继续可用：
 
 ```powershell
+python -B scripts/smoke_test.py
 python -B -m experiments.exact_distance_query.src.run full --plan
-python -B -m unittest discover -s experiments/03_hop_diagnostics/loho_diagnostic/tests -v
 ```
 
-脚本和配置的文件路径采用新的分组路径。原 Python 模块入口由 `experiments/__init__.py` 的包搜索路径兼容，无需保留旧目录或复制源码。
-旧运行记录中的路径、哈希、日期和指标保持原样；其历史位置可通过[迁移映射](layout_migration.json)和原 Git 提交追溯。
-目录迁移和路径适配会改变当前源码指纹，旧私有运行不会被当作当前版本结果自动复用。教师批准状态仍为 `NOT_VERIFIED`。
-
-`registry.csv` 的 1,566 条记录属于历史恢复批次。新实验使用各自覆盖文件和运行清单；Pilot 复用、共享对照、推理评估与独立训练需分别计数。
-`configs/future*.json` 等仍是待执行方案；私有数据、权重与逐节点产物保存在仓库之外。
+旧运行中的路径、哈希和执行 commit 不改写；使用 [本次路径映射](storyline_migration.json)
+与 [前次路径映射](layout_migration.json) 追溯。目录变化会改变当前源码指纹，不能自动复用旧私有运行。
+共享 registry 的 1,566 行只覆盖历史恢复批次；新实验使用各自运行清单。训练、Pilot 复用、推理评估分别计数。
+教师批准仍为 `NOT_VERIFIED`。
 
 ## 共享文件 / Shared files
 

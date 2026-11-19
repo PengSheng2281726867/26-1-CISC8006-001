@@ -13,7 +13,7 @@ def append(path,text):
     if marker in path.read_bytes():raise RuntimeError('Already integrated; review instead of duplicating')
     with path.open('ab') as f:f.write(('\n\n'+text+'\n').encode('utf8'))
 
-append('README.md','- [Fixed-propagation / variable-hop-gating study (2026-10-25)](experiments/03_hop_diagnostics/hop_scope_study/README.md):300 retrainings and300 inference-only mask evaluations; technical matrix complete, teacher approval NOT_VERIFIED.')
+append('README.md','- [Fixed-propagation / variable-hop-gating study (2026-10-25)](experiments/02_hop_scope/hop_scope_study/README.md):300 retrainings and300 inference-only mask evaluations; technical matrix complete, teacher approval NOT_VERIFIED.')
 append('AI_USAGE.md','''## Fixed-propagation / variable-hop-gating study (2026-10-25)
 
 This session's real user request was to read the local AGENTS instructions and
@@ -40,7 +40,7 @@ append('docs/IMPROVEMENTS.md',f'''## I4 - Fixed-propagation / variable-hop-gatin
 
 Status: **Full technical diagnostic evaluation**, user-authorized; teacher approval
 **NOT_VERIFIED**. This is not an implemented adaptive selector or an improvement
-claim. [Protocol and report](../experiments/03_hop_diagnostics/hop_scope_study/README.md).
+claim. [Protocol and report](../experiments/02_hop_scope/hop_scope_study/README.md).
 
 Propagation stays powers0..5 (15 actual calls, max chain5); only active routing
 scope0..x changes, x1-5. One actual GAMMA layer, hidden32,R2, original Dot/LN/squash,

@@ -27,15 +27,15 @@ archives, logs, node arrays and checkpoints stay outside the Git checkout.
 ```powershell
 git clone --branch exp/fixed-k-hop-gating https://github.com/PengSheng2281726867/26-1-CISC8006-001.git course_repo_checkout
 Set-Location course_repo_checkout
-python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/prepare.py --data-root ../local_data
-python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/check.py --data-root ../local_data --run-root ../local_runs
-python -B experiments/03_hop_diagnostics/hop_scope_study/tests/test_analysis.py
-python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/run.py --config experiments/03_hop_diagnostics/hop_scope_study/configs/pilot.json --data-root ../local_data --run-root ../local_runs
-python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/aggregate.py --pilot --data-root ../local_data --run-root ../local_runs
-python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/run.py --config experiments/03_hop_diagnostics/hop_scope_study/configs/full.json --data-root ../local_data --run-root ../local_runs
-python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/eval_only.py --config experiments/03_hop_diagnostics/hop_scope_study/configs/eval_only.json --data-root ../local_data --run-root ../local_runs
-python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/aggregate.py --data-root ../local_data --run-root ../local_runs
-python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/finalize_report.py
+python -B experiments/02_hop_scope/hop_scope_study/scripts/prepare.py --data-root ../local_data
+python -B experiments/02_hop_scope/hop_scope_study/scripts/check.py --data-root ../local_data --run-root ../local_runs
+python -B experiments/02_hop_scope/hop_scope_study/tests/test_analysis.py
+python -B experiments/02_hop_scope/hop_scope_study/scripts/run.py --config experiments/02_hop_scope/hop_scope_study/configs/pilot.json --data-root ../local_data --run-root ../local_runs
+python -B experiments/02_hop_scope/hop_scope_study/scripts/aggregate.py --pilot --data-root ../local_data --run-root ../local_runs
+python -B experiments/02_hop_scope/hop_scope_study/scripts/run.py --config experiments/02_hop_scope/hop_scope_study/configs/full.json --data-root ../local_data --run-root ../local_runs
+python -B experiments/02_hop_scope/hop_scope_study/scripts/eval_only.py --config experiments/02_hop_scope/hop_scope_study/configs/eval_only.json --data-root ../local_data --run-root ../local_runs
+python -B experiments/02_hop_scope/hop_scope_study/scripts/aggregate.py --data-root ../local_data --run-root ../local_runs
+python -B experiments/02_hop_scope/hop_scope_study/scripts/finalize_report.py
 ```
 
 If a verified local cache is already available, preparation supports
@@ -54,7 +54,7 @@ Matplotlib3.11.0 and NumPy2.4.6 because the training environment has no Matplotl
 From the repository root, invoke that environment's Python for:
 
 ```powershell
-python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/plot.py
+python -B experiments/02_hop_scope/hop_scope_study/scripts/plot.py
 ```
 
 The actual local executions used existing interpreters; this workflow was not
@@ -101,7 +101,7 @@ push, or alter the original .git. Add `--commit` to create a local commit object
 after the audit; the evidence receipt stays local.
 
 ```powershell
-python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/publication_snapshot.py --run-root ../local_runs
+python -B experiments/02_hop_scope/hop_scope_study/scripts/publication_snapshot.py --run-root ../local_runs
 ```
 
 ## File map / 文件归属
@@ -110,11 +110,11 @@ python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/publication_sna
 
 | Purpose | Canonical files |
 | --- | --- |
-| Code | [`experiments/03_hop_diagnostics/hop_scope_study/src`](src)<br>[`experiments/03_hop_diagnostics/hop_scope_study/scripts`](scripts) |
-| Configs | [`experiments/03_hop_diagnostics/hop_scope_study/configs`](configs) |
-| Protocol | [`experiments/03_hop_diagnostics/hop_scope_study/docs/00_AUDIT_AND_PROTOCOL.md`](docs/00_AUDIT_AND_PROTOCOL.md) |
-| Report | [`experiments/03_hop_diagnostics/hop_scope_study/docs/03_RESULTS.md`](docs/03_RESULTS.md)<br>[`experiments/03_hop_diagnostics/hop_scope_study/docs/04_INTERPRETATION_AND_LIMITATIONS.md`](docs/04_INTERPRETATION_AND_LIMITATIONS.md) |
-| Results | [`experiments/03_hop_diagnostics/hop_scope_study/results`](results) |
-| Figures | [`experiments/03_hop_diagnostics/hop_scope_study/figures`](figures) |
-| Tests | [`experiments/03_hop_diagnostics/hop_scope_study/tests`](tests) |
-| Coverage | [`experiments/03_hop_diagnostics/hop_scope_study/results/status.json`](results/status.json) |
+| Code | [`experiments/02_hop_scope/hop_scope_study/src`](src)<br>[`experiments/02_hop_scope/hop_scope_study/scripts`](scripts) |
+| Configs | [`experiments/02_hop_scope/hop_scope_study/configs`](configs) |
+| Protocol | [`experiments/02_hop_scope/hop_scope_study/docs/00_AUDIT_AND_PROTOCOL.md`](docs/00_AUDIT_AND_PROTOCOL.md) |
+| Report | [`experiments/02_hop_scope/hop_scope_study/docs/03_RESULTS.md`](docs/03_RESULTS.md)<br>[`experiments/02_hop_scope/hop_scope_study/docs/04_INTERPRETATION_AND_LIMITATIONS.md`](docs/04_INTERPRETATION_AND_LIMITATIONS.md) |
+| Results | [`experiments/02_hop_scope/hop_scope_study/results`](results) |
+| Figures | [`experiments/02_hop_scope/hop_scope_study/figures`](figures) |
+| Tests | [`experiments/02_hop_scope/hop_scope_study/tests`](tests) |
+| Coverage | [`experiments/02_hop_scope/hop_scope_study/results/status.json`](results/status.json) |

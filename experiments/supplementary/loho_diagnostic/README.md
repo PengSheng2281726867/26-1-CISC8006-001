@@ -18,11 +18,11 @@ From repository root (all interfaces below are implemented):
 
 ```powershell
 python -B -m experiments.loho_diagnostic.src.audit
-python -B -m experiments.loho_diagnostic.src.evaluate --config experiments/03_hop_diagnostics/loho_diagnostic/configs/loho_pilot.json --plan
-python -B -m unittest discover -s experiments/03_hop_diagnostics/loho_diagnostic/tests -v
+python -B -m experiments.loho_diagnostic.src.evaluate --config experiments/supplementary/loho_diagnostic/configs/loho_pilot.json --plan
+python -B -m unittest discover -s experiments/supplementary/loho_diagnostic/tests -v
 python -B scripts/smoke_test.py
-python -B -m experiments.loho_diagnostic.src.evaluate --config experiments/03_hop_diagnostics/loho_diagnostic/configs/loho_pilot.json --split val
-python -B -m experiments.loho_diagnostic.src.evaluate --config experiments/03_hop_diagnostics/loho_diagnostic/configs/loho_full.json --split val
+python -B -m experiments.loho_diagnostic.src.evaluate --config experiments/supplementary/loho_diagnostic/configs/loho_pilot.json --split val
+python -B -m experiments.loho_diagnostic.src.evaluate --config experiments/supplementary/loho_diagnostic/configs/loho_full.json --split val
 ```
 
 Each execution prints its private batch directory. To combine pilot and remaining
@@ -32,8 +32,8 @@ expected cells cause summary failure. The full config can also run all180 cells
 alone. No result directory is overwritten.
 
 ```powershell
-python -B -m experiments.loho_diagnostic.src.summarize --input ../private_outputs/BATCH_ID --output experiments/03_hop_diagnostics/loho_diagnostic/results/UNIQUE_SUMMARY_ID
-python -B -m experiments.loho_diagnostic.src.plots --input ../private_outputs/BATCH_ID --output experiments/03_hop_diagnostics/loho_diagnostic/results/UNIQUE_FIGURES_ID
+python -B -m experiments.loho_diagnostic.src.summarize --input ../private_outputs/BATCH_ID --output experiments/supplementary/loho_diagnostic/results/UNIQUE_SUMMARY_ID
+python -B -m experiments.loho_diagnostic.src.plots --input ../private_outputs/BATCH_ID --output experiments/supplementary/loho_diagnostic/results/UNIQUE_FIGURES_ID
 ```
 
 Replace the uppercase IDs with actual printed directories. Summarization needs
@@ -66,11 +66,11 @@ See results/private_artifact_checksums.csv for relative executed batch IDs.
 
 | Purpose | Canonical files |
 | --- | --- |
-| Code | [`experiments/03_hop_diagnostics/loho_diagnostic/src`](src) |
-| Configs | [`experiments/03_hop_diagnostics/loho_diagnostic/configs`](configs) |
-| Protocol | [`experiments/03_hop_diagnostics/loho_diagnostic/PROTOCOL.md`](PROTOCOL.md) |
-| Report | [`experiments/03_hop_diagnostics/loho_diagnostic/reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md) |
-| Results and figures | [`experiments/03_hop_diagnostics/loho_diagnostic/results`](results) |
-| Tests | [`experiments/03_hop_diagnostics/loho_diagnostic/tests`](tests) |
-| Coverage | [`experiments/03_hop_diagnostics/loho_diagnostic/results/full_test/coverage.json`](results/full_test/coverage.json) |
-| Checkpoint evidence | [`experiments/03_hop_diagnostics/loho_diagnostic/CHECKPOINT_INVENTORY.md`](CHECKPOINT_INVENTORY.md)<br>[`experiments/03_hop_diagnostics/loho_diagnostic/reports/EVIDENCE_MANIFEST.md`](reports/EVIDENCE_MANIFEST.md) |
+| Code | [`experiments/supplementary/loho_diagnostic/src`](src) |
+| Configs | [`experiments/supplementary/loho_diagnostic/configs`](configs) |
+| Protocol | [`experiments/supplementary/loho_diagnostic/PROTOCOL.md`](PROTOCOL.md) |
+| Report | [`experiments/supplementary/loho_diagnostic/reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md) |
+| Results and figures | [`experiments/supplementary/loho_diagnostic/results`](results) |
+| Tests | [`experiments/supplementary/loho_diagnostic/tests`](tests) |
+| Coverage | [`experiments/supplementary/loho_diagnostic/results/full_test/coverage.json`](results/full_test/coverage.json) |
+| Checkpoint evidence | [`experiments/supplementary/loho_diagnostic/CHECKPOINT_INVENTORY.md`](CHECKPOINT_INVENTORY.md)<br>[`experiments/supplementary/loho_diagnostic/reports/EVIDENCE_MANIFEST.md`](reports/EVIDENCE_MANIFEST.md) |

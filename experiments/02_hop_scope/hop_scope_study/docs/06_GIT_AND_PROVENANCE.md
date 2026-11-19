@@ -33,7 +33,7 @@ reused only within this new300-cell matrix.
 The publication_snapshot.py adapter creates a new candidate Git index and object
 store **inside the external writable run directory**, reading the clone's objects
 as an alternate. It writes no refs or original .git files. Explicit paths only:
-new experiments/03_hop_diagnostics/hop_scope_study plus minimal appended README, AI_USAGE and
+new experiments/02_hop_scope/hop_scope_study plus minimal appended README, AI_USAGE and
 IMPROVEMENTS navigation/evidence. core.autocrlf=false preserves the actual source
 bytes hashed during execution; every index blob is checked against its local file.
 

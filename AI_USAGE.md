@@ -140,3 +140,24 @@ see docs/EXPERIMENT_DIRECTORY_MIGRATION.md. User merge authorization is separate
 from teacher approval or human scientific review, which remain NOT_VERIFIED.
 
 Migration verification completed:52 tests passed; CLI plan counts720/300/180, external-working-directory imports,72 study catalog paths and258 Markdown targets passed. All273 frozen/evidence artifacts checked remain byte-identical. One incorrectly relocated missing-data test fixture was corrected back to external storage; no scientific behavior was changed to satisfy it.
+
+## 2026-11-19: course story line and experiment reorganization
+
+The user explicitly selected Baseline plus scorer, Hop scope and distance/query,
+and excluded LOHO from the main discussion. Codex organized their three ideas,
+controls, outcomes and limits into STORYLINE.md and experiment landing pages,
+moved LOHO to supplementary evidence, and updated the package/path adapters.
+This is an editorial synthesis of completed studies, not a claim that all
+questions or acceptance criteria were preregistered in this order. Historical
+protocols, scientific results and unknown execution commits are preserved.
+The user selected presentation scope; human verification of code/scientific
+interpretation and teacher approval remain NOT_VERIFIED. No human checks,
+contributions, approvals or historical interactions are fabricated.
+Evidence: STORYLINE.md, docs/STORYLINE_REORGANIZATION.md,
+experiments/storyline_migration.json and the publication commit.
+
+Executed verification: 52 tests passed (16 repository, 7 Hop adapter, 4 Hop analysis,
+16 Exact-distance, 9 supplementary LOHO); 274 frozen evidence/source files retained
+their bytes. A standalone LOHO check first hit Git's existing ownership guard and
+passed with a process-local safe.directory setting. No scientific behavior was
+changed to pass. CLI plans reported 720/300 cells without benchmark training.

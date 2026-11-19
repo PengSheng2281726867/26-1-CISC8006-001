@@ -41,7 +41,7 @@ def git_state():
     except subprocess.CalledProcessError: return dict(commit='UNKNOWN',dirty=True)
 def sources():
     paths=[STUDY/'src'/n for n in ('common.py','distance.py','model.py','run.py')]+list((REPO/'research/src').glob('*.py'))
-    paths += [REPO/'experiments/03_hop_diagnostics/hop_scope_study/src'/n for n in ('data.py','common.py')]
+    paths += [REPO/'experiments/02_hop_scope/hop_scope_study/src'/n for n in ('data.py','common.py')]
     paths.append(REPO/'experiments/__init__.py')
     return {p.relative_to(REPO).as_posix():sha(p) for p in sorted(paths)}
 def verify_freeze():

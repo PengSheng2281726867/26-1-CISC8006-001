@@ -1,5 +1,8 @@
 # Experiment organization and integration record
 
+Current layout: [2026-11-19 storyline reorganization](STORYLINE_REORGANIZATION.md).
+The older directory diagrams and executed-check counts below are historical.
+
 Current physical layout: [four-group migration](EXPERIMENT_DIRECTORY_MIGRATION.md).
 The record below describes the earlier flat navigation organization.
 

@@ -15,7 +15,11 @@ class ExperimentLayoutTests(unittest.TestCase):
     def test_groups_cover_each_study_and_historical_registry_once(self):
         catalog = json.loads((ROOT/'experiments/catalog.json').read_text(encoding='utf8'))
         self.assertEqual({g['id'] for g in catalog['groups']}, {
-            '01_reproduction', '02_scorer_ablation', '03_hop_diagnostics', '04_distance_query'})
+            '00_baseline', '01_scorer', '02_hop_scope', '03_distance_query', 'supplementary'})
+        self.assertEqual(catalog['main_sequence'], ['00_baseline', '01_scorer', '02_hop_scope', '03_distance_query'])
+        self.assertEqual([g['id'] for g in catalog['groups'] if g['role'] == 'main_experiment'], ['01_scorer', '02_hop_scope', '03_distance_query'])
+        loho = next(e for e in catalog['experiments'] if e['id'] == 'loho_diagnostic')
+        self.assertFalse(loho['in_main_storyline'])
         studies = [study for g in catalog['groups'] for study in g['experiments']]
         self.assertEqual(len(studies), 8)
         self.assertEqual(len(set(studies)), len(studies))
@@ -35,9 +39,9 @@ class ExperimentLayoutTests(unittest.TestCase):
 
     def test_public_modules_find_grouped_studies_and_repository_root(self):
         targets = {
-            'hop_scope_study': '03_hop_diagnostics',
-            'loho_diagnostic': '03_hop_diagnostics',
-            'exact_distance_query': '04_distance_query',
+            'hop_scope_study': '02_hop_scope',
+            'loho_diagnostic': 'supplementary',
+            'exact_distance_query': '03_distance_query',
         }
         for study, group in targets.items():
             with self.subTest(study=study):

@@ -1,5 +1,9 @@
 # Course repository handoff
 
+Current course layout and status: [Baseline + three experiments](../STORYLINE.md)
+and [updated compliance](COURSE_COMPLIANCE.md). The handoff below is the earlier
+recovery record; its global three-seed statement predates the completed Experiment 3.
+
 Repository: https://github.com/PengSheng2281726867/26-1-CISC8006-001
 
 The verified full import is `0f061de5377202f232afd26899826e8c5a825fb3`. The following

@@ -1,5 +1,12 @@
 # Claim and reproduction
 
+Current course narrative: [Baseline + three experiments](../STORYLINE.md).
+2026-11-19 editorial interpretation: approximate recovery of overall heterophilic
+accuracy, partial directional support for gating, and inconclusive evidence for
+a general positive effect. The consistent-positive pattern was not reproduced
+under the local protocol. This is not a historical preregistered decision rule.
+
+
 Citation: Amir Ghazizadeh, Rickard Ewetz, Hao Zheng (2025), *GAMMA: Gated Multi-hop
 Message Passing for Homophily-Agnostic Node Representation in GNNs*, NeurIPS.
 [Primary author PDF](https://amir-ghz.github.io/PDFs/GAMMA.pdf); [official repository](https://github.com/amir-ghz/GAMMA).

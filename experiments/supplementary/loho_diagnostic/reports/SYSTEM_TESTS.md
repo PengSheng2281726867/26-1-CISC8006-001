@@ -5,7 +5,7 @@ Executed2026-10-29 using existing compatible environments.
 | Check | Actual result |
 | --- | --- |
 | python -B scripts/smoke_test.py | PASS:13 tests,20 source alignment cases |
-| python -B -m unittest discover -s experiments/03_hop_diagnostics/loho_diagnostic/tests -v | PASS:9 tests, with CPU/CUDA and K/R subcases |
+| python -B -m unittest discover -s experiments/supplementary/loho_diagnostic/tests -v | PASS:9 tests, with CPU/CUDA and K/R subcases |
 | No-mask output/used-alpha/NLL vs original | PASS:360 real checkpoint-evaluation cells; max output/alpha error0; atol2e-6/rtol2e-5 |
 | Final-only earlier logits/alpha/fusion | PASS: unchanged round0 on all real K4/R2 cells |
 | Full-routing alpha exactly0, other weights normalized, finite outputs | PASS on every real intervention |

@@ -11,7 +11,7 @@ Four analysis known-answer tests also passed, covering sample SD, exact sign-fli
 One command from repository root:
 
 ```powershell
-python -B experiments/03_hop_diagnostics/hop_scope_study/scripts/check.py --data-root ../local_data --run-root ../local_runs
+python -B experiments/02_hop_scope/hop_scope_study/scripts/check.py --data-root ../local_data --run-root ../local_runs
 ```
 
 Private logs are retained under local_runs/checks; public scalar acceptance evidence is results/validation.json. All old source bytes remain unchanged.

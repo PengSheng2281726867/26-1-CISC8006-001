@@ -1,181 +1,63 @@
-# CISC8006 — GAMMA experiments
+# CISC8006 Course Project — GAMMA
 
-Research evidence recovery and a prospective reproducibility harness. **This is
-a component-level reproduction, not an exact reproduction of the paper tables.**
+**主线：Baseline 复现对比 → 实验 1：Scorer → 实验 2：Hop 范围 → 实验 3：Exact-distance / Query。**
 
-Paper: Amir Ghazizadeh, Rickard Ewetz, Hao Zheng. *GAMMA: Gated Multi-hop Message
-Passing for Homophily-Agnostic Node Representation in GNNs*, NeurIPS 2025.
-[Paper](https://amir-ghz.github.io/PDFs/GAMMA.pdf); [official code](https://github.com/amir-ghz/GAMMA),
-MIT, upstream `36d054b4ae53c0c8e360d85d056f5207d61c8281`. See [NOTICE](NOTICE.md).
+研究六个异配（heterophilic）数据集：Texas、Wisconsin、Cornell、Chameleon、Squirrel、Actor。
+原论文：Amir Ghazizadeh、Rickard Ewetz、Hao Zheng，*GAMMA: Gated Multi-hop Message Passing
+for Homophily-Agnostic Node Representation in GNNs*，NeurIPS 2025。
+[论文](https://amir-ghz.github.io/PDFs/GAMMA.pdf) · [官方代码](https://github.com/amir-ghz/GAMMA) · [来源与 MIT 许可](NOTICE.md)。
 
-## Experiments / 按组浏览
+## 从这里阅读
 
-The **[experiment index](experiments/README.md)** links four actual group folders:
+| 阶段 | 想法 / 研究问题 | 已有结果 |
+| --- | --- | --- |
+| [Baseline 复现对比](experiments/00_baseline/README.md) | 整体准确率是否接近？门控是否优于 Uniform？ | 准确率近似重现；门控有局部正向支持，一致收益未重现 |
+| [实验 1：Scorer](experiments/01_scorer/README.md) | 可学习 MLP 与 LN/GELU 是否改善 agreement？ | 更复杂的 scorer 未带来稳定收益 |
+| [实验 2：Hop 范围](experiments/02_hop_scope/README.md) | 固定传播后限制路由范围，是否更好？ | 范围效应依赖数据集；重训与推理删 hop 不等价 |
+| [实验 3：Exact-distance / Query](experiments/03_distance_query/README.md) | 换候选表示和 Query 是否改善融合？ | 没有普遍收益；H0 Query 高度集中于自身特征 |
 
-| Group | Studies |
-| --- | --- |
-| [01_reproduction](experiments/01_reproduction/README.md) | Historical README reproduction, early K2 gating, K2–4 Dot/Uniform |
-| [02_scorer_ablation](experiments/02_scorer_ablation/README.md) | Dot/MLP scorer comparison; separate LN and GELU ablations |
-| [03_hop_diagnostics](experiments/03_hop_diagnostics/README.md) | Fixed-K5 variable routing scope; frozen-weight LOHO |
-| [04_distance_query](experiments/04_distance_query/README.md) | G0–G3 aggregation/query comparison and controls |
+**[完整 Story line](STORYLINE.md)** 将问题、三个想法、对照、结果和结论连成一条论证。
+[实验目录](experiments/README.md) · [课程要求对应](docs/COURSE_COMPLIANCE.md) · [三个改进想法](docs/IMPROVEMENTS.md)。
+LOHO 按本次展示范围移入 [supplementary](experiments/supplementary/README.md)，不进入主线；原始证据保留。
 
-Each study contains its code, configs, reports, results and tests, or maps its
-shared historical evidence. See the [catalog](experiments/catalog.json) and
-[migration notes](docs/EXPERIMENT_DIRECTORY_MIGRATION.md). Python module commands
-retain their public names, while script/config file paths use the grouped layout.
-Teacher approval remains **NOT_VERIFIED**.
+## 结论范围
 
-## Historical reproduction claim and findings
+这是 **Component reproduction**。整体准确率近似重现不等于证明门控普遍有益，也不等于本地重现 SOTA 排名。
+本地 Dot−Uniform 为 11/18 条件正向、7/18 负向，平均 +1.51 pp，Holm18 后无显著比较。
+我们把门控总体收益表述为 inconclusive / 部分正向支持，把一致收益表述为本地未复现；
+这是当前解释，不伪称历史预注册判定。论文与本地协议差异、负结果和失败均保留。
+教师批准仍 `NOT_VERIFIED`，最终课程报告、slides、贡献确认和 Week 12 freeze 尚未完成。
 
-Candidate course claim: node-specific iterative gating improves node classification
-over uniform hop fusion while retaining shared projection and global channel scaling.
-It corresponds to Appendix B/Table 3. Teacher approval: **NOT_VERIFIED**. The
-retrospective protocol is documented but is not a claimed course-approved freeze.
-
-Local Dot−Uniform is positive in 11/18 Dataset×K conditions. MLP−Dot averages
-−0.51 pp (12/24 positive). LN−MLP averages +0.02 pp; GELU−MLP +0.47 pp.
-None of those direct comparisons is significant after its original family-wise
-Holm correction. A separate Actor/GELU K3-versus-K1 interaction has corrected
-p=0.03516; this does not establish a significant fixed-K improvement.
-[All results](reports/RESULTS_SUMMARY.md) and [course gaps](docs/COURSE_COMPLIANCE.md).
-
-## Layout and historical status
+## 实际目录
 
 ```text
+STORYLINE.md                   课程论证与结果解释
 experiments/
-  01_reproduction/             historical_readme, early_gate, gate_sweep
-  02_scorer_ablation/          dot_mlp, mlp_components
-  03_hop_diagnostics/          hop_scope_study, loho_diagnostic
-  04_distance_query/           exact_distance_query
-  README.md, catalog.json      grouped index and file mapping
-  registry.csv                1,566 recovered historical execution records
-  analysis/, protocols/       shared immutable historical evidence
-research/                     frozen scientific implementations and upstream snapshot
-course/, scripts/, tests/     shared adapters, entry points and checks
-configs/, environment/        shared configurations and recovered runtime versions
-reports/, docs/, archives/    historical report, audits and source recovery records
+  00_baseline/                 baseline 复现与 Dot/Uniform
+  01_scorer/                   实验 1：MLP、LN/GELU
+  02_hop_scope/                实验 2：固定传播、变量路由范围
+  03_distance_query/           实验 3：Exact-distance / Query
+  supplementary/              LOHO；不进入课程主线
+  analysis/, protocols/        不改写的共享历史证据
+  registry.csv, catalog.json   历史记录与实验文件映射
+research/                     冻结科学实现与官方快照
+course/, scripts/, tests/      公共运行和验证工具
+configs/, environment/        公共配置与环境版本
+reports/, docs/, archives/     报告、审计和历史来源
 ```
 
-All recovered execution commits are UNKNOWN (`pre-git experiment`). The import
-commit does not identify the code version at execution. No weights or datasets
-are uploaded. Obtain external artifacts from their owner; no public artifact
-hosting/availability is implied by a checksum. Original files remain intact.
+前次 `03_hop_diagnostics/README.md` 仅保留为旧入口跳转，不是额外实验。
 
-## Environment and installation
+## 安装与快速检查
 
-Existing tested training environment: Python 3.12.14, torch 2.8.0+cu128,
-torch-geometric 2.7.0, CUDA 12.8, RTX 5090. Do not modify a shared environment.
-Create an isolated environment and use the recovered versions:
-
-```powershell
-conda create -n cisc8006-gamma python=3.12.14
-conda activate cisc8006-gamma
-python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cu128
-python -m pip install torch-scatter==2.1.2+pt28cu128 torch-sparse==0.6.18+pt28cu128 -f https://data.pyg.org/whl/torch-2.8.0+cu128.html
-python -m pip install -r environment/historical-runtime.lock.txt
-```
-
-The existing environment is verified; the above **fresh installation is
-NOT_VERIFIED**, especially platform-specific wheels. The recovered lock converts
-one local build reference to its installed package version; see
-[environment recovery](environment/lock_recovery.json). This is a version pin
-list, not a hash-locked, independently rebuilt environment. The imported model
-can use CPU; CUDA is needed to match GPU measurements. No global dependency
-changes were made during recovery.
-
-## One-command checks (no dataset download, no full training)
-
-From the repository root, using a compatible environment:
+完整环境、数据准备、训练和评价命令见 [运行指南](docs/REPRODUCIBILITY.md)。在兼容环境中：
 
 ```powershell
 python -B scripts/smoke_test.py
-python -B scripts/run_experiment.py --config configs/future_three_seeds.json --plan
+python -B -m experiments.exact_distance_query.src.run full --plan
 ```
 
-The smoke test checks official forward/gradients, K1–4, all four scorers,
-nonzero gradients, metric answers/units/direction, node-ID alignment, matched
-configs, label isolation, unique registry IDs, frozen source hashes and failure
-provenance. It retains a deliberately failed missing-data fixture under ignored
-`outputs/`. See [actual results](reports/SYSTEM_TESTS.md).
-
-## Data preparation
-
-No graph data or split archives are redistributed. Dataset license and
-redistribution permission remain NOT_VERIFIED; download from upstream through
-PyG according to its terms. Raw content SHA256 and expected graph shapes are
-recorded in [data manifest](experiments/data_manifest.json).
-
-```powershell
-python -B scripts/prepare_data.py
-python -B scripts/prepare_data.py --check-only
-```
-
-These commands create only ignored `research/data/` caches and ten CPU-seeded
-60/20/20 splits (seeds102–111), use NormalizeFeatures and verify raw hashes and
-split arrays. Recreated NPZ ZIP metadata may change archive hashes despite
-identical mask arrays; both facts are recorded. Processed torch serialization
-hashes may be environment-dependent. No silent acceptance of different raw
-graph content is allowed. Fresh downloads/preparation of all six datasets and60
-exact split archives were actually checked in the existing recorded environment;
-a fresh environment build remains NOT_VERIFIED. See
-[data validation evidence](reports/data_preparation_verification.json).
-
-## Independently run Baseline and MLP
-
-```powershell
-python -B scripts/run_experiment.py --config configs/baseline_texas.json --device cuda
-python -B scripts/run_experiment.py --config configs/mlp_texas.json --device cuda
-```
-
-Both use the same frozen training loop and only switch the scorer. They start
-from matched random initializations; neither loads pretrained weights. Each run
-gets a fresh `outputs/<unique-run-id>/` directory with `config.json`,
-`metadata.json`, `terminal.log`, `epochs.csv`, `result.json`, `metrics.json`,
-`predictions.npz`, `model.pt` and checksums. Failure metadata is retained. Git
-commit/dirty state and code/config/data/split hashes are captured. A dirty or
-uncommitted tree warns explicitly. No old result is resumed or overwritten.
-
-## Evaluate existing metrics or local predictions
-
-```powershell
-python -B scripts/evaluate.py --registry experiments/registry.csv --stage dot_mlp
-python -B scripts/evaluate.py --predictions outputs/<run-id>/predictions.npz
-```
-
-The second command uses the actual run ID produced by training. Accuracy is a
-fraction, higher is better; percent=100×fraction. Across splits we report equal
-weight means and sample SD (ddof1), never pool test nodes across overlapping
-splits as independent samples. Recovered reports give paired sign-flip tests,
-descriptive t intervals and Holm correction; see [claim](docs/CLAIM_AND_REPRODUCTION.md).
-
-## Proposed three-seed follow-up (not launched)
-
-```powershell
-python -B scripts/run_experiment.py --config configs/paired_texas_three_seeds.json --plan
-python -B scripts/run_experiment.py --config configs/future_three_seeds.json --plan
-```
-
-These enumerate 6 and 1,440 runs respectively. Removing `--plan` starts training;
-do so only after human/teacher protocol approval and budget review. Historical
-ten-split variability does not supply three optimization seeds per fixed split.
-[Improvement ideas](docs/IMPROVEMENTS.md) records two additional untested ideas
-as Proposed, not completed pilots.
-
-## Course evidence and limitations
-
-- [Code audit](docs/CODE_AUDIT.md), [recovery](docs/EXPERIMENT_RECOVERY.md),
-  [claim/paper differences](docs/CLAIM_AND_REPRODUCTION.md),
-  [improvements](docs/IMPROVEMENTS.md), [compliance](docs/COURSE_COMPLIANCE.md).
-- [AI usage](AI_USAGE.md) is factual and still needs human verification;
-  [contributions](CONTRIBUTIONS.md) leaves unverified names/roles unassigned.
-- [Publishing review](docs/PUBLICATION_REVIEW.md), [Git recovery](docs/GIT_RECOVERY.md).
-- Teacher approvals, full multi-seed follow-up, fresh environment installation,
-  externally accessible artifact archive, final course slides and Week12 freeze
-  are not complete. No Week12 final tag is created.
-
-- [Frozen-weight LOHO routing diagnostic](experiments/03_hop_diagnostics/loho_diagnostic/README.md).
-
-
-- [Fixed-propagation / variable-hop-gating study (2026-10-25)](experiments/03_hop_diagnostics/hop_scope_study/README.md):300 retrainings and300 inference-only mask evaluations; technical matrix complete, teacher approval NOT_VERIFIED.
-
-- [Exact-distance and Query-gating study](experiments/04_distance_query/exact_distance_query/README.md): four matched arms; teacher approval NOT_VERIFIED.
+第一条只做合成检查；第二条仅列计划。此次组织不启动新 benchmark 训练。
+新环境重建仍 `NOT_VERIFIED`。数据、标签、权重和逐节点产物保存在 Git 外；校验和不等于可下载。
+历史执行 commit 的 UNKNOWN 不用导入 commit 替代。目录变动后的指纹不能冒充历史运行版本。
+[AI 使用](AI_USAGE.md) · [个人贡献](CONTRIBUTIONS.md) · [本次迁移](docs/STORYLINE_REORGANIZATION.md)。

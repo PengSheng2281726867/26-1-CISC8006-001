@@ -1,5 +1,8 @@
 # Four-group experiment directory migration
 
+Current layout: [2026-11-19 storyline reorganization](STORYLINE_REORGANIZATION.md).
+The older directory diagrams and executed-check counts below are historical.
+
 The user explicitly requested physically organizing the GitHub project into
 the four groups discussed in the conversation. This migration starts at
 `101b13406673fba50a9dd001bc1faa83f04a99da`; it supersedes the earlier flat

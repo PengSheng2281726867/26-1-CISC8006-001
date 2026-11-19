@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "base_commit": "6d2cc6e96f3e10c6c62c153a6aa7e15cde461951",
+  "directory_map": {
+    "experiments/01_reproduction": "experiments/00_baseline",
+    "experiments/02_scorer_ablation": "experiments/01_scorer",
+    "experiments/03_hop_diagnostics/hop_scope_study": "experiments/02_hop_scope/hop_scope_study",
+    "experiments/03_hop_diagnostics/loho_diagnostic": "experiments/supplementary/loho_diagnostic",
+    "experiments/04_distance_query": "experiments/03_distance_query"
+  },
+  "previous_mapping": "experiments/layout_migration.json",
+  "main_sequence": [
+    "00_baseline",
+    "01_scorer",
+    "02_hop_scope",
+    "03_distance_query"
+  ],
+  "supplementary": [
+    "loho_diagnostic"
+  ],
+  "policy": "Preserve historical source, configurations, protocols, results and artifact hashes. New paths and package adapter alter current fingerprints; never silently reuse older private runs."
+}

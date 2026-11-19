@@ -13,7 +13,7 @@ Parameters, initialization, data splits and training budget are matched.
 From repository root in the existing compatible GAMMA environment:
 
 ```powershell
-python -B -m unittest discover -s experiments/04_distance_query/exact_distance_query/tests -v
+python -B -m unittest discover -s experiments/03_distance_query/exact_distance_query/tests -v
 python -B scripts/smoke_test.py
 python -B -m experiments.exact_distance_query.src.run full --plan
 python -B -m experiments.exact_distance_query.src.run prepare --data-root ../private_data --import-from <VERIFIED_CACHE_ROOT>
@@ -53,10 +53,10 @@ checks do not imply data access or external weight availability.
 
 | Purpose | Canonical files |
 | --- | --- |
-| Code | [`experiments/04_distance_query/exact_distance_query/src`](src) |
-| Configs | [`experiments/04_distance_query/exact_distance_query/configs`](configs) |
-| Protocol | [`experiments/04_distance_query/exact_distance_query/PROTOCOL.md`](PROTOCOL.md) |
-| Report | [`experiments/04_distance_query/exact_distance_query/docs/03_FULL_RESULTS.md`](docs/03_FULL_RESULTS.md)<br>[`experiments/04_distance_query/exact_distance_query/docs/04_INTERPRETATION.md`](docs/04_INTERPRETATION.md) |
-| Results and figures | [`experiments/04_distance_query/exact_distance_query/results/full`](results/full)<br>[`experiments/04_distance_query/exact_distance_query/results/pilot`](results/pilot) |
-| Tests | [`experiments/04_distance_query/exact_distance_query/tests`](tests) |
-| Coverage | [`experiments/04_distance_query/exact_distance_query/results/full/coverage.json`](results/full/coverage.json) |
+| Code | [`experiments/03_distance_query/exact_distance_query/src`](src) |
+| Configs | [`experiments/03_distance_query/exact_distance_query/configs`](configs) |
+| Protocol | [`experiments/03_distance_query/exact_distance_query/PROTOCOL.md`](PROTOCOL.md) |
+| Report | [`experiments/03_distance_query/exact_distance_query/docs/03_FULL_RESULTS.md`](docs/03_FULL_RESULTS.md)<br>[`experiments/03_distance_query/exact_distance_query/docs/04_INTERPRETATION.md`](docs/04_INTERPRETATION.md) |
+| Results and figures | [`experiments/03_distance_query/exact_distance_query/results/full`](results/full)<br>[`experiments/03_distance_query/exact_distance_query/results/pilot`](results/pilot) |
+| Tests | [`experiments/03_distance_query/exact_distance_query/tests`](tests) |
+| Coverage | [`experiments/03_distance_query/exact_distance_query/results/full/coverage.json`](results/full/coverage.json) |
