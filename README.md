@@ -7,6 +7,8 @@
 for Homophily-Agnostic Node Representation in GNNs*，NeurIPS 2025。
 [论文](https://amir-ghz.github.io/PDFs/GAMMA.pdf) · [官方代码](https://github.com/amir-ghz/GAMMA) · [来源与 MIT 许可](NOTICE.md)。
 
+[架构图总览](experiments/ARCHITECTURE.md) · [原始 GAMMA](experiments/00_baseline/figures/gamma-architecture.png) · [Baseline 门控对照](experiments/00_baseline/figures/dot-vs-uniform.png)
+
 ## 从这里阅读
 
 | 阶段 | 想法 / 研究问题 | 已有结果 |

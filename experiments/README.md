@@ -2,6 +2,8 @@
 
 [完整 Story line](../STORYLINE.md) · [项目首页](../README.md) · [三个想法与评分要求](../docs/IMPROVEMENTS.md)
 
+[架构图总览](ARCHITECTURE.md) 收录原始 GAMMA、Baseline 门控对照和三个主实验的配图。
+
 | 顺序 | 问题 | 主要证据 |
 | --- | --- | --- |
 | [00_baseline](00_baseline/README.md) | GAMMA 准确率与门控收益复现到什么程度？ | 历史 README + 后期 Dot/Uniform 主对照 |

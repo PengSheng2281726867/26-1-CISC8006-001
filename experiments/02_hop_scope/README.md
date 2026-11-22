@@ -2,6 +2,10 @@
 
 [实验 1](../01_scorer/README.md) → 实验 2 → [实验 3](../03_distance_query/README.md)
 
+![固定计算 H0 至 H5，比较全范围和受限范围的路由掩码](figures/fixed-propagation-routing-scope.png)
+
+图以 x=2 对比 x=5。两组均先计算 H0 至 H5，掩码在各轮 softmax 前限制可用候选。
+
 ## 想法与假设
 
 固定传播到 powers 0..5，仅允许 0..x 参与路由，x=1..5。

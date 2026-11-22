@@ -2,6 +2,10 @@
 
 [Baseline](../00_baseline/README.md) → 实验 1 → [实验 2](../02_hop_scope/README.md)
 
+![原 Dot scorer 与 MLP、MLP+LN、MLP+GELU 的四种独立配置](figures/routing-scorer.png)
+
+每次运行使用一种 agreement 函数。LN 加在第一层线性变换与 ReLU 之间，GELU 单独替换 ReLU。
+
 ## 想法与假设
 
 Dot agreement 只衡量固定形式的相似性。想法：以共享 MLP 学习 hop 表示与当前融合表示的兼容度，

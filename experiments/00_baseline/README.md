@@ -2,6 +2,14 @@
 
 [Story line](../../STORYLINE.md) · [全部实验](../README.md)
 
+## 架构与门控对照
+
+![GAMMA 的共享投影、多跳表示和迭代节点路由](figures/gamma-architecture.png)
+
+![Dot 和 Uniform 使用相同候选 hop 的两组对照](figures/dot-vs-uniform.png)
+
+第一张图概括原论文中的 GAMMA 层。第二张图展示本地复现的对照设计。Dot 和 Uniform 分别运行，保留相同的 hop 候选、逐 hop 缩放和分类头。
+
 ## 复现问题
 
 范围限定六个异配（heterophilic）数据集：Texas、Wisconsin、Cornell、Chameleon、Squirrel、Actor。

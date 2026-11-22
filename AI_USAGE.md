@@ -161,3 +161,7 @@ Executed verification: 52 tests passed (16 repository, 7 Hop adapter, 4 Hop anal
 their bytes. A standalone LOHO check first hit Git's existing ownership guard and
 passed with a process-local safe.directory setting. No scientific behavior was
 changed to pass. CLI plans reported 720/300 cells without benchmark training.
+
+## 2026-11-22: architecture figures
+
+Codex used the built-in ImageGen tool to illustrate the original GAMMA architecture, the Dot/Uniform baseline, and the three existing main experiments. Codex checked the visible labels, routing arrows, and arm definitions against the paper, model source, and study protocols before adding the figures to the [architecture gallery](experiments/ARCHITECTURE.md). Team review is `NOT_VERIFIED`.

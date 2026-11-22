@@ -2,6 +2,10 @@
 
 [实验 2](../02_hop_scope/README.md) → 实验 3 → [完整结论](../../STORYLINE.md)
 
+![G0 至 G3 的候选聚合方式与路由 Query 对照](figures/exact-distance-query.png)
+
+G3 使用 Walk H4 作为 Query，并从 Exact-distance 候选中融合。实现细节见[模型流程图](exact_distance_query/docs/ARCHITECTURE.md)。
+
 ## 想法与假设
 
 Walk 聚合混合多条路径与不同最短距离的节点。想法：使用严格最短距离 shell 构造 hop 候选，
