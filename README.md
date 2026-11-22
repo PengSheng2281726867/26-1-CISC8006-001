@@ -9,6 +9,8 @@ for Homophily-Agnostic Node Representation in GNNs*，NeurIPS 2025。
 
 [架构图总览](experiments/ARCHITECTURE.md) · [原始 GAMMA](experiments/00_baseline/figures/gamma-architecture.png) · [Baseline 门控对照](experiments/00_baseline/figures/dot-vs-uniform.png)
 
+**组员制作 PPT** · [逐页汇报提纲、讲稿逻辑和图表数据来源](docs/PRESENTATION_GUIDE.md)
+
 ## 从这里阅读
 
 | 阶段 | 想法 / 研究问题 | 已有结果 |

@@ -4,6 +4,8 @@
 
 [架构图总览](ARCHITECTURE.md) 收录原始 GAMMA、Baseline 门控对照和三个主实验的配图。
 
+[课程 PPT 制作指南](../docs/PRESENTATION_GUIDE.md) 将实验图、数据和讲稿按汇报顺序对应到每一页。
+
 | 顺序 | 问题 | 主要证据 |
 | --- | --- | --- |
 | [00_baseline](00_baseline/README.md) | GAMMA 准确率与门控收益复现到什么程度？ | 历史 README + 后期 Dot/Uniform 主对照 |
