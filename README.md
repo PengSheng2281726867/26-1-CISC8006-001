@@ -1,5 +1,10 @@
 # CISC8006 Course Project — GAMMA
 
+> [!TIP]
+> **[制作汇报 PPT，从这里开始](docs/PRESENTATION_GUIDE.md)**
+>
+> 指南按 12 页列出每页讲什么、放哪张架构图、去哪找实验对比数据。
+
 **主线：Baseline 复现对比 → 实验 1：Scorer → 实验 2：Hop 范围 → 实验 3：Exact-distance / Query。**
 
 研究六个异配（heterophilic）数据集：Texas、Wisconsin、Cornell、Chameleon、Squirrel、Actor。
@@ -8,8 +13,6 @@ for Homophily-Agnostic Node Representation in GNNs*，NeurIPS 2025。
 [论文](https://amir-ghz.github.io/PDFs/GAMMA.pdf) · [官方代码](https://github.com/amir-ghz/GAMMA) · [来源与 MIT 许可](NOTICE.md)。
 
 [架构图总览](experiments/ARCHITECTURE.md) · [原始 GAMMA](experiments/00_baseline/figures/gamma-architecture.png) · [Baseline 门控对照](experiments/00_baseline/figures/dot-vs-uniform.png)
-
-**组员制作 PPT** · [逐页汇报提纲、讲稿逻辑和图表数据来源](docs/PRESENTATION_GUIDE.md)
 
 ## 从这里阅读
 
